@@ -1,0 +1,8 @@
+*.pyc
+migrations
+db.sqlite3
+settings.py
+__pacache__
+media
+static
+.idea
