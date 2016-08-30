@@ -23,9 +23,9 @@
       <div class="row top-page">
         <div class="col-md-3 with-vert-align"><a href="/"><img src="/media/{{ firm_settings.logo }}" class="main-logo"></a> </div>
         <div class="col-md-1 with-vert-align "><img src="/media/homepage/house.png" class="nav-img "></div>
-          <div class="col-md-2 with-vert-align"> <div class="address">{{ firm_settings.address | safe}}</div></div>
-        <div class="col-md-3 with-vert-align"> <div class="address">Время работы {{ firm_settings.work_time }}</div> </div>
-        <div class="col-md-3 with-vert-align"><img src="/media/homepage/phone.png" class="nav-img"> <div class="address">{{ firm_settings.phone1 }} </div> <br> {{ firm_settings.phone2 }}</div>
+          <div class="col-md-2 with-vert-align">{{ firm_settings.address | safe}}</div>
+        <div class="col-md-3 with-vert-align"> Время работы {{ firm_settings.work_time }} </div>
+        <div class="col-md-3 with-vert-align"><img src="/media/homepage/phone.png" class="nav-img"> {{ firm_settings.phone1 }}  <br> {{ firm_settings.phone2 }}</div>
       </div>
       <ul class="nav nav-pills nav-justified top-page">
             <li class="active"><a href="/">ГЛАВНАЯ</a></li>
