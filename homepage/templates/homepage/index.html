@@ -28,14 +28,16 @@
         <div class="col-md-3 with-vert-align"><img src="/media/homepage/phone.png" class="nav-img"> {{ firm_settings.phone1 }}  <br> {{ firm_settings.phone2 }}</div>
       </div>
       <ul class="nav nav-pills nav-justified top-page">
-            <li class="active"><a href="/">ГЛАВНАЯ</a></li>
+            <li class="active"><a href="{{ page.get_absolute_url }}">ГЛАВНАЯ</a></li>
           {% for page in menu_pages %}
-                  <li ><a href="/{{ page.lable | lower }}">{{ page.name | upper }}</a></li>
+                  <li ><a href="{{ page.get_absolute_url }}">{{ page.name | upper }}</a></li>
           {% endfor %}
       </ul>
         <div class="row wrap-tile">
             {% for tile in tiles_pages %}
-                <a href="/{{ tile.lable | lower }}"><div class="tile-wrapper"><div class="tile-div"><h2 class="tile-h2">{{ tile.name | capfirst}}</h2><img src="/media/{{ tile.avatar }}" class="tile-img img-circle center-block img-responsive"></div></div> </a>
+                {% if tile %}
+                <a href="{{ tile.get_absolute_url }}"><div class="tile-wrapper"><div class="tile-div"><h2 class="tile-h2">{{ tile.name | capfirst}}</h2><img src="/media/{{ tile.avatar }}" class="tile-img img-circle center-block img-responsive"></div></div> </a>
+                {% endif %}
             {% endfor %}
         </div>
     </div>

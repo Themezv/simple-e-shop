@@ -30,10 +30,10 @@
       <ul class="nav nav-pills nav-justified top-page">
         <li><a href="/">ГЛАВНАЯ</a></li>
           {% for page in menu_pages %}
-              {% if page.lable == cpage.lable %}
-                 <li class="active"><a href="/{{ page.lable | lower}}">{{ page.name | upper}}</a></li>
+              {% if page.get_absolute_url == cpage.get_absolute_url %}
+                 <li class="active"><a href="/{{ page.get_absolute_url }}">{{ page.name | upper}}</a></li>
               {% else %}
-                  <li ><a href="/{{ page.lable | lower }}">{{ page.name | upper}}</a></li>
+                  <li ><a href="/{{ page.get_absolute_url }}">{{ page.name | upper}}</a></li>
               {% endif %}
           {% endfor %}
       </ul>
