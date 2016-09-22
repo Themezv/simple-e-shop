@@ -1,5 +1,5 @@
 from django.http import Http404, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_protect
 
 #import forms
@@ -36,6 +36,28 @@ def page_create(request):
     }
     return render(request, "homepage/page_form.html", context)
 
+def page_edit(request, slug=None):
+    if not request.user.is_staff or not request.user.is_superuser:
+        raise Http404
+    instance = get_object_or_404(Page, slug=slug)
+    form = PageForm(request.POST or None, request.FILES or None, instance=instance)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.user = request.user
+        instance.save()
+        return HttpResponseRedirect(instance.get_absolute_url())
+    context = {
+        'instance':instance,
+        'form': form
+    }
+    return render(request, "homepage/page_form.html", context)
+
+def page_delete(request, slug=None):
+    if not request.user.is_staff or not request.user.is_superuser:
+        raise Http404
+    instance = get_object_or_404(Page, slug=slug)
+    instance.delete()
+    return redirect("index")   
 
 @csrf_protect
 def page_detail(request, slug='main'):
