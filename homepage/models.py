@@ -9,9 +9,10 @@ from PIL import Image
 
 
 class Page(models.Model):
-    name = models.CharField(max_length=15, unique=True)
-    title = models.TextField(max_length=55)
-    description = models.TextField(max_length=150)
+    title = models.CharField(max_length=55, blank=True)
+    content = models.TextField(max_length=50000, blank=True)
+    description = models.TextField(max_length=150, blank=True)
+    published = models.DateTimeField(auto_now_add=True, null=True) #Null ubrat'
     slug = models.SlugField(unique=True)
     menu = models.BooleanField(default=False, help_text='Отображать в главном меню')
     tile = models.BooleanField(default=False, help_text='Отображать на главной странице (плитка)')
@@ -25,7 +26,7 @@ class Page(models.Model):
 
 
     def __str__(self):
-        return self.name
+        return self.title
 
 def create_slug(instance, new_slug=None):
     # transliterate title
@@ -35,7 +36,7 @@ def create_slug(instance, new_slug=None):
 
     #Почему то все работает с русским текстом
 
-    slug = slugify(instance.name, True)
+    slug = slugify(instance.title, True)
     if new_slug is not None:
         slug = new_slug
     qs = Page.objects.filter(slug=slug).order_by("-id")

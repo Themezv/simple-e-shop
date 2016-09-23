@@ -9,8 +9,9 @@ from .forms import PageForm
 from .models import Page, MainSetting
 
 
-@csrf_protect
+# @csrf_protect
 def index(request):
+    user = request.user
     firm_settings = MainSetting.objects.get(active=True)
     menu_pages = Page.objects.filter(menu=True)  # pages to nav-menu
     tiles_pages = Page.objects.filter(tile=True)  # pages to tales
@@ -18,6 +19,7 @@ def index(request):
         'menu_pages': menu_pages,
         'firm_settings': firm_settings,
         'tiles_pages': tiles_pages,
+        'user': user,
         }
     return render(request, 'homepage/index.html', context)
 
@@ -59,18 +61,17 @@ def page_delete(request, slug=None):
     instance.delete()
     return redirect("index")   
 
-@csrf_protect
+# @csrf_protect
 def page_detail(request, slug='main'):
-    cpage = get_object_or_404(Page, slug=slug)
+    page = get_object_or_404(Page, slug=slug)
+    user = request.user
     firm_settings = MainSetting.objects.get(active=True)
-    pages = Page.objects.all()
     menu_pages = Page.objects.filter(menu=True)  # pages to nav-menu
     context = {
-        'cpage': cpage,
-        'pages': pages,
-        #'page_lable': page_lable,
+        'page': page,
         'menu_pages': menu_pages,
         'firm_settings': firm_settings,
+        'user': user,
         }
     return render(request, 'homepage/pages.html', context)
 
