@@ -1,14 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Create page</title>
-</head>
-<body>
+{% extends "homepage/base.html" %}
+
+
+{% block head_title %}Create page{% endblock head_title %}
+
+
+{% block content %}
   <h1>Form</h1>
   <form action="" method="POST" enctype="multipart/form-data">  {% csrf_token %}
   	{{ form.as_p }}
   	<input type="submit" value="Create Post">
   </form>	
-</body>
-</html>
+{% endblock content %}

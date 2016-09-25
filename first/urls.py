@@ -19,9 +19,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    url(r'^page/', include('homepage.urls')),  # namespace='pages'
     url(r'^admin/', admin.site.urls),
     url(r'^shop/', include('shop.urls')),
-    url(r'^', include('homepage.urls')),
 ]
 
 if settings.DEBUG:
