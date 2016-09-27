@@ -12,21 +12,19 @@ class Page(models.Model):
     title = models.CharField(max_length=55, blank=True)
     content = models.TextField(max_length=50000, blank=True)
     description = models.TextField(max_length=150, blank=True)
-    published = models.DateTimeField(auto_now_add=True, null=True) #Null ubrat'
+    published = models.DateTimeField(auto_now_add=True, null=True)  # Null ubrat'
     slug = models.SlugField(unique=True)
     menu = models.BooleanField(default=False, help_text='Отображать в главном меню')
     tile = models.BooleanField(default=False, help_text='Отображать на главной странице (плитка)')
     avatar = models.ImageField(upload_to='pages_avatars', blank=True)
 
-   
-
     # function return url for every object
     def get_absolute_url(self):
         return reverse("page_detail", args=[str(self.slug)])
 
-
     def __str__(self):
         return self.title
+
 
 def create_slug(instance, new_slug=None):
     # transliterate title
@@ -45,6 +43,7 @@ def create_slug(instance, new_slug=None):
         new_slug = "%s-%s" %(slug, qs.first().id)
         return create_slug(instance, new_slug)
     return slug
+
 
 #vipolnyaetsya pered instance.save()
 def pre_save_receiver(sender, instance, *args, **kwargs):
