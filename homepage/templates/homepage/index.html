@@ -21,6 +21,7 @@
             <div class="tile-wrapper"><div class="tile-div">
               <h2 class="tile-h2">{{ tile.title }}</h2><span>{{ tile.published|timesince }} назад</span>
               <img src="/media/{{ tile.avatar }}" class="tile-img img-circle center-block img-responsive">
+              <p>{{ tile.content|truncatechars:200 }}</p>
             </div></div>
           </a> <hr>
       {% endfor %}
