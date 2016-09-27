@@ -1,11 +1,14 @@
 from django.shortcuts import render
-from .models import Category, Product
+from .models import Category, Product, Service
 
 
 # Create your views here.
-def in_work(request):
+def all_items(request):
+    items = Product.objects.filter(available=True)
+    services = Service.objects.filter(available=True)
     context = {
-        'answer': "app in dev",
+        'items': items,
+        'services': services,
     }
     return render(request, "shop/index.html", context=context)
 
@@ -18,14 +21,11 @@ def category(request, slug):
     return render(request, "shop/index.html", context=context)
 
 
-def product(request, cat, item):
-    current_category = Category.objects.get(slug=cat)
-    items = Product.objects.filter(category=current_category)
-    current_item = items.get(name=item)
+def product(request, item):
+    item = Product.objects.get(slug=item)
+
     context = {
-        'cat': current_category.name,
-        'items': items,
-        'item': current_item,
+        'item': item,
     }
     return render(request, "shop/product.html", context=context)
 

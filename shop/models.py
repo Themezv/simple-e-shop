@@ -25,6 +25,7 @@ class AbstractProduct(models.Model):
     available = models.BooleanField(default=True)
     category = models.ManyToManyField(Category)
     relation = models.ManyToManyField('self', blank=True)
+    avatar = models.ImageField(upload_to='items_avatars', default='kotenok.jpg' )
 
     def __str__(self):
         return self.name
@@ -35,7 +36,7 @@ class AbstractProduct(models.Model):
 
 class Product(AbstractProduct):
     def get_absolute_url(self):
-        return reverse("product", args=[str(self.name)])
+        return reverse("product", args=[str(self.slug)])
 
     def __str__(self):
         return self.name
@@ -47,6 +48,7 @@ class Service(AbstractProduct):
 
     def __str__(self):
         return self.name
+
 
 def create_slug(instance, new_slug=None):
     # transliterate title

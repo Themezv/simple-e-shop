@@ -1,19 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>In dev</title>
+{% extends "homepage/base.html" %}
+{% load staticfiles %}
 
-  </head>
-  <body>
+{% block head_title %}Товар: {{ item.name }} {% endblock head_title %}
+
+{% block content %}
+  {{ block.super }}
+
     <h1>{{ item.name }}</h1>
-  <h5>Цена: {{ item.price }}</h5>
-  <b>cat: {{ cat }}</b>
-<i>Items:</i>
-  {% for i in items %}
-    {{ i }} <br>
-  {% endfor %}
-  </body>
-</html>
+    <h2> Цена: {{ item.price }}</h2>
+    <img src="/media/items_avatars/{{ item.avatar }}">
+
+{% endblock content %}
