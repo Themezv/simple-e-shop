@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.utils.text import slugify
 
 from PIL import Image
+from transliterate import translit
 # Create your models here.
 
 
@@ -27,17 +28,12 @@ class Page(models.Model):
 
 
 def create_slug(instance, new_slug=None):
-    # transliterate title
-    # translit() takes first arg only unicode text 
-    # uni = unicode(instance.title)
-    # translited_title = translit(uni, reversed=True)
-
-    #Почему то все работает с русским текстом
-
-    slug = slugify(instance.title, True)
+    translited_title = translit(instance.title, reversed=True)
+    Model = type(instance)
+    slug = slugify(translited_title, True)
     if new_slug is not None:
         slug = new_slug
-    qs = Page.objects.filter(slug=slug).order_by("-id")
+    qs = Model.objects.filter(slug=slug).order_by("-id")
     exists = qs.exists()
     if exists:
         new_slug = "%s-%s" %(slug, qs.first().id)
@@ -45,12 +41,17 @@ def create_slug(instance, new_slug=None):
     return slug
 
 
-#vipolnyaetsya pered instance.save()
 def pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = create_slug(instance)
 
-pre_save.connect(pre_save_receiver, sender=Page)
+
+def pre_save_connect(Model):
+    pre_save.connect(pre_save_receiver, sender=Model)
+
+
+pre_save_connect(Page)
+
 
 
 class MainSetting(models.Model):
