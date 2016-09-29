@@ -14,7 +14,6 @@ from .models import Page, MainSetting
 # @csrf_protect
 def index(request):
     user = request.user
-    firm_settings = MainSetting.objects.get(active=True)
     menu_pages = Page.objects.filter(menu=True).order_by('-published')  # pages to nav-menu
     tiles_pages = Page.objects.filter(tile=True).order_by('-published')  # pages to tales
 
@@ -46,11 +45,8 @@ def index(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         tiles_pages = paginator.page(paginator.num_pages)
 
-
-
     context = {
         'menu_pages': menu_pages,
-        'firm_settings': firm_settings,
         'tiles_pages': tiles_pages,
         'user': user,
         'page_request_var':page_request_var,

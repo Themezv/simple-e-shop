@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^page/', include('homepage.urls')),  # namespace='pages'
     url(r'^admin/', admin.site.urls),
     url(r'^shop/', include('shop.urls')),
+    url(r'^', include('shop.urls')),
 ]
 
 if settings.DEBUG:

@@ -45,7 +45,7 @@ class Product(AbstractProduct):
 
 class Service(AbstractProduct):
     def get_absolute_url(self):
-        return reverse("service", args=[str(self.name)])
+        return reverse("services", args=[str(self.name)])
 
     def __str__(self):
         return self.name
