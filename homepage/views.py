@@ -33,7 +33,7 @@ def index(request):
 
     #Paginator
 
-    paginator = Paginator(tiles_pages, 2)
+    paginator = Paginator(tiles_pages, 1)
     page_request_var='page'#url name 'page'=1,2,3,4...
     page = request.GET.get(page_request_var)
 
