@@ -1,0 +1,25 @@
+{% load page_extras %}
+<ul class="nav nav-pills nav-justified top-page">
+{% if path == '/' %}
+    <li class="active"><a href="/">Главная</a></li>
+{% else %}
+    <li><a href="/">Главная</a></li>
+{% endif %}
+
+{% if path == '/shop/' %}
+    <li class="active"><a href="/shop/">Магазин</a></li>
+{% else %}
+    <li><a href="/shop/">Магазин</a></li>
+{% endif %}
+
+{% for page in menu_pages %}
+    {% if page.get_absolute_url == path  %}
+        <li class="active"><a href="{{ page.get_absolute_url }}">{{ page.title }}</a></li>
+    {% else %}
+        <li><a href="{{ page.get_absolute_url }}">{{ page.title }}</a></li>
+    {% endif %}
+{% empty %}
+    <li> Нет страниц в меню</li>
+{% endfor %}
+
+</ul>

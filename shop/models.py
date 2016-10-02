@@ -3,6 +3,7 @@ from django.db.models.signals import pre_save
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.text import slugify
+from transliterate import translit
 
 
 class Category(models.Model):
@@ -44,24 +45,19 @@ class Product(AbstractProduct):
 
 class Service(AbstractProduct):
     def get_absolute_url(self):
-        return reverse("service", args=[str(self.name)])
+        return reverse("services", args=[str(self.name)])
 
     def __str__(self):
         return self.name
 
 
 def create_slug(instance, new_slug=None):
-    # transliterate title
-    # translit() takes first arg only unicode text
-    # uni = unicode(instance.title)
-    # translited_title = translit(uni, reversed=True)
-
-    # Почему то все работает с русским текстом
-
-    slug = slugify(instance.name, True)
+    translited_title = translit(instance.name, reversed=True)
+    Model = type(instance)
+    slug = slugify(translited_title, True)
     if new_slug is not None:
         slug = new_slug
-    qs = Product.objects.filter(slug=slug).order_by("-id")
+    qs = Model.objects.filter(slug=slug).order_by("-id")
     exists = qs.exists()
     if exists:
         new_slug = "%s-%s" %(slug, qs.first().id)
@@ -73,5 +69,11 @@ def pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = create_slug(instance)
 
-pre_save.connect(pre_save_receiver, sender=Category)
-pre_save.connect(pre_save_receiver, sender=Product)
+
+def pre_save_connect(Model):
+    pre_save.connect(pre_save_receiver, sender=Model)
+
+
+pre_save_connect(Product)
+pre_save_connect(Service)
+pre_save_connect(Category)

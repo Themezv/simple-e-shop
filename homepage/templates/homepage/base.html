@@ -1,10 +1,11 @@
 {% load staticfiles %}
+{% load page_extras %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="shortcut icon" href="/media/{{ firm_settings.favicon }}" type="image/x-icon">
+    <link rel="shortcut icon" href="/media/homepage/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>
@@ -31,23 +32,14 @@
 
 
 <div class="container-fluid"> 
-{% block content %}
-  
-  <div class="row top-page">
-      <div class="col-md-3 with-vert-align"><a href="/"><img src="/media/{{ firm_settings.logo }}" class="main-logo img-responsive" ></a> </div>
-      <div class="col-md-1 with-vert-align "><img src="/media/homepage/house.png" class="nav-img "></div>
-      <div class="col-md-2 with-vert-align">{{ firm_settings.address | safe}}</div>
-      <div class="col-md-3 with-vert-align"> Время работы {{ firm_settings.work_time }} </div>
-      <div class="col-md-3 with-vert-align"><img src="/media/homepage/phone.png" class="nav-img"> {{ firm_settings.phone1 }}  <br> {{ firm_settings.phone2 }}</div>
-    </div>
-    <ul class="nav nav-pills nav-justified top-page">
-          <li class="active"><a href="{% url 'index' %}">ГЛАВНАЯ</a></li>
-        {% for page in menu_pages %}
-          <li ><a href="{{ page.get_absolute_url }}">{{ page.title }}</a></li>
-        {% endfor %}
-    </ul>
 
-{% endblock content %}
+  
+    {% show_top %}
+
+    {% show_menu request.path %}
+
+    {% block content %}
+    {% endblock content %}
 </div>
 
 
