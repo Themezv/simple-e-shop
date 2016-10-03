@@ -1,6 +1,5 @@
 from django.db import models
 from django.db.models.signals import pre_save
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.text import slugify
 
@@ -28,10 +27,7 @@ class Page(models.Model):
 
 
 def create_slug(instance, new_slug=None):
-    try:
-        translited_title = translit(instance.title, reversed=True)
-    except:
-        translited_title = instance.title
+    translited_title = translit(instance.title, reversed=True)
     Model = type(instance)
     slug = slugify(translited_title, True)
     if new_slug is not None:
@@ -54,7 +50,6 @@ def pre_save_connect(Model):
 
 
 pre_save_connect(Page)
-
 
 
 class MainSetting(models.Model):

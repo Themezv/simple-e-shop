@@ -17,12 +17,14 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from homepage.views import index
 
 urlpatterns = [
+    url(r'^$', index),
     url(r'^page/', include('homepage.urls')),  # namespace='pages'
     url(r'^admin/', admin.site.urls),
     url(r'^article/', include('blog.urls')),
-    url(r'^', include('shop.urls')),
+    url(r'^shop/', include('shop.urls')),
 ]
 
 
