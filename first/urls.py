@@ -21,9 +21,10 @@ from django.conf.urls.static import static
 urlpatterns = [
     url(r'^page/', include('homepage.urls')),  # namespace='pages'
     url(r'^admin/', admin.site.urls),
-    url(r'^shop/', include('shop.urls')),
+    url(r'^article/', include('blog.urls')),
     url(r'^', include('shop.urls')),
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
