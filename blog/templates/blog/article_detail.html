@@ -1,13 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>detail</title>
-</head>
-<body>
+{% extends "homepage/base.html" %}
+
+
+{% block content %}
+<div class="row">
+<div class="col-sm-6 col-sm-offset-3">
+
+
 	<h1>Detail</h1>
-	{{ instance.title }}
+	<h3>{{ instance.title }}</h3><span>{{ obj.updated|timesince }}</span>
 	<br>
-	{{ instance.content }}
-</body>
-</html>
+	<img src="/media/{{ instance.image }}" alt="" class="img-responsive">
+	<p>{{ instance.content }} </p>
+
+
+	{% if user.is_staff or user.is_superuser %} <a href="{% url 'article_edit' slug=instance.slug %}">Edit</a> <a href="{% url 'article_delete' slug=instance.slug %}">Delete</a>{% endif %}
+
+</div>
+</div>
+{% endblock content %}

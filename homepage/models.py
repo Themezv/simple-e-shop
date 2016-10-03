@@ -27,7 +27,10 @@ class Page(models.Model):
 
 
 def create_slug(instance, new_slug=None):
-    translited_title = translit(instance.title, reversed=True)
+    try:
+        translited_title = translit(instance.title, reversed=True)
+    except:
+        translited_title = instance.title
     Model = type(instance)
     slug = slugify(translited_title, True)
     if new_slug is not None:

@@ -44,8 +44,9 @@ def article_list(request):
 		queryset = paginator.page(paginator.num_pages)
 
 	context = {
-		"object_list": queryset,#object_list v html
-		"page_request_var": page_request_var #v url num page
+		'object_list': queryset,#object_list v html
+		'page_request_var': page_request_var, #v url num page
+		'user': user,
 	}
 
 	return render(request, "blog/article_list.html", context)
@@ -72,12 +73,14 @@ def article_create(request):
 @csrf_protect
 def article_detail(request, slug=None):
 	instance = get_object_or_404(Article, slug=slug)
+	user = request.user
 	if instance.draft:
 		if not request.user.is_staff or not request.user.is_superuser:
 			raise Http404
 
 	context = {
 		'instance': instance,
+		'user': user,
 	}
 	return render(request, "blog/article_detail.html", context)
 
@@ -91,7 +94,7 @@ def article_edit(request, slug=None):
 	if form.is_valid():
 		instance = form.save(commit=False)
 		instance.save()
-		messages.success(request, "<a href='#'>Item</a> edited", extra_tags="html_safe")
+		# messages.success(request, "<a href='#'>Item</a> edited", extra_tags="html_safe")
 		return HttpResponseRedirect(instance.get_absolute_url())
 	context = {
 		'instance': instance,
