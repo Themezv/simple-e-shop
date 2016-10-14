@@ -28,4 +28,3 @@ def product(request, item):
         'item': item,
     }
     return render(request, "shop/product.html", context=context)
-
