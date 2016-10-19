@@ -3,7 +3,28 @@
 
 {% block content %}
 <div class="row">
-<div class="col-sm-6 col-sm-offset-3">
+
+<div class="col-sm-3">	
+
+<div class="list-group">
+<br>
+<h4>Категории</h4>
+<div class="row">
+{% for catgr in another_categories %}
+
+  <a href="{% url 'article_categoried_list' category_slug=catgr.slug %}" class="list-group-item">{{ catgr.name }}</a>
+<!--   {% if recent_article.image %}
+     <img src="{{ recent_article.image }}" class="img-responsive" alt="">
+  {% endif %} -->
+
+{% endfor %}
+</div>
+</div>
+</div>
+
+
+
+<div class="col-sm-6 col-sm-offset-1">
 <h1>List</h1>
 <br>
 
@@ -17,11 +38,13 @@
   </div>
 </form>
 
-{% if user.is_staff or user.is_superuser %} <a href="{% url 'article_create' %}" class="row"><h4>Create new article</h4></a>{% endif %}
+{% if user.is_staff or user.is_superuser %} <a href="{% url 'article_create' category_slug=category_url %}" class="row"><h4>Create new article</h4></a>{% endif %}
 
 {% for obj in object_list %}
-		<h3><a href="{{ obj.get_absolute_url }}"> {{ obj.title }} </a><span>{{ obj.updated|timesince }} ago</span></h3>	
-		<img src="/media/{{ obj.image }}" alt="" class="img-responsive" />
+		<h3><a href="{% url 'article_detail' category_slug=category_url article_slug=obj.slug %}"> {{ obj.title }} </a><span>{{ obj.updated|timesince }} ago</span></h3>	
+		{% if obj.image %}
+		   <img src="/media/{{ obj.image }}" alt="" class="img-responsive" />
+		{% endif %}
 		<p> {{ obj.content|truncatechars:200 }} </p>
 		<hr/>
 {% endfor %}

@@ -9,5 +9,6 @@ class ArticleForm(forms.ModelForm):
 			'title',
 			'content',
 			'image',
-			'draft'
+			'category',
+			'draft',
 		]

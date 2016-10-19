@@ -25,6 +25,6 @@ def create_slug(instance, new_slug=None):
 
 @receiver(pre_save, sender=Article)
 @receiver(pre_save, sender=Page)
-def pre_save_receiver(sender, instance, *args, **kwargs):
+def pre_save(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = create_slug(instance)

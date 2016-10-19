@@ -2,7 +2,7 @@
 migrations
 db.sqlite3
 settings.py
-__pacache__
+__pycache__
 media
 static
 .idea

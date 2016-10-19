@@ -11,7 +11,7 @@
     {% for item in items %}
         <a href="{{ item.get_absolute_url }}">
     <div class="col-md-1"> {{ item.name }}
-        <img src="/media/items_avatars/{{ item.avatar }}" class="item-avatar">
+        <img src="/media/{{ item.avatar }}" class="item-avatar">
         цена: {{ item.price }}
     </div>
         </a>
