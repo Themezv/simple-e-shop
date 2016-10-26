@@ -14,7 +14,7 @@ class Category(models.Model):
     image = models.ImageField(upload_to='category_image', null=True)
 
     def get_absolute_url(self):
-        return reverse("category", args=[str(self.slug)])
+        return reverse("product_list", args=[str(self.slug)])
 
     def __str__(self):
         return self.name
@@ -32,6 +32,9 @@ class AbstractProduct(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_category_slug(self):
+        return self.category.all().first().slug
 
     class META:
         abstract = True
@@ -54,7 +57,10 @@ class Service(AbstractProduct):
 
 
 def create_slug(instance, new_slug=None):
-    translited_title = translit(instance.name, reversed=True)
+    try:
+        translited_title = translit(instance.name, reversed=True)
+    except:
+        translited_title = instance.name
     Model = type(instance)
     slug = slugify(translited_title, True)
     if new_slug is not None:

@@ -1,0 +1,37 @@
+{% extends "homepage/base.html" %}
+{% load staticfiles %}
+
+{% block head_title %}Товар: {{ item.name }} {% endblock head_title %}
+
+{% block content %}
+
+<div class="col-sm-3">
+
+<h4>Услуги</h4>
+{% for item in releted_services %}
+
+  <a href="{% url 'service_detail' service_slug=item.slug %}" class="list-group-item">{{ item.name }}</a>
+
+{% endfor %}
+
+ <h4>Товары</h4>
+
+
+{% for item in related_productes %}
+
+  <a href="{% url 'product_detail' category_slug=item.get_category_slug product_slug=item.slug %}" class="list-group-item">{{ item.name }}</a>
+
+{% endfor %}
+</div>
+
+
+
+<div class="col-sm-6">
+
+    <h1>{{ item.name }}</h1>
+    <h2> Цена: {{ item.price }}</h2>
+    {% if item.avatar %}
+    	<img src="/media/{{ item.avatar }}" class="img-responsive">
+	{% endif %}
+</div>
+{% endblock content %}

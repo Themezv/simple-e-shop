@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^page/', include('homepage.urls')),  # namespace='pages'
     url(r'^admin/', admin.site.urls),
     url(r'^article/', include('blog.urls')),
-    url(r'^shop/', include('shop.urls')),
+    url(r'^market/', include('shop.urls')),
 ]
 
 

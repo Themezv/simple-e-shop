@@ -22,6 +22,7 @@
 </div>
 <div class="col-sm-6 col-sm-offset-1">
 	<h1>Detail</h1>
+	{{ instance.get_absolute_url }}
 	<h3>{{ instance.title }}</h3><span>{{ obj.updated|timesince }}</span>
 	<br>
 	{% if instance.image %}

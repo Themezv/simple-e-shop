@@ -3,7 +3,11 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.all_items, name='all_items'),
-    url(r'^category/(?P<slug>[\w-]+)/$', views.category, name='category'),
-    url(r'^(?P<item>[\w-]+)/$', views.product, name='product'),
+    url(r'^shop/$', views.category_list, name='category_list'),
+    url(r'^shop/(?P<category_slug>[\w-]+)/$', views.product_categoried_list, name='product_categoried_list'),
+    url(r'^shop/(?P<category_slug>[\w-]+)/(?P<product_slug>[\w-]+)/$', views.product_detail, name='product_detail'),
+    url(r'^service/$', views.service_list, name='service_list'),
+    url(r'^service/(?P<service_slug>[\w-]+)/$', views.service_detail, name='service_detail'),
+    
+    #url(r'^(?P<item>[\w-]+)/$', views.product, name='product'),
 ]

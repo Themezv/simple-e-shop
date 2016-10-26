@@ -7,9 +7,15 @@
 {% endif %}
 
 {% if path == '/shop/' %}
-    <li class="active"><a href="/shop/">Магазин</a></li>
+    <li class="active"><a href="/market/shop/">Магазин</a></li>
 {% else %}
-    <li><a href="/shop/">Магазин</a></li>
+    <li><a href="/market/shop/">Магазин</a></li>
+{% endif %}
+
+{% if path == '/service/' %}
+    <li class="active"><a href="/market/service/">Услуги</a></li>
+{% else %}
+    <li><a href="/market/service/">Услуги</a></li>
 {% endif %}
 
 {% if path == '/article/' %}
@@ -18,7 +24,7 @@
     <li><a href="/article/">Статьи</a></li>
 {% endif %}
 
-{% for page in menu_pages %}
+<!-- {% for page in menu_pages %}
     {% if page.get_absolute_url == path  %}
         <li class="active"><a href="{{ page.get_absolute_url }}">{{ page.title }}</a></li>
     {% else %}
@@ -26,6 +32,6 @@
     {% endif %}
 {% empty %}
     <li> Нет страниц в меню</li>
-{% endfor %}
+{% endfor %} -->
 
 </ul>

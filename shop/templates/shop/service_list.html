@@ -1,0 +1,53 @@
+{% extends "homepage/base.html" %}
+
+
+
+{% block content %}
+<div class="row">
+<div class="col-sm-6 col-sm-offset-1">
+<h1>List</h1>
+<br>
+
+
+<form method="GET" action="" class="row">
+  <div class="col-sm-6">
+	<div class="input-group">	
+		<input class="form-control" type="text" placeholder="Search post" name="q" value="{{ request.GET.q }}">
+		<span class="input-group-btn"><input class="btn btn-default" type="submit" value="Search"></span>
+	</div>
+  </div>
+</form>
+
+
+{% for service in services %}
+		<h3><a href="{% url 'service_detail' service_slug=service.slug %}"> {{ service.name }} </a></h3>	
+
+		{% if service.avatar %}
+		   <img src="/media/{{ service.avatar }}" alt="" class="img-responsive" />
+		{% endif %}
+		<p>{{ service.price }}</p>
+		<hr/>
+
+{% endfor %}
+
+
+<div class="pagination">
+	<span class="step-links">
+		{% if services.has_previous %}
+    	<a href="?{{page_request_var}}={{ services.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>
+		{% endif %}
+
+		<span class="current">
+		{{ services.number }} из {{ services.paginator.num_pages }}.
+		</span>
+
+		{% if services.has_next %}
+   		<a href="?{{page_request_var}}={{ services.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a>
+		{% endif %}
+	</span>
+</div>
+
+
+</div>
+</div>
+{% endblock content %}
