@@ -6,12 +6,11 @@ from django.utils.text import slugify
 from transliterate import translit
     
 
-
 class Category(models.Model):
     name = models.CharField(max_length=16, unique=True)
     description = models.TextField(max_length=100)
     slug = models.SlugField(unique=True, null=True, blank=True)
-    image = models.ImageField(upload_to='category_image', null=True)
+    image = models.ImageField(upload_to='category_image', null=True, blank=True)
 
     def get_absolute_url(self):
         return reverse("product_list", args=[str(self.slug)])
