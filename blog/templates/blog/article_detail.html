@@ -3,37 +3,31 @@
 
 {% block content %}
 <div class="row">
-<div class="col-sm-3">	
 
-<div class="list-group">
-<br>
-<h4>Последние Статьи</h4>
-<div class="row">
-{% for recent_article in recent_articles %}
+  <div class="col-sm-3">	
+    <div class="list-group">
+      <br>
+      <h4>Последние Статьи</h4>
+      <div class="row">
+        {% for recent_article in recent_articles %}
+          <a href="{{ recent_article.get_absolute_url }}" class="list-group-item">{{ recent_article.title }}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
 
-  <a href="{% url 'article_detail' category_slug=recent_article.category.slug article_slug=recent_article.slug %}" class="list-group-item">{{ recent_article.title }}</a>
-<!--   {% if recent_article.image %}
-     <img src="{{ recent_article.image }}" class="img-responsive" alt="">
-  {% endif %} -->
+  <div class="col-sm-6 col-sm-offset-1">
+  	<h3>{{ instance.title }}</h3><span>{{ obj.updated|timesince }} назад</span>
+  	<br>
+  	{% if instance.image %}
+  	   <img src="/media/{{ instance.image }}" alt="" class="img-responsive">
+  	{% endif %}
 
-{% endfor %}
-</div>
-</div>
-</div>
-<div class="col-sm-6 col-sm-offset-1">
-	<h1>Detail</h1>
-	{{ instance.get_absolute_url }}
-	<h3>{{ instance.title }}</h3><span>{{ obj.updated|timesince }}</span>
-	<br>
-	{% if instance.image %}
-	   <img src="/media/{{ instance.image }}" alt="" class="img-responsive">
-	{% endif %}
-	<p>{{ instance.content }} </p>
+  	<p>{{ instance.content }} </p>
 
-
-	{% if user.is_staff or user.is_superuser %} <a href="{% url 'article_edit' category_slug=instance.category.slug article_slug=instance.slug %}">Edit</a> <a href="{% url 'article_delete' category_slug=instance.category.slug article_slug=instance.slug %}">Delete</a>{% endif %}
-
-</div>
+  	{% if user.is_staff or user.is_superuser %} <a href="{% url 'article_edit' category_slug=instance.category.slug article_slug=instance.slug %}">Редактировать</a> <a href="{% url 'article_delete' category_slug=instance.category.slug article_slug=instance.slug %}">Удалить</a>{% endif %}
+  </div>
+  
 </div>
  
 {% endblock content %}

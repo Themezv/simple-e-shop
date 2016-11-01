@@ -3,50 +3,48 @@
 
 {% block content %}
 <div class="row">
-<div class="col-sm-6 col-sm-offset-3">
-<h1>Категории</h1>
-<br>
+	<div class="col-sm-6 col-sm-offset-3">
+		<h1>Категории</h1>
+		<br>
 
 
-<form method="GET" action="" class="row">
-  <div class="col-sm-6">
-	<div class="input-group">	
-		<input class="form-control" type="text" placeholder="Введите запрос" name="q" value="{{ request.GET.q }}">
-		<span class="input-group-btn"><input class="btn btn-default" type="submit" value="Искать"></span>
+		<form method="GET" action="" class="row">
+		  <div class="col-sm-6">
+				<div class="input-group">	
+					<input class="form-control" type="text" placeholder="Введите запрос" name="q" value="{{ request.GET.q }}">
+					<span class="input-group-btn"><input class="btn btn-default" type="submit" value="Искать"></span>
+				</div>
+		  </div>
+		</form>
+
+
+		{% for obj in categories %}
+				<h3><a href="{{ obj.get_absolute_url_for_blog }}"> {{ obj.name }} </a></h3>	
+				{% if obj.image %}
+				   <img src="/media/{{ obj.image }}" alt="" class="img-responsive" />
+				{% endif %}
+				<hr/>
+		{% endfor %}
+
+
+		<div class="pagination">
+			<span class="step-links">
+				{% if categories.has_previous %}
+		    	<a href="?{{page_request_var}}={{ categories.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>
+				{% endif %}
+
+				<span class="current">
+				{{ categories.number }} из {{ categories.paginator.num_pages }}.
+				</span>
+
+				{% if categories.has_next %}
+		   		<a href="?{{page_request_var}}={{ categories.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a>
+				{% endif %}
+			</span>
+		</div>
+
+
+
 	</div>
-  </div>
-</form>
-
-
-{% for obj in categories %}
-		<h3><a href="{% url 'article_categoried_list' category_slug=obj.slug %}"> {{ obj.name }} </a></h3>	
-		{% if obj.image %}
-		   <img src="/media/{{ obj.image }}" alt="" class="img-responsive" />
-		{% endif %}
-		<hr/>
-{% endfor %}
-
-
-
-
-<div class="pagination">
-	<span class="step-links">
-		{% if categories.has_previous %}
-    	<a href="?{{page_request_var}}={{ categories.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>
-		{% endif %}
-
-		<span class="current">
-		{{ categories.number }} из {{ categories.paginator.num_pages }}.
-		</span>
-
-		{% if categories.has_next %}
-   		<a href="?{{page_request_var}}={{ categories.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a>
-		{% endif %}
-	</span>
-</div>
-
-
-
-</div>
 </div>
 {% endblock content %}

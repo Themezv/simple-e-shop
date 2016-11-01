@@ -96,7 +96,6 @@ def category_list(request):
         queryset_list = queryset_list.filter(Q(name__icontains=query)).distinct()
 
 
-
     #################Paginator#################
 
     paginator = Paginator(queryset_list, 5) #Show 5 contacts per page
@@ -123,11 +122,11 @@ def category_list(request):
 def product_detail(request,category_slug, product_slug):
     item = get_object_or_404(Product, slug=product_slug)
 
-    releted_items = Product.objects.filter(relation=item).distinct()
+    related_items = Product.objects.filter(relation=item).distinct()
 
     context = {
         'item': item,
-        'releted_items':releted_items,
+        'related_items':related_items,
         'category_slug':category_slug,
     }
 
@@ -137,13 +136,13 @@ def product_detail(request,category_slug, product_slug):
 def service_detail(request, service_slug):
     item = get_object_or_404(Service, slug=service_slug)
 
-    releted_services = Service.objects.filter(relation=item).distinct()
+    related_services = Service.objects.filter(relation=item).distinct()
 
     related_productes = Product.objects.filter(relation=item).distinct()
 
     context = {
         'item': item,
-        'releted_services':releted_services,
+        'related_services':related_services,
         'related_productes':related_productes,
     }
 

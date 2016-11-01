@@ -55,7 +55,7 @@ def article_categoried_list(request, category_slug):
 
 	user = request.user
 	category_url = category_slug
-	another_categories = Category.objects.all()[:10]
+	another_categories = Category.objects.all().exclude(slug=category_slug)[:10]
 
 	##################Search###################
 
@@ -116,7 +116,7 @@ def article_create(request, category_slug):
 @csrf_protect
 def article_detail(request, category_slug ,article_slug=None):
 	instance = get_object_or_404(Article, slug=article_slug)
-	recent_articles = Article.objects.active().order_by('-published')[:5]#get first 5 obj
+	recent_articles = Article.objects.active().order_by('-published').exclude(slug=instance.slug)[:5]#get first 5 obj
 	user = request.user
 	if instance.draft:
 		if not request.user.is_staff or not request.user.is_superuser:

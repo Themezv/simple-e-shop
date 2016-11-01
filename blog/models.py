@@ -27,8 +27,11 @@ class Article(models.Model):
     objects = ArticleManager()
 
     # function return url for every object
+    def get_category_slug(self):
+        return self.category.slug
+
     def get_absolute_url(self):
-        return reverse("article_detail", args=[str(self.slug)])
+        return reverse("article_detail", args=[str(self.get_category_slug()), str(self.slug)])
 
     def __str__(self):
         return self.title

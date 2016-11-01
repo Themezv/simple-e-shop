@@ -14,7 +14,10 @@ class Category(models.Model):
     image = models.ImageField(upload_to='category_image', null=True)
 
     def get_absolute_url(self):
-        return reverse("product_list", args=[str(self.slug)])
+        return reverse("product_categoried_list", args=[str(self.slug)])
+
+    def get_absolute_url_for_blog(self):
+        return reverse("article_categoried_list", args=[str(self.slug)])
 
     def __str__(self):
         return self.name
@@ -34,7 +37,7 @@ class AbstractProduct(models.Model):
         return self.name
 
     def get_category_slug(self):
-        return self.category.all().first().slug
+        return self.category.first().slug
 
     class META:
         abstract = True
@@ -42,7 +45,7 @@ class AbstractProduct(models.Model):
 
 class Product(AbstractProduct):
     def get_absolute_url(self):
-        return reverse("product", args=[str(self.slug)])
+        return reverse("product_detail", args=[str(self.get_category_slug()), str(self.slug)])
 
     def __str__(self):
         return self.name
@@ -50,7 +53,7 @@ class Product(AbstractProduct):
 
 class Service(AbstractProduct):
     def get_absolute_url(self):
-        return reverse("services", args=[str(self.name)])
+        return reverse("service_detail", args=[str(self.slug)])
 
     def __str__(self):
         return self.name
