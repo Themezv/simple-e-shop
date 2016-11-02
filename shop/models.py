@@ -26,7 +26,7 @@ class Category(models.Model):
 class AbstractProduct(models.Model):
     name = models.CharField(max_length=20)
     slug = models.SlugField(unique=True, null=True, blank=True)
-    price = models.PositiveSmallIntegerField(blank=True)
+    price = models.PositiveSmallIntegerField(blank=True, null=True)
     description = models.TextField(max_length=100)
     available = models.BooleanField(default=True)
     category = models.ManyToManyField(Category)

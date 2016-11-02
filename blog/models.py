@@ -11,8 +11,8 @@ class ArticleManager(models.Manager):
 
 
 class Article(models.Model):
-    title = models.CharField(max_length=55, blank=True)
-    content = models.TextField(max_length=50000, blank=True)
+    title = models.CharField(max_length=55)
+    content = models.TextField(max_length=50000)
     published = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
     slug = models.SlugField(unique=True, blank=True)
@@ -21,7 +21,7 @@ class Article(models.Model):
 
 
     ##########FOREIGNFIELDS###########
-    category = models.ForeignKey(Category, blank=True)   
+    category = models.ForeignKey(Category)   
 
 
     objects = ArticleManager()

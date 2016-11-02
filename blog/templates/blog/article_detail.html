@@ -7,24 +7,30 @@
   <div class="col-sm-3">	
     <div class="list-group">
       <br>
+      {% if recent_article %}
       <h4>Последние Статьи</h4>
       <div class="row">
         {% for recent_article in recent_articles %}
           <a href="{{ recent_article.get_absolute_url }}" class="list-group-item">{{ recent_article.title }}</a>
         {% endfor %}
+      {% endif %}
       </div>
     </div>
   </div>
 
   <div class="col-sm-6 col-sm-offset-1">
-  	<h3>{{ instance.title }}</h3><span>{{ obj.updated|timesince }} назад</span>
+    {% if instance.draft %}
+      <h4 style="color:red;">В разработке</h4>
+    {% endif %}
+  	<h3>{{ instance.title }}</h3>
+    <span>{{ instance.published|timesince }} назад</span>
   	<br>
   	{% if instance.image %}
   	   <img src="/media/{{ instance.image }}" alt="" class="img-responsive">
   	{% endif %}
 
   	<p>{{ instance.content }} </p>
-
+  
   	{% if user.is_staff or user.is_superuser %} <a href="{% url 'article_edit' category_slug=instance.category.slug article_slug=instance.slug %}">Редактировать</a> <a href="{% url 'article_delete' category_slug=instance.category.slug article_slug=instance.slug %}">Удалить</a>{% endif %}
   </div>
   

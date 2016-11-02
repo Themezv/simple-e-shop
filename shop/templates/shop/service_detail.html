@@ -28,7 +28,9 @@
 <div class="col-sm-6">
 
     <h1>{{ item.name }}</h1>
-    <h2> Цена: {{ item.price }}</h2>
+    {% if item.price %}
+      <h2> Цена: {{ item.price }}</h2>
+    {% endif %}
     {% if item.avatar %}
       <img src="/media/{{ item.avatar }}" class="img-responsive">
     {% endif %}

@@ -5,9 +5,9 @@
 <div class="row">
   <div class="col-sm-6 col-sm-offset-3">
     <h1>Форма для заполнения</h1>
-    <form action="" method="POST" enctype="multipart/form-data">  {% csrf_token %}
+    <form action="" method="POST" enctype="multipart/form-data" class="article-form">  {% csrf_token %}
     	{{ form.as_p }}
-    	<input type="submit" value="Create Post">
+    	<button type="submit" class="save btn btn-default">Сохранить</button>
     </form>
   </div>
 </div>

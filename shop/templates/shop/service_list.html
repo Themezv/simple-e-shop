@@ -25,7 +25,9 @@
 		{% if service.avatar %}
 		   <img src="/media/{{ service.avatar }}" alt="" class="img-responsive" />
 		{% endif %}
-		<h3> Цена: {{ service.price }}</h3>
+		{% if service.price %}
+			<h3> Цена: {{ service.price }}</h3>
+		{% endif %}
 		<hr/>
 
 {% endfor %}
