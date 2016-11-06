@@ -1,15 +1,24 @@
 from django import forms
+
+
+
 from .models import Page
+from django.contrib.flatpages.models import FlatPage
 
 
-class PageForm(forms.ModelForm):
+class AboutForm(forms.ModelForm):
 	class Meta:
-		model = Page
+		model = FlatPage
 		fields = [
 			'title',
 			'content',
-			'description',
-			'menu',
-			'tile',
-			'avatar',
+		]
+
+
+class ContactForm(forms.ModelForm):
+	class Meta:
+		model = FlatPage
+		fields = [
+			'title',
+			'content',
 		]

@@ -28,9 +28,9 @@
   	{% if instance.image %}
   	   <img src="/media/{{ instance.image }}" alt="" class="img-responsive">
   	{% endif %}
-
-  	<p>{{ instance.content }} </p>
-  
+    <div class="content-markdown">
+  	 <p>{{ instance.get_markdown|safe }} </p>
+    </div>
   	{% if user.is_staff or user.is_superuser %} <a href="{% url 'article_edit' category_slug=instance.category.slug article_slug=instance.slug %}">Редактировать</a> <a href="{% url 'article_delete' category_slug=instance.category.slug article_slug=instance.slug %}">Удалить</a>{% endif %}
   </div>
   

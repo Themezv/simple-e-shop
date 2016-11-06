@@ -45,7 +45,9 @@
 			{% if obj.image %}
 			   <img src="/media/{{ obj.image }}" alt="" class="img-responsive" />
 			{% endif %}
-			<p>{{ obj.content|truncatechars:200 }}</p>
+			<div class="content-markdown">
+  	 		<p>{{ obj.get_markdown|truncatechars_html:50|safe }} </p>
+    	</div>
 			<hr/>
 	{% endfor %}
 

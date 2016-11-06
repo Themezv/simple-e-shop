@@ -2,6 +2,8 @@ from django.db import models
 from django.core.urlresolvers import reverse
 from PIL import Image
 
+from markdown_deux import markdown
+
 from shop.models import Category
 
 
@@ -32,6 +34,9 @@ class Article(models.Model):
 
     def get_absolute_url(self):
         return reverse("article_detail", args=[str(self.get_category_slug()), str(self.slug)])
+
+    def get_markdown(self):
+        return markdown(self.content)
 
     def __str__(self):
         return self.title
