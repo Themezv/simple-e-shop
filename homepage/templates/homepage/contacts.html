@@ -1,0 +1,16 @@
+{% extends "homepage/base.html" %}
+{% load staticfiles %}
+
+
+{% block content %}
+
+{% if request.user.is_staff or request.user.is_superuser %}
+  <a href="{% url 'contacts_edit' %}">Редактировать</a>
+  <br>
+{% endif %}
+
+  <h1>{{ flatpage.title }}</h1>
+
+  <p>{{ flatpage.content }}</p>
+
+{% endblock content %}

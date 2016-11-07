@@ -6,13 +6,13 @@
     <li><a href="/">Главная</a></li>
 {% endif %}
 
-{% if path == '/shop/' %}
+{% if path == '/market/shop/' %}
     <li class="active"><a href="/market/shop/">Магазин</a></li>
 {% else %}
     <li><a href="/market/shop/">Магазин</a></li>
 {% endif %}
 
-{% if path == '/service/' %}
+{% if path == '/market/service/' %}
     <li class="active"><a href="/market/service/">Услуги</a></li>
 {% else %}
     <li><a href="/market/service/">Услуги</a></li>
@@ -22,6 +22,18 @@
     <li class="active"><a href="/article/">Статьи</a></li>
 {% else %}
     <li><a href="/article/">Статьи</a></li>
+{% endif %}
+
+{% if path == '/about/' %}
+    <li class="active"><a href="/about/">О нас</a></li>
+{% else %}
+    <li><a href="/about/">О нас</a></li>
+{% endif %}
+
+{% if path == '/contacts/' %}
+    <li class="active"><a href="/contacts/">Контакты</a></li>
+{% else %}
+    <li><a href="/contacts/">Контакты</a></li>
 {% endif %}
 
 <!-- {% for page in menu_pages %}

@@ -8,6 +8,4 @@ urlpatterns = [
     url(r'^shop/(?P<category_slug>[\w-]+)/(?P<product_slug>[\w-]+)/$', views.product_detail, name='product_detail'),
     url(r'^service/$', views.service_list, name='service_list'),
     url(r'^service/(?P<service_slug>[\w-]+)/$', views.service_detail, name='service_detail'),
-    
-    #url(r'^(?P<item>[\w-]+)/$', views.product, name='product'),
 ]

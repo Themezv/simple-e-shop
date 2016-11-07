@@ -2,6 +2,8 @@ from django.db import models
 from django.core.urlresolvers import reverse
 from PIL import Image
 
+from markdown_deux import markdown
+
 from shop.models import Category
 
 
@@ -11,8 +13,8 @@ class ArticleManager(models.Manager):
 
 
 class Article(models.Model):
-    title = models.CharField(max_length=55, blank=True)
-    content = models.TextField(max_length=50000, blank=True)
+    title = models.CharField(max_length=55)
+    content = models.TextField(max_length=50000)
     published = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
     slug = models.SlugField(unique=True, blank=True)
@@ -21,14 +23,20 @@ class Article(models.Model):
 
 
     ##########FOREIGNFIELDS###########
-    category = models.ForeignKey(Category, blank=True)   
+    category = models.ForeignKey(Category)   
 
 
     objects = ArticleManager()
 
     # function return url for every object
+    def get_category_slug(self):
+        return self.category.slug
+
     def get_absolute_url(self):
-        return reverse("article_detail", args=[str(self.slug)])
+        return reverse("article_detail", args=[str(self.get_category_slug()), str(self.slug)])
+
+    def get_markdown(self):
+        return markdown(self.content)
 
     def __str__(self):
         return self.title

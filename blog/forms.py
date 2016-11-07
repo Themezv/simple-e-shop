@@ -1,14 +1,20 @@
 from django import forms
+
+from pagedown.widgets import PagedownWidget
+
+
 from .models import Article
 
 
 class ArticleForm(forms.ModelForm):
-	class Meta:
-		model = Article
-		fields = [
-			'title',
-			'content',
-			'image',
-			'category',
-			'draft',
-		]
+    content = forms.CharField(widget=PagedownWidget())
+
+    class Meta:
+        model = Article
+        fields = [
+            'title',
+            'image',
+            'category',
+            'content',
+            'draft',
+        ]

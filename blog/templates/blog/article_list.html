@@ -3,70 +3,71 @@
 
 {% block content %}
 <div class="row">
-
-<div class="col-sm-3">	
-
-<div class="list-group">
-<br>
-<h4>Категории</h4>
-<div class="row">
-{% for catgr in another_categories %}
-
-  <a href="{% url 'article_categoried_list' category_slug=catgr.slug %}" class="list-group-item">{{ catgr.name }}</a>
-<!--   {% if recent_article.image %}
-     <img src="{{ recent_article.image }}" class="img-responsive" alt="">
-  {% endif %} -->
-
-{% endfor %}
-</div>
-</div>
-</div>
-
-
-
-<div class="col-sm-6 col-sm-offset-1">
-<h1>List</h1>
-<br>
-
-
-<form method="GET" action="" class="row">
-  <div class="col-sm-6">
-	<div class="input-group">	
-		<input class="form-control" type="text" placeholder="Search post" name="q" value="{{ request.GET.q }}">
-		<span class="input-group-btn"><input class="btn btn-default" type="submit" value="Search"></span>
-	</div>
+	<div class="col-sm-3">	
+		<div class="list-group">
+			<br>
+			<h4>Категории</h4>
+			<div class="row">
+				{% for catgr in another_categories %}
+				  <a href="{{ catgr.get_absolute_url_for_blog }}" class="list-group-item">{{ catgr.name }}</a>
+				{% endfor %}
+			</div>
+		</div>
   </div>
-</form>
-
-{% if user.is_staff or user.is_superuser %} <a href="{% url 'article_create' category_slug=category_url %}" class="row"><h4>Create new article</h4></a>{% endif %}
-
-{% for obj in object_list %}
-		<h3><a href="{% url 'article_detail' category_slug=category_url article_slug=obj.slug %}"> {{ obj.title }} </a><span>{{ obj.updated|timesince }} ago</span></h3>	
-		{% if obj.image %}
-		   <img src="/media/{{ obj.image }}" alt="" class="img-responsive" />
-		{% endif %}
-		<p> {{ obj.content|truncatechars:200 }} </p>
-		<hr/>
-{% endfor %}
 
 
-<div class="pagination">
-	<span class="step-links">
-		{% if object_list.has_previous %}
-    	<a href="?{{page_request_var}}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>
-		{% endif %}
 
-		<span class="current">
-		{{ object_list.number }} из {{ object_list.paginator.num_pages }}.
+	<div class="col-sm-6 col-sm-offset-1">
+	<br>
+	<form method="GET" action="" class="row">
+	  <div class="col-sm-6">
+  		<div class="input-group">	
+  			<input class="form-control" type="text" placeholder="Введите запрос" name="q" value="{{ request.GET.q }}">
+  			<span class="input-group-btn"><input class="btn btn-default" type="submit" value="Search"></span>
+  		</div>
+	  </div>
+	</form>
+	<hr>
+
+	{% if user.is_staff or user.is_superuser %}
+		<a href="{% url 'article_create' category_slug=category_url %}" class="row"><h4>Создать новую статью</h4></a>
+	{% endif %}
+	<hr>
+
+	{% for obj in object_list %}
+			{% if obj.draft %}
+				<h4 style="color:#f00">В разработке</h4>
+			{% endif %}
+			<h3>
+				<a href="{{ obj.get_absolute_url }}"> {{ obj.title }} </a>
+				<span>{{ obj.updated|timesince }} назад</span>
+			</h3>	
+			{% if obj.image %}
+			   <img src="/media/{{ obj.image }}" alt="" class="img-responsive" />
+			{% endif %}
+			<div class="content-markdown">
+  	 		<p>{{ obj.get_markdown|truncatechars_html:50|safe }} </p>
+    	</div>
+			<hr/>
+	{% endfor %}
+
+
+	<div class="pagination">
+		<span class="step-links">
+			{% if object_list.has_previous %}
+	    	<a href="?{{page_request_var}}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>
+			{% endif %}
+
+			<span class="current">
+			{{ object_list.number }} из {{ object_list.paginator.num_pages }}.
+			</span>
+
+			{% if object_list.has_next %}
+	   		<a href="?{{page_request_var}}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a>
+			{% endif %}
 		</span>
+	</div>
 
-		{% if object_list.has_next %}
-   		<a href="?{{page_request_var}}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a>
-		{% endif %}
-	</span>
-</div>
-
-
-</div>
+	</div>
 </div>
 {% endblock content %}

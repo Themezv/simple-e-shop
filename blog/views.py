@@ -10,7 +10,7 @@ from shop.models import Category
 from .forms import ArticleForm
 # Create your views here.
 
-@csrf_protect
+
 def category_list(request):
 	queryset_list = Category.objects.all()
 
@@ -47,7 +47,7 @@ def category_list(request):
 	return render(request, "blog/category_list.html", context)
 
 
-@csrf_protect
+
 def article_categoried_list(request, category_slug):
 	queryset_list = Article.objects.filter(category__slug=category_slug).order_by('-updated')
 	if not request.user.is_staff or not request.user.is_superuser:
@@ -55,7 +55,7 @@ def article_categoried_list(request, category_slug):
 
 	user = request.user
 	category_url = category_slug
-	another_categories = Category.objects.all()[:10]
+	another_categories = Category.objects.all().exclude(slug=category_slug)[:10]
 
 	##################Search###################
 
@@ -95,7 +95,7 @@ def article_categoried_list(request, category_slug):
 	return render(request, "blog/article_list.html", context)
 
 
-@csrf_protect
+
 def article_create(request, category_slug):
 	if not request.user.is_staff or not request.user.is_superuser:
 		raise Http404
@@ -105,7 +105,7 @@ def article_create(request, category_slug):
 		# instance.user = request.user 
 		instance.save()	
 		# messages.success(request, "Successfuly created", extra_tags="html_safe")
-		return redirect("article_detail", category_slug=category_slug, article_slug=instance.slug)	
+		return HttpResponseRedirect(instance.get_absolute_url())	
 
 	context = {
 		'form': form
@@ -113,10 +113,10 @@ def article_create(request, category_slug):
 	return render(request, "blog/article_form.html", context)
 
 
-@csrf_protect
+
 def article_detail(request, category_slug ,article_slug=None):
 	instance = get_object_or_404(Article, slug=article_slug)
-	recent_articles = Article.objects.active().order_by('-published')[:5]#get first 5 obj
+	recent_articles = Article.objects.active().order_by('-published').exclude(slug=instance.slug)[:5]#get first 5 obj
 	user = request.user
 	if instance.draft:
 		if not request.user.is_staff or not request.user.is_superuser:
@@ -130,7 +130,7 @@ def article_detail(request, category_slug ,article_slug=None):
 	return render(request, "blog/article_detail.html", context)
 
 
-@csrf_protect
+
 def article_edit(request,category_slug, article_slug=None):
 	if not request.user.is_staff or not request.user.is_superuser:
 		raise Http404
@@ -140,7 +140,7 @@ def article_edit(request,category_slug, article_slug=None):
 		instance = form.save(commit=False)
 		instance.save()
 		# messages.success(request, "<a href='#'>Item</a> edited", extra_tags="html_safe")
-		return redirect("article_detail", category_slug=category_slug, article_slug=instance.slug)	
+		return HttpResponseRedirect(instance.get_absolute_url())	
 	context = {
 		'instance': instance,
 		'form': form
@@ -148,7 +148,6 @@ def article_edit(request,category_slug, article_slug=None):
 	return render(request, "blog/article_form.html", context)
 
 
-@csrf_protect
 def article_delete(request,category_slug, article_slug=None):
 	if not request.user.is_staff or not request.user.is_superuser:
 		raise Http404
