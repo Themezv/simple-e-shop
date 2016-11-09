@@ -3,8 +3,8 @@ migrations
 db.sqlite3
 settings.py
 __pycache__
-media
-static
 .idea
 igartstep.sublime-project
 igartstep.sublime-workspace
+Будет удалено main/
+Будет удалено templates/

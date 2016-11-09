@@ -1,5 +1,7 @@
 {% load page_extras %}
-<ul class="nav nav-pills nav-justified top-page">
+<div class="row menu-row">
+<nav class="mymenu">
+<ul class="nav nav-pills nav-justified mymenu-item">
 {% if path == '/' %}
     <li class="active"><a href="/">Главная</a></li>
 {% else %}
@@ -47,3 +49,5 @@
 {% endfor %} -->
 
 </ul>
+</nav>
+</div>
