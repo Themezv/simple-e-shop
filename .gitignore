@@ -4,6 +4,8 @@ db.sqlite3
 settings.py
 __pycache__
 .idea
+media
+static
 igartstep.sublime-project
 igartstep.sublime-workspace
 Будет удалено main/

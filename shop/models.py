@@ -44,7 +44,7 @@ class AbstractProduct(models.Model):
 
 class Product(AbstractProduct):
     def get_absolute_url(self):
-        return reverse("product_detail", args=[str(self.get_category_slug()), str(self.slug)])
+        return reverse("product_detail", args=[str(self.slug)])
 
     def __str__(self):
         return self.name

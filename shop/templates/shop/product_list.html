@@ -4,11 +4,13 @@
 
 {% block content %}
 <div class="row">
-	<hr>
+
+
 	<div class="col-sm-3">
-		{% if another_categories %}
-			<h3>Другие категории</h3>
-			{% for catgr in another_categories %}
+		<br>
+		{% if categories %}
+			<a href="{% url 'category_list' %}"><h3>Категории</h3></a>
+			{% for catgr in categories %}
 			<a href="{{ catgr.get_absolute_url }}" class="list-group-item">{{ catgr.name }}</a>
 			{% endfor %}
 		{% endif %}
@@ -16,14 +18,13 @@
 
 
 	<div class="col-sm-6">
+	<br>
 		<form method="GET" action="" class="">
 			<div class="input-group">	
 				<input class="form-control" type="text" placeholder="Введите запрос" name="q" value="{{ request.GET.q }}">
 				<span class="input-group-btn"><input class="btn btn-default" type="submit" value="Search"></span>
 			</div>
-
 		</form>
-
 
 
 		{% for product in products %}
@@ -54,6 +55,12 @@
 			</span>
 		</div>
 	</div>
+
+
+	<div class="col-sm-3">
+		<br>
+	</div>
+
 </div>
 
 {% endblock content %}
