@@ -1,41 +1,41 @@
 {% load page_extras %}
 <div class="row menu-row">
-<nav class="mymenu">
-<ul class="nav nav-pills nav-justified mymenu-item">
+<nav class="main-menu">
+<ul class="nav nav-justified main-menu-ul">
 {% if path == '/' %}
-    <li class="active"><a href="/">Главная</a></li>
+    <li class="active main-menu-li"><a class="main-menu-li-a" href="/">Главная</a></li>
 {% else %}
-    <li><a href="/">Главная</a></li>
+    <li class="main-menu-li"><a class="main-menu-li-a" href="/">Главная</a></li>
 {% endif %}
 
 {% if path == '/market/shop/' %}
-    <li class="active"><a href="/market/shop/">Магазин</a></li>
+    <li class="active main-menu-li"><a class="main-menu-li-a" href="/market/shop/">Магазин</a></li>
 {% else %}
-    <li><a href="/market/shop/">Магазин</a></li>
+    <li class="main-menu-li"><a class="main-menu-li-a" href="/market/shop/">Магазин</a></li>
 {% endif %}
 
 {% if path == '/market/service/' %}
-    <li class="active"><a href="/market/service/">Услуги</a></li>
+    <li class="active main-menu-li"><a class="main-menu-li-a" href="/market/service/">Услуги</a></li>
 {% else %}
-    <li><a href="/market/service/">Услуги</a></li>
+    <li class="main-menu-li"><a class="main-menu-li-a" href="/market/service/">Услуги</a></li>
 {% endif %}
 
 {% if path == '/article/' %}
-    <li class="active"><a href="/article/">Статьи</a></li>
+    <li class="active main-menu-li"><a class="main-menu-li-a" href="/article/">Статьи</a></li>
 {% else %}
-    <li><a href="/article/">Статьи</a></li>
+    <li class="main-menu-li"><a class="main-menu-li-a" href="/article/">Статьи</a></li>
 {% endif %}
 
 {% if path == '/about/' %}
-    <li class="active"><a href="/about/">О нас</a></li>
+    <li  class="active main-menu-li"><a class="main-menu-li-a" href="/about/">О нас</a></li>
 {% else %}
-    <li><a href="/about/">О нас</a></li>
+    <li class="main-menu-li"><a class="main-menu-li-a" href="/about/">О нас</a></li>
 {% endif %}
 
 {% if path == '/contacts/' %}
-    <li class="active"><a href="/contacts/">Контакты</a></li>
+    <li class="active main-menu-li"><a class="main-menu-li-a" href="/contacts/">Контакты</a></li>
 {% else %}
-    <li><a href="/contacts/">Контакты</a></li>
+    <li class="main-menu-li"><a class="main-menu-li-a" href="/contacts/">Контакты</a></li>
 {% endif %}
 
 <!-- {% for page in menu_pages %}

@@ -16,19 +16,40 @@ div.header-img {
 	text-align: left;
 	font-family: 'Roboto Condensed', sans-serif;
 }
-.mymenu {
+.main-menu {
 	display: flex;
 	justify-content: space-around;
 	width: 100%;
-	background-color: red;
 	height: 30px;
 }
-.mymenu-item, .mymenu-item:hover {
-	display: block;
+.main-menu-ul {
+	display: inline-flex;
 	text-decoration: none;
-	color: #fff;
 	width: 100%;
-	text-align: center;
+	justify-content: space-around;
 	font-family: 'Roboto Condensed Bold', sans-serif;
 	margin: auto;
+	background-color: #be5845;
+	height: 100%;
+}
+.main-menu-li-a, .main-menu-li-a:hover, .main-menu-li-a:active  {
+	text-decoration: none;
+	color: #fff;
+	display: inline-flex;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+	margin: auto;
+
+}
+.main-menu-li {
+	height: 100%;
+	width: 100%;
+	display: inline-flex;
+	justify-content: center;
+	text-align: center;
+	margin: auto;
+}
+.active > a {
+	background-color: #7f7f7f;
 }
