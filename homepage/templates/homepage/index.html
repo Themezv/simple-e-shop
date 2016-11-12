@@ -11,14 +11,7 @@
         
   <div class="row wrap-tile">
     <div class="col-sm-6 col-sm-offset-3">
-  <form method="GET" action="" class="row">
-  <div class="col-sm-6">
-  <div class="input-group"> 
-    <input class="form-control" type="text" placeholder="Search post" name="q" value="{{ request.GET.q }}">
-    <span class="input-group-btn"><input class="btn btn-default" type="submit" value="Search"></span>
-  </div>
-  </div>
-</form>
+
       {% for tile in tiles_pages %}
           <a href="{{ tile.get_absolute_url }}">
             <div class="tile-wrapper"><div class="tile-div">
