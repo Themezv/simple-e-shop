@@ -5,60 +5,59 @@
 {% block content %}
 <div class="row">
 
-
-	<div class="col-sm-3">
-		<br>
-		{% if categories %}
-			<a href="{% url 'category_list' %}"><h3>Категории</h3></a>
-			{% for catgr in categories %}
-			<a href="{{ catgr.get_absolute_url }}" class="list-group-item">{{ catgr.name }}</a>
-			{% endfor %}
-		{% endif %}
+	<div class="col-xs-3">
+					<br>
+					{% if categories %}
+						<a href="{% url 'category_list' %}"><h3>Категории</h3></a>
+						{% for catgr in categories %}
+						<a href="{{ catgr.get_absolute_url }}" class="list-group-item">{{ catgr.name }}</a>
+						{% endfor %}
+					{% endif %}
 	</div>
 
 
-	<div class="col-sm-6">
-	<br>
-		<form method="GET" action="" class="">
-			<div class="input-group">	
-				<input class="form-control" type="text" placeholder="Введите запрос" name="q" value="{{ request.GET.q }}">
-				<span class="input-group-btn"><input class="btn btn-default" type="submit" value="Search"></span>
-			</div>
-		</form>
+	<div class="col-xs-6">
+					<br>
+					<form method="GET" action="" class="">
+						<div class="input-group">	
+							<input class="form-control" type="text" placeholder="Введите запрос" name="q" value="{{ request.GET.q }}">
+							<span class="input-group-btn"><input class="btn btn-default" type="submit" value="Search"></span>
+						</div>
+					</form>
 
 
-		{% for product in products %}
-		<h3><a href="{{ product.get_absolute_url }}"> {{ product.name }} </a></h3>	
+					{% for product in products %}
+					<h3><a href="{{ product.get_absolute_url }}"> {{ product.name }} </a></h3>	
 
-		{% if product.avatar %}
-		<img src="/media/{{ product.avatar }}" alt="" class="img-responsive" />
-		{% endif %}
-		
-		<p>Цена:{{ product.price }}</p>
-		<hr/>
-		{% endfor %}
+					{% if product.avatar %}
+					<img src="/media/{{ product.avatar }}" alt="" class="img-fluid" />
+					{% endif %}
+					
+					<p>Цена:{{ product.price }}</p>
+					<hr/>
+					{% endfor %}
 
 
-		<div class="pagination">
-			<span class="step-links">
-			{% if products.has_previous %}
-				<a href="?{{page_request_var}}={{ products.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>
-				{% endif %}
+					<div class="pagination">
+						<span class="step-links">
+						{% if products.has_previous %}
+							<a href="?{{page_request_var}}={{ products.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>
+							{% endif %}
 
-				<span class="current">
-				{{ products.number }} из {{ products.paginator.num_pages }}.
-				</span>
+							<span class="current">
+							{{ products.number }} из {{ products.paginator.num_pages }}.
+							</span>
 
-				{% if products.has_next %}
-				<a href="?{{page_request_var}}={{ products.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a>
-				{% endif %}
-			</span>
-		</div>
+							{% if products.has_next %}
+							<a href="?{{page_request_var}}={{ products.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a>
+							{% endif %}
+						</span>
+					</div>
 	</div>
 
 
-	<div class="col-sm-3">
-		<br>
+	<div class="col-xs-3">
+					<br>
 	</div>
 
 </div>

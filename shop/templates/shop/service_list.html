@@ -4,52 +4,60 @@
 
 {% block content %}
 <div class="row">
-<div class="col-sm-6 col-sm-offset-1">
-<h1>List</h1>
-<br>
 
 
-<form method="GET" action="" class="row">
-  <div class="col-sm-6">
-	<div class="input-group">	
-		<input class="form-control" type="text" placeholder="Введите запрос" name="q" value="{{ request.GET.q }}">
-		<span class="input-group-btn"><input class="btn btn-default" type="submit" value="Search"></span>
+	<div class="col-xs-3">
+					<br>
 	</div>
-  </div>
-</form>
 
 
-{% for service in services %}
-		<h3><a href="{{ service.get_absolute_url }}"> {{ service.name }} </a></h3>	
+	<div class="col-xs-6">
+				<br>
+				<form method="GET" action="" class="">
+					<div class="input-group">	
+						<input class="form-control" type="text" placeholder="Введите запрос" name="q" value="{{ request.GET.q }}">
+						<span class="input-group-btn"><input class="btn btn-default" type="submit" value="Search"></span>
+					</div>
+				</form>
 
-		{% if service.avatar %}
-		   <img src="/media/{{ service.avatar }}" alt="" class="img-responsive" />
-		{% endif %}
-		{% if service.price %}
-			<h3> Цена: {{ service.price }}</h3>
-		{% endif %}
-		<hr/>
+				<div class="service-list">
+					{% for service in services %}
+							<div class="service-item">
+								<h3><a href="{{ service.get_absolute_url }}"> {{ service.name }} </a></h3>	
+								{% if service.avatar %}
+								   <img src="/media/{{ service.avatar }}" alt="" class="img-fluid" />
+								{% endif %}
+								{% if service.price %}
+									<h3> Цена: {{ service.price }}</h3>
+								{% endif %}
+								<hr/>
+							</div>
+					{% endfor %}
+				</div>
 
-{% endfor %}
 
+				<div class="pagination">
+					<span class="step-links">
+						{% if services.has_previous %}
+				    	<a href="?{{page_request_var}}={{ services.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>
+						{% endif %}
 
-<div class="pagination">
-	<span class="step-links">
-		{% if services.has_previous %}
-    	<a href="?{{page_request_var}}={{ services.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>
-		{% endif %}
+						<span class="current">
+						{{ services.number }} из {{ services.paginator.num_pages }}.
+						</span>
 
-		<span class="current">
-		{{ services.number }} из {{ services.paginator.num_pages }}.
-		</span>
+						{% if services.has_next %}
+				   		<a href="?{{page_request_var}}={{ services.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a>
+						{% endif %}
+					</span>
+				</div>
 
-		{% if services.has_next %}
-   		<a href="?{{page_request_var}}={{ services.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a>
-		{% endif %}
-	</span>
+	</div>
+
+	<div class="col-xs-3">
+					<br>
+	</div>
+
 </div>
 
-
-</div>
-</div>
 {% endblock content %}

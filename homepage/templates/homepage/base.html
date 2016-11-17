@@ -49,17 +49,11 @@
     <script src="{% static '/homepage/js/bootstrap.min.js'%} "></script>
 
     <script type="text/javascript">
-    $(document).ready(function() {
-        $(".content-markdown img").each(function() {
-            $(this).addClass("img-responsive");
-        });
-    });
-
+            $(document).ready(function() {
+                $(".content-markdown img").each(function() {
+                    $(this).addClass("img-fluid");
+                });
+            });
     </script>
-
-
-
-
-
   </body>
 </html>
