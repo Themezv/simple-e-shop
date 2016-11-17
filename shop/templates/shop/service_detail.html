@@ -4,36 +4,37 @@
 {% block head_title %}Товар: {{ item.name }} {% endblock head_title %}
 
 {% block content %}
+<div class="row">
 
-<div class="col-sm-3">
+  <div class="col-xs-3">
+        {% if related_services %}
+          <h3>Похожие услуги</h3>
+          {% for item in related_services %}
+            <a href="{{ item.get_absolute_url }}" class="list-group-item">{{ item.name }}</a>
+          {% endfor %}
+        {% endif %}
 
+        {% if related_productes %}
+          <h3>Похожие товары</h3>
+          {% for item in related_productes %}
+            <a href="{{ item.get_absolute_url }}" class="list-group-item">{{ item.name }}</a>
+          {% endfor %}
+        {% endif %}
+  </div>
 
-  {% if related_services %}
-    <h3>Похожие услуги</h3>
-    {% for item in related_services %}
-      <a href="{{ item.get_absolute_url }}" class="list-group-item">{{ item.name }}</a>
-    {% endfor %}
-  {% endif %}
+  <div class="col-xs-6">
+        <h1>{{ item.name }}</h1>
+        {% if item.price %}
+          <h2> Цена: {{ item.price }}</h2>
+        {% endif %}
+        {% if item.avatar %}
+          <img src="/media/{{ item.avatar }}" class="img-fluid">
+        {% endif %}
+  </div>
 
-
-  {% if related_productes %}
-    <h3>Похожие товары</h3>
-    {% for item in related_productes %}
-      <a href="{{ item.get_absolute_url }}" class="list-group-item">{{ item.name }}</a>
-    {% endfor %}
-  {% endif %}
-
-</div>
-
-<div class="col-sm-6">
-
-    <h1>{{ item.name }}</h1>
-    {% if item.price %}
-      <h2> Цена: {{ item.price }}</h2>
-    {% endif %}
-    {% if item.avatar %}
-      <img src="/media/{{ item.avatar }}" class="img-responsive">
-    {% endif %}
+  <div class="col-xs-3">
+        <br>
+  </div>
 
 </div>
 
