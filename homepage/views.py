@@ -1,16 +1,15 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_protect
-
-
-
-from .models import Page, MainSetting
+from .models import Tiles
 from django.contrib.flatpages.models import FlatPage
+from .forms import AboutForm, ContactForm, TilesForm
 
-from .forms import AboutForm, ContactForm
 
 @csrf_protect
-def index(request): 
-    return render(request, 'homepage/index.html', {})
+def index(request):
+    tiles = Tiles.objects.all()
+    form = TilesForm
+    return render(request, 'homepage/index.html', {'tiles': tiles, 'form': form,})
 
 
 def about_edit(request):

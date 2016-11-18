@@ -8,24 +8,30 @@
 
   {{ block.super }}
       
-        
-  <div class="row wrap-tile">
-  <div class="for-back-img">
-    <div class="col-sm-6 col-sm-offset-3">
 
-      {% for tile in tiles_pages %}
-          <a href="{{ tile.get_absolute_url }}">
-            <div class="tile-wrapper"><div class="tile-div">
-              <h2 class="tile-h2">{{ tile.title }}</h2><span>{{ tile.published|timesince }} назад</span>
-              <img src="/media/{{ tile.avatar }}" class="tile-img img-circle center-block img-responsive">
-              <p>{{ tile.content|truncatechars:200 }}</p>
-            </div></div>
-          </a>
+  <div class="row wrap-tile">
+  <div class="for-back-img"></div>
+      {% for tile in tiles %}
+
+          <div class="col-xl-3 tile">
+          <a href="{{ tile.pages.get_absolute_url }}">
+            <h3 class="tile-name">{{ tile.pages.name }}</h3>
+          <img src="media/{{ tile.pages.avatar }}" class="tile-img">
+              </a>
+          </div>
+
       {% endfor %}
 
-    </div>
+      {% if user.is_staff or user.is_superuser %}
+          <div class="col-xl-3 tile">
+          <form>
+              {{ form }}
+          </form>
+          </div>
+      {% endif %}
+
   </div>
-  </div>
+
 
 
 

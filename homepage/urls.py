@@ -1,7 +1,4 @@
 from django.conf.urls import url
-
-
-
 from homepage.views import index, about_edit, contacts_edit
 from django.contrib.flatpages.views import flatpage
 
