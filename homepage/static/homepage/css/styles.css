@@ -72,13 +72,17 @@ div.header-img {
     background-image: url("pattern-for-tiles.png");
     opacity: 0.29;
 }
-.tile, #div-new-tile{
+.tile{
 	height: 400px;
 	padding: 10px;
 	align-content: center;
 	display: flex;
 	flex-direction: column;
 	text-align: center;
+}
+#new-tile {
+    font-size: 400px;
+    text-align: center;
 }
 h3.tile-name {
 	color: white;
