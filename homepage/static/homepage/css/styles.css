@@ -72,7 +72,7 @@ div.header-img {
     background-image: url("pattern-for-tiles.png");
     opacity: 0.29;
 }
-.tile {
+.tile, #div-new-tile{
 	height: 400px;
 	padding: 10px;
 	align-content: center;

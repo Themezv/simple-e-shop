@@ -23,12 +23,16 @@
       {% endfor %}
 
       {% if user.is_staff or user.is_superuser %}
-          <div class="col-xl-3 tile">
-          <form>
-              {{ form }}
-          </form>
+          <div class="col-xl-3 tile" id="div-new-tile">
+            <h1 id="new-tile">+</h1>
+            <script type="text/javascript">
+            $("#new-tile").click(function () {
+                    $("#div-new-tile").html("<form method=\"POST\" action=\" /new_tile/ \" > {% csrf_token %} {{ form.as_p | escapejs}} <button id=\"add-tile\" class=\"save btn btn-default\">Добавить</button></form>");
+              });
+            </script>
           </div>
       {% endif %}
+
 
   </div>
 
