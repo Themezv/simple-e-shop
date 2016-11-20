@@ -72,25 +72,37 @@ div.header-img {
     background-image: url("pattern-for-tiles.png");
     opacity: 0.29;
 }
+
 .tile{
 	height: 400px;
 	padding: 10px;
-	align-content: center;
-	display: flex;
-	flex-direction: column;
+	width: 400px;
+	text-align: center;
+	background-color: transparent;
+	border: 0;
+}
+h3.card-title{
+	color: white;
 	text-align: center;
 }
 #new-tile {
     font-size: 400px;
     text-align: center;
+    color:white;
 }
-h3.tile-name {
-	color: white;
-	text-align: center;
-}
+
 .tile-img {
-	max-width: 100%;
-	max-height: 100%;
+	width: 300px;
+	height: 300px;
 	-webkit-clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
 	clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+}
+
+.number-tile-delete {
+	display: none;
+}
+.btn-tile-delete {
+	position: absolute; /* Абсолютное позиционирование */
+    top: 10px; /* Положение от нижнего края */
+    right: 10px;
 }
