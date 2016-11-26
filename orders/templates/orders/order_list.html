@@ -1,0 +1,41 @@
+{% extends "homepage/base.html" %}
+
+
+{% block content %}
+  <div class="row">
+
+    <div class="col-xs-12">
+      <h1>Заказы</h1>
+      <br>
+      {% for obj in obj_list %}
+        <a href="{{ obj.get_absolute_url }}"><h6>{{ obj.FIO }}</h6></a>
+        <p>{{ obj.phone_number }}</p>
+        <p>{{ obj.email }}</p>
+        <p>{{ obj.adress }}</p>
+
+
+
+      {% endfor %}
+
+
+      <div class="pagination">
+        <span class="step-links">
+          {% if object_list.has_previous %}
+            <a href="?{{page_request_var}}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>
+          {% endif %}
+
+          <span class="current">
+          {{ object_list.number }} из {{ object_list.paginator.num_pages }}.
+          </span>
+
+          {% if object_list.has_next %}
+            <a href="?{{page_request_var}}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a>
+          {% endif %}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,31 @@
+{% extends "homepage/base.html" %}
+
+
+{% block content %}
+  <div class="row">
+
+    <div class="col-xs-12">
+      <h3>Заказчик</h3>
+      <p>{{ instance.FIO }}</p>
+      <p>{{ instance.adress }}</p>
+      <p>{{ instance.email }}</p>
+      <p>{{ instance.phone_number }}</p>
+
+      <hr>
+      <h3>Заказ</h3>
+      {% for item in ordered_items %}
+          {% if item.product %}
+              <p>{{ item.product.name }}</p>
+              <img src="/media/{{ item.product.avatar }}" class="img-fluid" alt="">
+              <p><a href="{{ item.product.get_absolute_url }}">Ссылка</a></p>
+          {% elif item.service %}
+              <p>{{ item.service.name }}</p>
+              <img src="/media/{{ item.service.avatar }}" class="img-fluid" alt="">
+              <p><a href="{{ item.service.get_absolute_url }}">Ссылка</a></p>
+          {% endif %}
+          <p>{{ item.count }}</p>
+      {% endfor %}
+    </div>
+  </div>
+ 
+{% endblock content %}

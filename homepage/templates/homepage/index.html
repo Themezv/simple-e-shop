@@ -11,20 +11,19 @@
 
   <div class="row wrap-tile">
   <div class="for-back-img"></div>
-      {% for tile in tiles %}
 
+      {% for tile in tiles %}
           <div class="card card-block tile">
-          <a href="{{ tile.pages.get_absolute_url }}" class="card-link">
-            <h3 class="card-title">{{ tile.pages.name }}</h3>
-              {% if  user.is_staff or user.is_superuser %}
-            <form method="post" action="/tile-delete/">
-            {% csrf_token %}
-                <input type="number" class="number-tile-delete" value="{{ tile.pk }}" name="id-to-delete">
-                <button class="btn btn-danger btn-tile-delete">x</button>
-            </form>
-          {% endif %}
-          <img src="media/{{ tile.pages.avatar }}" class="tile-img img-fluid">
-              </a>
+            <a href="{{ tile.pages.get_absolute_url }}" class="card-link">
+                <h3 class="card-title">{{ tile.pages.name }}</h3>
+                {% if  user.is_staff or user.is_superuser %}
+                      <form method="post" action="/tile-delete/"> {% csrf_token %}
+                      <input type="number" class="number-tile-delete" value="{{ tile.pk }}" name="id-to-delete">
+                      <button class="btn btn-danger btn-tile-delete">x</button>
+                      </form>
+                {% endif %}
+                <img src="media/{{ tile.pages.avatar }}" class="tile-img img-fluid">
+            </a>
           </div>
       {% endfor %}
 
