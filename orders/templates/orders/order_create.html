@@ -1,0 +1,22 @@
+{% extends "homepage/base.html" %}
+
+{% block head_extra %}
+{% endblock head_extra %}
+
+{% block content %}
+<div class="row">
+  <div class="col-xs-6 offset-xs-3">
+    <br>
+    <h3>{{ instance.name }}</h3>
+    <img src="/media/{{ instance.avatar }}" alt="" class="img-fluid">
+    <p>Количество: {{ count }}</p>
+    <h1>Форма для заполнения</h1>
+    <form action="" method="POST" class="article-form">  {% csrf_token %}
+      {{ form.as_p }}
+      <input type="hidden" name="id_service" value="{{ instance.id }}">
+      <input type="hidden" name="count" value="{{ count }}">
+      <button type="submit" class="save btn btn-default">Сохранить</button>
+    </form>
+  </div>
+</div>
+{% endblock content %}

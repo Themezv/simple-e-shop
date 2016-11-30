@@ -33,7 +33,11 @@
   </div>
 
   <div class="col-xs-3">
-        <br>
+    <form action="/orders/order-create/" method="POST"> {% csrf_token %}
+          <input type="number" name="count" value="1" required>
+          <input type="hidden" name="id_service" value="{{ item.id }}">
+          <button type="submit" class="save btn btn-default">Сохранить</button>
+    </form>
   </div>
 
 </div>

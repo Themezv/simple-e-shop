@@ -103,6 +103,7 @@ def article_create(request, category_slug):
 	if form.is_valid():
 		instance = form.save(commit=False)
 		# instance.user = request.user 
+		print(request.POST)
 		instance.save()	
 		# messages.success(request, "Successfuly created", extra_tags="html_safe")
 		return HttpResponseRedirect(instance.get_absolute_url())	
@@ -136,6 +137,7 @@ def article_edit(request,category_slug, article_slug=None):
 		raise Http404
 	instance = get_object_or_404(Article, slug=article_slug)
 	form = ArticleForm(request.POST or None, request.FILES or None, instance=instance)
+	print(request.POST)
 	if form.is_valid():
 		instance = form.save(commit=False)
 		instance.save()

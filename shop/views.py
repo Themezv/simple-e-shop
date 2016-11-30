@@ -3,6 +3,8 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_protect
 
+from orders.forms import OrderForm
+
 from .models import Category, Product, Service
 
 
@@ -176,6 +178,7 @@ def category_list(request):
 def service_detail(request, service_slug):
     item = get_object_or_404(Service, slug=service_slug)
 
+
     related_services = Service.objects.filter(relation=item).distinct()
 
     related_productes = Product.objects.filter(relation=item).distinct()
@@ -188,3 +191,4 @@ def service_detail(request, service_slug):
 
     return render(request, "shop/service_detail.html", context=context)
  
+

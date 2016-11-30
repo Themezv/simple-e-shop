@@ -5,7 +5,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_protect
 
 
-from orders.models import OrderedItem, Order
+from orders.forms import OrderForm
+from shop.models import Service, Product
+from orders.models import Order, OrderedItem
 # Create your views here.
 
 @csrf_protect
@@ -69,3 +71,36 @@ def order_delete(request, order_id):
     instance.delete()
 
     return redirect("order_list")
+
+
+def order_create(request):
+
+    count = request.POST.get('count')
+    id_item = request.POST.get('id_service')
+    print(request)
+    try:
+        instance = Service.objects.get(id=id_item)
+        ordered_item = OrderedItem(service=instance, count=count)
+    except:
+        instance = Product.objects.get(id=id_item)
+        ordered_item = OrderedItem.objects.create(product=instance, count=count)
+    
+    ordered_item.save()
+
+    form = OrderForm(request.POST or None)
+    if form.is_valid():
+        order = form.save(commit=False)
+        print(ordered_item)
+
+        order.save()
+        order.items.add(ordered_item)
+        return HttpResponseRedirect(instance.get_absolute_url())
+
+    context = {
+        'form':form,
+        'instance':instance,
+        'count':count,
+    }
+
+    return render(request, "orders/order_create.html", context)
+

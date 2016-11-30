@@ -12,9 +12,9 @@ class OrderedItem(models.Model):
 
     def __str__(self):
         if self.product:
-            return "Товар - %s:%d" %(self.product.name, self.count)
+            return "Товар - %s:%s" %(self.product.name, self.count)
         if self.service:
-            return "Услуга - %s:%d" %(self.service.name, self.count) 
+            return "Услуга - %s:%s" %(self.service.name, self.count) 
 
 
 class Order(models.Model):
