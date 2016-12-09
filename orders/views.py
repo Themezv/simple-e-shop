@@ -55,11 +55,13 @@ def order_detail(request, order_id):
 
     instance = get_object_or_404(Order, id=order_id)
 
-    ordered_items = instance.items.all()
+    ordered_product = instance.items.filter(service=None)
+    ordered_service = instance.items.filter(product=None)
 
     context = {
         'instance': instance,
-        'ordered_items':ordered_items,
+        'ordered_product':ordered_product,
+        'ordered_service':ordered_service,
     }
     return render(request, "orders/order_detail.html", context)
 
@@ -68,30 +70,28 @@ def order_delete(request, order_id):
     if not request.user.is_staff or not request.user.is_superuser:
         raise Http404
     instance = get_object_or_404(Order, id=order_id)
+
+    #FOR ADDING: DELETE linked OrderedItem
+    
     instance.delete()
 
     return redirect("order_list")
 
 
 def order_create(request):
-
     count = request.POST.get('count')
     id_item = request.POST.get('id_service')
-    print(request)
     try:
         instance = Service.objects.get(id=id_item)
         ordered_item = OrderedItem(service=instance, count=count)
     except:
         instance = Product.objects.get(id=id_item)
         ordered_item = OrderedItem.objects.create(product=instance, count=count)
-    
-    ordered_item.save()
 
     form = OrderForm(request.POST or None)
     if form.is_valid():
         order = form.save(commit=False)
-        print(ordered_item)
-
+        ordered_item.save()
         order.save()
         order.items.add(ordered_item)
         return HttpResponseRedirect(instance.get_absolute_url())

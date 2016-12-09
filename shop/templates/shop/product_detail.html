@@ -23,6 +23,12 @@
           	<img src="/media/{{ item.avatar }}" class="img-fluid">
       	  {% endif %}
           <h3> Цена: {{ item.price }}</h3>
+          
+          <form action="/orders/order-create/" method="POST"> {% csrf_token %}
+            <input type="number" name="count" value="1" required>
+            <input type="hidden" name="id_service" value="{{ item.id }}">
+            <button type="submit" class="save btn btn-default">Заказать</button>
+          </form>
   </div>
 
   <div class="col-xs-3">
