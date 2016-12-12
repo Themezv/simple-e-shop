@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_protect
 
 
 from orders.forms import OrderForm
-from shop.models import Service, Product
+from shop.models import Product
 from orders.models import Order, OrderedItem
 # Create your views here.
 

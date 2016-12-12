@@ -2,12 +2,11 @@ from django.core.urlresolvers import reverse
 from django.db import models
 
 
-from shop.models import Product, Service
+from shop.models import Product
 # Create your models here.
 
 class OrderedItem(models.Model):
     product = models.ForeignKey(Product, blank=True, null=True)
-    service = models.ForeignKey(Service, blank=True, null=True)
     count = models.PositiveSmallIntegerField(default=1) 
 
     def __str__(self):

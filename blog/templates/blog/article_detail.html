@@ -27,7 +27,7 @@
           <span>{{ instance.published|timesince }} назад</span>
         	<br>
         	{% if instance.image %}
-        	   <img src="/media/{{ instance.image }}" alt="" class="img-responsive">
+        	   <img src="/media/{{ instance.image }}" alt="" class="img-fluid">
         	{% endif %}
           <div class="content-markdown">
         	 <p>{{ instance.get_markdown|safe }} </p>

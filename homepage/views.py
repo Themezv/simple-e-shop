@@ -4,7 +4,6 @@ from django.http import HttpResponse, Http404
 from .models import Tiles
 from django.contrib.flatpages.models import FlatPage
 from .forms import AboutForm, ContactForm, TilesForm
-from shop.models import Service
 from django.core.exceptions import ObjectDoesNotExist
 
 

@@ -6,6 +6,8 @@ __pycache__
 .idea
 media
 igartstep.sublime-project
+shopCBV.sublime-project
+shopCBV.sublime-workspace
 igartstep.sublime-workspace
 Будет удалено main/
 Будет удалено templates/
