@@ -11,14 +11,14 @@
           {% if related_items %}
           <h3>Похожие товары</h3>
             {% for item in related_items %}
-              <a href="{{ item.get_absolute_url }}" class="list-group-item">{{ item.name }}</a>
+              <a href="{{ item.get_absolute_url }}" class="list-group-item">{{ item.title }}</a>
             {% endfor %}
           {% endif %}
   </div>
 
   <div class="col-xs-6">
           <br>
-          <h1>{{ item.name }}</h1>
+          <h1>{{ item.title }}</h1>
           {% if item.avatar %}
           	<img src="/media/{{ item.avatar }}" class="img-fluid">
       	  {% endif %}

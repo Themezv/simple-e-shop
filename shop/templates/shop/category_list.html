@@ -15,7 +15,7 @@
 
 				<h1>Категории</h1>
 				{% for obj in categories %}
-						<h3><a href="{{ obj.get_absolute_url }}"> {{ obj.name }} </a></h3>	
+						<h3><a href="{{ obj.get_absolute_url }}"> {{ obj.title }} </a></h3>	
 						{% if obj.image %}
 						   <img src="/media/{{ obj.image }}" alt="" class="img-fluid" />
 						{% endif %}

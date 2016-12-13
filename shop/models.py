@@ -30,8 +30,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=20)
-    # slug = models.SlugField(unique=True, null=True, blank=True)
+    title = models.CharField(max_length=20)
     price = models.PositiveSmallIntegerField(blank=True, null=True)
     description = models.TextField(max_length=100)
     available = models.BooleanField(default=True)
@@ -43,7 +42,7 @@ class Product(models.Model):
 
 
     def get_absolute_url(self):
-        if self.product_type.title == 'Product':
+        if self.product_type.title == 'Item':
             return reverse("product_detail", args=[str(self.id)])
 
         if self.product_type.title == 'Service':
@@ -55,39 +54,4 @@ class Product(models.Model):
 
     
     def __str__(self):
-        return self.name
-
-
-
-
-
-
-# def create_slug(instance, new_slug=None):
-#     try:
-#         translited_title = translit(instance.name, reversed=True)
-#     except:
-#         translited_title = instance.name
-#     Model = type(instance)
-#     slug = slugify(translited_title, True)
-#     if new_slug is not None:
-#         slug = new_slug
-#     qs = Model.objects.filter(slug=slug).order_by("-id")
-#     exists = qs.exists()
-#     if exists:
-#         new_slug = "%s-%s" %(slug, qs.first().id)
-#         return create_slug(instance, new_slug)
-#     return slug
-
-
-# def pre_save_receiver(sender, instance, *args, **kwargs):
-#     if not instance.slug:
-#         instance.slug = create_slug(instance)
-
-
-# def pre_save_connect(Model):
-#     pre_save.connect(pre_save_receiver, sender=Model)
-
-
-# pre_save_connect(Product)
-# pre_save_connect(Service)
-# pre_save_connect(Category)
+        return self.title

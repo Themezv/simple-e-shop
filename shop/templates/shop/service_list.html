@@ -23,7 +23,7 @@
 				<div class="service-list">
 					{% for service in services %}
 							<div class="service-item">
-								<h3><a href="{{ service.get_absolute_url }}"> {{ service.name }} </a></h3>	
+								<h3><a href="{{ service.get_absolute_url }}"> {{ service.title }} </a></h3>	
 								{% if service.avatar %}
 								   <img src="/media/{{ service.avatar }}" alt="" class="img-fluid" />
 								{% endif %}
