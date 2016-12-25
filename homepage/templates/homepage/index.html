@@ -15,7 +15,7 @@
       {% for tile in tiles %}
           <div class="card card-block tile">
             <a href="{{ tile.pages.get_absolute_url }}" class="card-link">
-                <h3 class="card-title">{{ tile.pages.name }}</h3>
+                <h3 class="card-title">{{ tile.pages.title }}</h3>
                 {% if  user.is_staff or user.is_superuser %}
                       <form method="post" action="/tile-delete/"> {% csrf_token %}
                       <input type="number" class="number-tile-delete" value="{{ tile.pk }}" name="id-to-delete">

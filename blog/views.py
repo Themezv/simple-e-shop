@@ -1,6 +1,6 @@
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, RedirectView, DeleteView, TemplateView
-from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse
 
@@ -67,23 +67,17 @@ class ArticleListView(ListView):
 		return context
 
 
+@method_decorator(login_required(), name="dispatch")
 class ArticleCreateView(CreateView):
 	template_name = "blog/article_form.html"
 	model = Article
 	form_class = ArticleForm
-
-	@method_decorator(login_required())
-	def dispatch(self, request, *args, **kwargs):
-		return super(ArticleCreateView, self).dispatch(request, *args, **kwargs)
 
 
 class ArticleDetail(DetailView):
 	template_name = "blog/article_detail.html"
 	model = Article
 	context_object_name = 'instance'
-
-	def dispatch(self, request, *args, **kwargs):
-		return super(ArticleDetail, self).dispatch(request, *args, **kwargs)
 
 	def get_context_data(self, **kwargs):
 		context = super(ArticleDetail, self).get_context_data(**kwargs)
@@ -93,25 +87,19 @@ class ArticleDetail(DetailView):
 		return context
 
 
+@method_decorator(login_required(), name="dispatch")
 class ArticleEditView(UpdateView):
 	template_name = "blog/article_form.html"
 	model = Article
 	form_class = ArticleForm
 
-	@method_decorator(login_required())
-	def dispatch(self, request, *args, **kwargs):
-		return super(ArticleEditView, self).dispatch(request, *args, **kwargs)
 
-
+@method_decorator(login_required(), name="dispatch")
 class ArticleDeleteView(DeleteView):
 	template_name = "blog/article_form.html"
 	model = Article
 	form_class = ArticleForm
 	
-	@method_decorator(login_required())
-	def dispatch(self, request, *args, **kwargs):
-		return super(ArticleDeleteView, self).dispatch(request, *args, **kwargs)
-
 	def get_success_url(self):
 		category_slug = super(ArticleDeleteView, self).get_context_data()['article'].category.slug
 		return reverse('article_list', args=[str(category_slug)])

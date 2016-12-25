@@ -33,7 +33,7 @@
 
         <form action="/orders/order-create/" method="POST"> {% csrf_token %}
           <input type="number" name="count" value="1" required>
-          <input type="hidden" name="id_service" value="{{ item.id }}">
+          <input type="hidden" name="id_product" value="{{ item.id }}">
           <button type="submit" class="save btn btn-default">Заказать</button>
         </form>
   </div>

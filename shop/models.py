@@ -6,6 +6,13 @@ from django.utils.text import slugify
 from transliterate import translit
     
 
+class ProductManager(models.Manager):
+    def items(self, *args, **kwargs):
+        return super(ProductManager, self).filter(product_type__title="Item")
+    def services(self, *args, **kwargs):    
+        return super(ProductManager, self).filter(product_type__title="Service")
+
+
 class ProductType(models.Model):
     title = models.CharField(max_length=50)
 
@@ -38,7 +45,12 @@ class Product(models.Model):
     relation = models.ManyToManyField('self', blank=True)
     avatar = models.ImageField(upload_to='items_avatars')
 
+    #ForeignKey
     product_type = models.ForeignKey(ProductType)
+
+
+    #Manager
+    objects = ProductManager()
 
 
     def get_absolute_url(self):

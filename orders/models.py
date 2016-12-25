@@ -10,10 +10,7 @@ class OrderedItem(models.Model):
     count = models.PositiveSmallIntegerField(default=1) 
 
     def __str__(self):
-        if self.product:
-            return "Товар - %s:%s" %(self.product.name, self.count)
-        if self.service:
-            return "Услуга - %s:%s" %(self.service.name, self.count) 
+        return  "%s:Название-%s, количество-%s" %(self.product.product_type.title ,self.product.title, self.count)
 
 
 class Order(models.Model):
