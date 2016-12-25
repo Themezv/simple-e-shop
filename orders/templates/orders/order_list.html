@@ -18,16 +18,16 @@
 
       <div class="pagination">
         <span class="step-links">
-          {% if object_list.has_previous %}
-            <a href="?{{page_request_var}}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>
+          {% if obj_list.has_previous %}
+            <a href="?{{page_request_var}}={{ obj_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>
           {% endif %}
 
           <span class="current">
-          {{ object_list.number }} из {{ object_list.paginator.num_pages }}.
+          {{ obj_list.number }} из {{ obj_list.paginator.num_pages }}.
           </span>
 
-          {% if object_list.has_next %}
-            <a href="?{{page_request_var}}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a>
+          {% if obj_list.has_next %}
+            <a href="?{{page_request_var}}={{ obj_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a>
           {% endif %}
         </span>
       </div>

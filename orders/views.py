@@ -1,106 +1,82 @@
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.http import Http404, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_protect
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, RedirectView, DeleteView, TemplateView
+from django.utils.decorators import method_decorator
+
+
 
 
 from orders.forms import OrderForm
-from shop.models import Service, Product
+from shop.models import Product
 from orders.models import Order, OrderedItem
 # Create your views here.
 
-@csrf_protect
-def order_list(request):
-    if not request.user.is_superuser or not request.user.is_staff:
-        raise Http404
-    queryset_list = Order.objects.all()
+@method_decorator(login_required(), name="dispatch")
+class OrderListView(ListView):
+    template_name = "orders/order_list.html"
+    model = Order
+    context_object_name = 'obj_list'
 
-    ##################Search###################
+    paginate_by = 10
 
-    query = request.GET.get("q")
-    if query:
-        queryset_list = queryset_list.filter(
+    def get_queryset(self):
+        queryset_list = super(OrderListView, self).get_queryset()
+        query = self.request.GET.get('q')
+        if query:
+            return queryset_list.filter(
                             Q(FIO__icontains=query) |
                             Q(adress__icontains=query) |
                             Q(email__icontains=query)).distinct()
+        else:
+            return queryset_list
 
 
-    #################Paginator#################
+@method_decorator(login_required(), name="dispatch")
+class OrderDetailView(DetailView): 
+    template_name = "orders/order_detail.html"
+    model = Order
+    context_object_name = 'instance'
 
-    paginator = Paginator(queryset_list, 10)
-    page_request_var='page' #url name 'page'=1,2,3,4...
-    page = request.GET.get(page_request_var)
+    def get_context_data(self, **kwargs):
+        context = super(OrderDetailView, self).get_context_data(**kwargs)
+        instance = context['instance']
+        context['ordered_products'] = instance.items.all()
+        return context
 
-    try:
-        queryset = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        queryset = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        queryset = paginator.page(paginator.num_pages)
-
-    context = {
-        'obj_list': queryset,#object_list v html
-        'page_request_var': page_request_var, #v url num page
-    }
-
-    return render(request, "orders/order_list.html", context)
+#Не сделанно
+@method_decorator(login_required(), name="dispatch")
+class OrdereDeleteView(DeleteView):
+    template_name = "orders/order_create.html"
+    model = Order
+    form_class = OrderForm
 
 
-def order_detail(request, order_id):
-    if not request.user.is_superuser or not request.user.is_staff:
-        raise Http404
+class OrderCreateView(CreateView):
+    template_name = "orders/order_create.html"
+    Model = Order
+    form_class = OrderForm
 
-    instance = get_object_or_404(Order, id=order_id)
+    def get_context_data(self, **kwargs):
+        context = super(OrderCreateView, self).get_context_data(**kwargs)
+        count = self.request.POST.get('count')
+        id_item = self.request.POST.get('id_product')
+        product = Product.objects.get(id=id_item)
+        ordered_item = OrderedItem(product=product, count=count)
+        context['ordered_item'] = ordered_item
+        context['count'] = count
+        return context
 
-    ordered_product = instance.items.filter(service=None)
-    ordered_service = instance.items.filter(product=None)
-
-    context = {
-        'instance': instance,
-        'ordered_product':ordered_product,
-        'ordered_service':ordered_service,
-    }
-    return render(request, "orders/order_detail.html", context)
-
-
-def order_delete(request, order_id):
-    if not request.user.is_staff or not request.user.is_superuser:
-        raise Http404
-    instance = get_object_or_404(Order, id=order_id)
-
-    #FOR ADDING: DELETE linked OrderedItem
-    
-    instance.delete()
-
-    return redirect("order_list")
-
-
-def order_create(request):
-    count = request.POST.get('count')
-    id_item = request.POST.get('id_service')
-    try:
-        instance = Service.objects.get(id=id_item)
-        ordered_item = OrderedItem(service=instance, count=count)
-    except:
-        instance = Product.objects.get(id=id_item)
-        ordered_item = OrderedItem.objects.create(product=instance, count=count)
-
-    form = OrderForm(request.POST or None)
-    if form.is_valid():
-        order = form.save(commit=False)
+    def form_valid(self, form):
+        ordered_item = self.get_context_data()['ordered_item']
         ordered_item.save()
-        order.save()
-        order.items.add(ordered_item)
-        return HttpResponseRedirect(instance.get_absolute_url())
+        self.object = form.save(commit=False)
+        self.object.save()
+        self.object.items.add(ordered_item)
+        return self.get_success_url()
 
-    context = {
-        'form':form,
-        'instance':instance,
-        'count':count,
-    }
-
-    return render(request, "orders/order_create.html", context)
-
+    def get_success_url(self):
+        #Нужно переделать
+        return HttpResponseRedirect('/')

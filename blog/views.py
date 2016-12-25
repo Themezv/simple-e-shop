@@ -1,8 +1,9 @@
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.http import Http404, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, redirect
-from django.views.decorators.csrf import csrf_protect
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, RedirectView, DeleteView, TemplateView
+from django.utils.decorators import method_decorator
+from django.urls import reverse
+
 
 from .models import Article
 from shop.models import Category
@@ -10,152 +11,95 @@ from shop.models import Category
 from .forms import ArticleForm
 # Create your views here.
 
-
-def category_list(request):
-	queryset_list = Category.objects.all()
-
-	user = request.user
-
-	##################Search###################
-
-	query = request.GET.get("q")
-	if query:
-		queryset_list = queryset_list.filter(Q(name__icontains=query)).distinct()
+class CategoryListView(ListView):
+	template_name = "blog/category_list.html"
+	model = Category
+	slug_field = 'slug'
+	slug_url_kwarg = 'category_slug'
+	context_object_name = 'categories'
 
 
-	#################Paginator#################
+	# Не работает
+	paginate_by = 5
+	#############
 
-	paginator = Paginator(queryset_list, 5) #Show 5 contacts per page
-	page_request_var='page' #url name 'page'=1,2,3,4...
-	page = request.GET.get(page_request_var)
+	def get_queryset(self):
+		query = self.request.GET.get('q')
+		queryset_list = super(CategoryListView, self).get_queryset()
+		if query:
+			return queryset_list.filter(Q(title__icontains=query)).distinct()
+		else:
+			return queryset_list
+		
 
-	try:
-		queryset = paginator.page(page)
-	except PageNotAnInteger:
-		# If page is not an integer, deliver first page.
-		queryset = paginator.page(1)
-	except EmptyPage:
-		# If page is out of range (e.g. 9999), deliver last page of results.
-		queryset = paginator.page(paginator.num_pages)
-
-	context = {
-		'categories': queryset,#object_list v html
-		'page_request_var': page_request_var, #v url num page
-		'user': user,
-	}
-
-	return render(request, "blog/category_list.html", context)
+class ArticleListView(ListView):
+	template_name = "blog/article_list.html"
+	model = Article
+	context_object_name = 'object_list'
+	slug_field = 'slug'
+	slug_url_kwarg = 'category_slug'
 
 
+	paginate_by = 10
 
-def article_categoried_list(request, category_slug):
-	queryset_list = Article.objects.filter(category__slug=category_slug).order_by('-updated')
-	if not request.user.is_staff or not request.user.is_superuser:
-		queryset_list = Article.objects.active().filter(category__slug=category_slug).order_by('-updated')
+	def get_queryset(self):
+		query = self.request.GET.get('q')
+		queryset_list = super(ArticleListView, self).get_queryset().filter(category__slug=self.kwargs['category_slug'])
+		user = self.request.user
 
-	user = request.user
-	category_url = category_slug
-	another_categories = Category.objects.all().exclude(slug=category_slug)[:10]
+		##################Search###################
+		query = self.request.GET.get("q")
 
-	##################Search###################
-
-	query = request.GET.get("q")
-	if query:
-		queryset_list = queryset_list.filter(
-				Q(title__icontains=query) |     
-				Q(content__icontains=query)
-				#Q(user__first_name__icontains=query) |
-				#Q(user__last_name__icontains=query) 
-				).distinct()
+		if query:
+			return queryset_list.filter(
+						Q(title__icontains=query) |     
+						Q(content__icontains=query)).distinct()
+		else:
+			return queryset_list
 
 
-	#################Paginator#################
+	def get_context_data(self, **kwargs):
+		context = super(ArticleListView, self).get_context_data(**kwargs)
 
-	paginator = Paginator(queryset_list, 5) #Show 5 contacts per page
-	page_request_var='page' #url name 'page'=1,2,3,4...
-	page = request.GET.get(page_request_var)
-
-	try:
-		queryset = paginator.page(page)
-	except PageNotAnInteger:
-		# If page is not an integer, deliver first page.
-		queryset = paginator.page(1)
-	except EmptyPage:
-		# If page is out of range (e.g. 9999), deliver last page of results.
-		queryset = paginator.page(paginator.num_pages)
-
-	context = {
-		'object_list': queryset,#object_list v html
-		'page_request_var': page_request_var, #v url num page
-		'category_url':category_url,
-		'another_categories':another_categories,
-		'user': user,
-	}
-
-	return render(request, "blog/article_list.html", context)
+		another_categories = Category.objects.all().exclude(slug=self.kwargs['category_slug'])[:10]
+		context['another_categories'] = another_categories
+		context['category_url'] = self.kwargs['category_slug']
+		return context
 
 
-
-def article_create(request, category_slug):
-	if not request.user.is_staff or not request.user.is_superuser:
-		raise Http404
-	form = ArticleForm(request.POST or None, request.FILES or None)
-	if form.is_valid():
-		instance = form.save(commit=False)
-		# instance.user = request.user 
-		print(request.POST)
-		instance.save()	
-		# messages.success(request, "Successfuly created", extra_tags="html_safe")
-		return HttpResponseRedirect(instance.get_absolute_url())	
-
-	context = {
-		'form': form
-	}
-	return render(request, "blog/article_form.html", context)
+@method_decorator(login_required(), name="dispatch")
+class ArticleCreateView(CreateView):
+	template_name = "blog/article_form.html"
+	model = Article
+	form_class = ArticleForm
 
 
+class ArticleDetail(DetailView):
+	template_name = "blog/article_detail.html"
+	model = Article
+	context_object_name = 'instance'
 
-def article_detail(request, category_slug ,article_slug=None):
-	instance = get_object_or_404(Article, slug=article_slug)
-	recent_articles = Article.objects.active().order_by('-published').exclude(slug=instance.slug)[:5]#get first 5 obj
-	user = request.user
-	if instance.draft:
-		if not request.user.is_staff or not request.user.is_superuser:
-			raise Http404
-
-	context = {
-		'instance': instance,
-		'recent_articles':recent_articles,
-		'user': user,
-	}
-	return render(request, "blog/article_detail.html", context)
+	def get_context_data(self, **kwargs):
+		context = super(ArticleDetail, self).get_context_data(**kwargs)
+		instance = context['object']
+		recent_articles = Article.objects.active().order_by('-published').exclude(slug=instance.slug)[:5]
+		context['recent_articles'] = recent_articles
+		return context
 
 
-
-def article_edit(request,category_slug, article_slug=None):
-	if not request.user.is_staff or not request.user.is_superuser:
-		raise Http404
-	instance = get_object_or_404(Article, slug=article_slug)
-	form = ArticleForm(request.POST or None, request.FILES or None, instance=instance)
-	print(request.POST)
-	if form.is_valid():
-		instance = form.save(commit=False)
-		instance.save()
-		# messages.success(request, "<a href='#'>Item</a> edited", extra_tags="html_safe")
-		return HttpResponseRedirect(instance.get_absolute_url())	
-	context = {
-		'instance': instance,
-		'form': form
-	}
-	return render(request, "blog/article_form.html", context)
+@method_decorator(login_required(), name="dispatch")
+class ArticleEditView(UpdateView):
+	template_name = "blog/article_form.html"
+	model = Article
+	form_class = ArticleForm
 
 
-def article_delete(request,category_slug, article_slug=None):
-	if not request.user.is_staff or not request.user.is_superuser:
-		raise Http404
-	instance = get_object_or_404(Article, slug=article_slug)
-	instance.delete()
-	# messages.success(request, "Successfuly deleted", extra_tags="html_safe")
-	context = {
-	}
-	return redirect("article_categoried_list", category_slug=category_slug)
+@method_decorator(login_required(), name="dispatch")
+class ArticleDeleteView(DeleteView):
+	template_name = "blog/article_form.html"
+	model = Article
+	form_class = ArticleForm
+	
+	def get_success_url(self):
+		category_slug = super(ArticleDeleteView, self).get_context_data()['article'].category.slug
+		return reverse('article_list', args=[str(category_slug)])
