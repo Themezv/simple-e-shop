@@ -9,7 +9,7 @@
 							<br>
 							<h4>Категории</h4>
 							{% for catgr in another_categories %}
-							  <a href="{{ catgr.get_absolute_url_for_blog }}" class="list-group-item">{{ catgr.name }}</a>
+							  <a href="{{ catgr.get_absolute_url_for_blog }}" class="list-group-item">{{ catgr.title }}</a>
 							{% endfor %}
 					</div>	
 	  </div>

@@ -27,13 +27,13 @@
           <span>{{ instance.published|timesince }} назад</span>
         	<br>
         	{% if instance.image %}
-        	   <img src="/media/{{ instance.image }}" alt="" class="img-responsive">
+        	   <img src="/media/{{ instance.image }}" alt="" class="img-fluid">
         	{% endif %}
           <div class="content-markdown">
         	 <p>{{ instance.get_markdown|safe }} </p>
           </div>
         	{% if user.is_staff or user.is_superuser %}
-            <a href="{% url 'article_edit' category_slug=instance.category.slug article_slug=instance.slug %}">Редактировать</a> <a href="{% url 'article_delete' category_slug=instance.category.slug article_slug=instance.slug %}">Удалить</a>{% endif %}
+            <a href="{% url 'article_edit' category_slug=instance.category.slug slug=instance.slug %}">Редактировать</a> <a href="{% url 'article_delete' category_slug=instance.category.slug slug=instance.slug %}">Удалить</a>{% endif %}
     </div>
     
     <div class="col-xs-3">
