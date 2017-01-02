@@ -1,0 +1,22 @@
+{% extends "homepage/base.html" %}
+
+{% block head_extra %}
+{% endblock head_extra %}
+
+{% block content %}
+<div class="row">
+  <div class="col-xs-6 offset-xs-3">
+    <br>
+    <h3>{{ ordered_item.product.title }}</h3>
+    <img src="/media/{{ ordered_item.product.avatar }}" alt="" class="img-fluid">
+    <p>Количество: {{ count }}</p>
+    <h1>Форма для заполнения</h1>
+    <form action="" method="POST" class="article-form">  {% csrf_token %}
+      {{ form.as_p }}
+      <input type="hidden" name="id_product" value="{{ ordered_item.product.id }}">
+      <input type="hidden" name="count" value="{{ count }}">
+      <button type="submit" class="save btn btn-default">Сохранить</button>
+    </form>
+  </div>
+</div>
+{% endblock content %}

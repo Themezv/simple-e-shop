@@ -1,7 +1,7 @@
 {% extends "homepage/base.html" %}
 {% load staticfiles %}
 
-{% block head_title %}Товар: {{ item.name }} {% endblock head_title %}
+{% block head_title %}Товар: {{ item.title }} {% endblock head_title %}
 
 {% block content %}
 <div class="row">
@@ -10,30 +10,36 @@
         {% if related_services %}
           <h3>Похожие услуги</h3>
           {% for item in related_services %}
-            <a href="{{ item.get_absolute_url }}" class="list-group-item">{{ item.name }}</a>
+            <a href="{{ item.get_absolute_url }}" class="list-group-item">{{ item.title }}</a>
           {% endfor %}
         {% endif %}
 
         {% if related_productes %}
           <h3>Похожие товары</h3>
           {% for item in related_productes %}
-            <a href="{{ item.get_absolute_url }}" class="list-group-item">{{ item.name }}</a>
+            <a href="{{ item.get_absolute_url }}" class="list-group-item">{{ item.title }}</a>
           {% endfor %}
         {% endif %}
   </div>
 
   <div class="col-xs-6">
-        <h1>{{ item.name }}</h1>
+        <h1>{{ item.title }}</h1>
         {% if item.price %}
           <h2> Цена: {{ item.price }}</h2>
         {% endif %}
         {% if item.avatar %}
           <img src="/media/{{ item.avatar }}" class="img-fluid">
         {% endif %}
+
+        <form action="/orders/order-create/" method="POST"> {% csrf_token %}
+          <input type="number" name="count" value="1" required>
+          <input type="hidden" name="id_product" value="{{ item.id }}">
+          <button type="submit" class="save btn btn-default">Заказать</button>
+        </form>
   </div>
 
   <div class="col-xs-3">
-        <br>
+    <br>
   </div>
 
 </div>

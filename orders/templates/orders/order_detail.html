@@ -1,0 +1,25 @@
+{% extends "homepage/base.html" %}
+
+
+{% block content %}
+  <div class="row">
+        <div class="col-xs-6">
+          <h3>Заказчик</h3>
+          <p>Имя:{{ instance.FIO }}</p>
+          <p>Адресс:{{ instance.adress }}</p>
+          <p>Email:{{ instance.email }}</p>
+          <p>Телефон:{{ instance.phone_number }}</p>
+        </div>
+        <div class="col-xs-6">
+          <h3>Заказ</h3>
+          {% for item in ordered_products %}
+              <p>Название товара:{{ item.product.title }}</p>
+              <img src="/media/{{ item.product.avatar }}" class="img-fluid" alt="">
+              <p><a href="{{ item.product.get_absolute_url }}">Ссылка</a></p>
+              <p>Количество:{{ item.count }}</p>
+          {% endfor %}
+
+        </div>
+  </div>
+ 
+{% endblock content %}

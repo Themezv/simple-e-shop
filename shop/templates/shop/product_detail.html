@@ -11,18 +11,24 @@
           {% if related_items %}
           <h3>Похожие товары</h3>
             {% for item in related_items %}
-              <a href="{{ item.get_absolute_url }}" class="list-group-item">{{ item.name }}</a>
+              <a href="{{ item.get_absolute_url }}" class="list-group-item">{{ item.title }}</a>
             {% endfor %}
           {% endif %}
   </div>
 
   <div class="col-xs-6">
           <br>
-          <h1>{{ item.name }}</h1>
+          <h1>{{ item.title }}</h1>
           {% if item.avatar %}
-          	<img src="/media/{{ item.avatar }}" class="img-fluid">
-      	  {% endif %}
+            <img src="/media/{{ item.avatar }}" class="img-fluid">
+          {% endif %}
           <h3> Цена: {{ item.price }}</h3>
+          
+          <form action="/orders/order-create/" method="POST"> {% csrf_token %}
+            <input type="number" name="count" value="1" required>
+            <input type="hidden" name="id_product" value="{{ item.id }}">
+            <button type="submit" class="save btn btn-default">Заказать</button>
+          </form>
   </div>
 
   <div class="col-xs-3">

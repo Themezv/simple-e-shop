@@ -1,12 +1,18 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.flatpages.models import FlatPage
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_protect
-from django.http import HttpResponse, Http404, JsonResponse
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, RedirectView, DeleteView, TemplateView
+from django.utils.decorators import method_decorator
 from .models import Tiles
-from django.contrib.flatpages.models import FlatPage
 from .forms import AboutForm, ContactForm, TilesForm
-from shop.models import Service
-from django.core.exceptions import ObjectDoesNotExist
-from django.core.serializers import json
+##############
+
+# class 
+
+##############
 
 
 @csrf_protect
@@ -17,26 +23,47 @@ def index(request):
     return render(request, 'homepage/index.html', {'tiles': tiles, 'form': form, })
 
 
-def new_tile(request):
-    if request.method == 'POST':
-        form = TilesForm(request.POST)
-        if form.is_valid():
-            form.save(commit=True)
-            return redirect('/')
-        else:
-            return HttpResponse("Плитка со ссылкой на эту услугу уже создана <a href=\"/\">Вернуться на главую </a>")
-    else:
-        return Http404
+@method_decorator(login_required(), name="dispatch")
+class NewTileView(CreateView):
+    model = Tiles
+    form_class = TilesForm
+    success_url = '/'
+
+    def form_invalid(self, form):
+        return HttpResponse("Плитка со ссылкой на эту услугу уже создана <a href=\"/\">Вернуться на главую </a>")
 
 
-def delete_tile(request):
-    if request.method == 'POST':
-        id_tile_to_delete = int(request.POST['id-to-delete'])
+# def new_tile(request):
+#     if request.method == 'POST':
+#         form = TilesForm(request.POST)
+#         if form.is_valid():
+#             form.save(commit=True)
+#             return redirect('/')
+#         else:
+#             return HttpResponse("Плитка со ссылкой на эту услугу уже создана <a href=\"/\">Вернуться на главую </a>")
+#     else:
+#         return Http404
+
+@method_decorator(login_required(), name="dispatch")
+class DeleteTileView(DeleteView):
+    model = Tiles
+    form_class = TilesForm
+    success_url = '/'
+
+    def get_object(self):
+        id_tile_to_delete = int(self.request.POST.get('id-to-delete'))
         tile = Tiles.objects.get(pk=id_tile_to_delete)
-        tile.delete()
-        return redirect('/')
-    else:
-        return Http404
+        return tile
+
+
+# def delete_tile(request):
+#     if request.method == 'POST':
+#         id_tile_to_delete = int(request.POST['id-to-delete'])
+#         tile = Tiles.objects.get(pk=id_tile_to_delete)
+#         tile.delete()
+#         return redirect('/')
+#     else:
+#         return Http404
 
 
 def about_edit(request):

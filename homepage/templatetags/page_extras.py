@@ -3,10 +3,13 @@ from django import template
 register = template.Library()
 
 
-@register.inclusion_tag('homepage/menu.html')
-def show_menu(path):
+@register.inclusion_tag('homepage/menu.html', takes_context=True)
+def show_menu(context,path):
+    request = context['request']
+    user = request.user
     context = {
         'path': path,
+        'user':user,
     }
     return context
 

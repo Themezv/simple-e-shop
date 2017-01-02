@@ -1,7 +1,6 @@
 {% extends "homepage/base.html" %}
 {% load staticfiles %}
 
-
 {% block content %}
 
 {% if request.user.is_staff or request.user.is_superuser %}
@@ -12,5 +11,6 @@
   <h1>{{ flatpage.title }}</h1>
 
   <p>{{ flatpage.content }}</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita nesciunt quisquam doloribus reprehenderit, autem modi.</p>
 
 {% endblock content %}

@@ -1,185 +1,82 @@
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, RedirectView, DeleteView, TemplateView
 from django.views.decorators.csrf import csrf_protect
-
-from .models import Category, Product, Service
-
-
-# Create your views here.
-@csrf_protect
-def product_list(request):
-    queryset_list = Product.objects.all()
-    categories = Category.objects.all()[:10]
-
-    ##################Search###################
-
-    query = request.GET.get("q")
-    if query:
-        queryset_list = queryset_list.filter(
-                Q(name__icontains=query)).distinct()
-
-    #################Paginator#################
-
-    paginator = Paginator(queryset_list, 5) #Show 5 contacts per page
-    page_request_var='page' #url name 'page'=1,2,3,4...
-    page = request.GET.get(page_request_var)
-
-    try:
-        queryset = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        queryset = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        queryset = paginator.page(paginator.num_pages)
-
-    context = {
-        'products': queryset,#object_list v html
-        'page_request_var': page_request_var, #v url num page
-        'categories': categories,
-    }
-
-    return render(request, "shop/product_list.html", context)
+from blog.views import CategoryListView
+from .models import Category, Product, ProductType
 
 
+class ProductListView(ListView):
+    template_name = "shop/product_list.html"
+    model = Product
 
-@csrf_protect
-def product_categoried_list(request, category_slug):
-    queryset_list = Product.objects.filter(category__slug=category_slug)
-    
+    paginate_by = 10
 
-    user = request.user
-    category_url = category_slug
-    another_categories = Category.objects.all()[:10]
-
-    ##################Search###################
-
-    query = request.GET.get("q")
-    if query:
-        queryset_list = queryset_list.filter(
-                Q(name__icontains=query)).distinct()
+    def get_queryset(self):
+        queryset_list = super(ProductListView, self).get_queryset()
+        query = self.request.GET.get('q')
+        if query:
+            return queryset_list.filter(Q(title__icontains=query)).distinct()
+        else:
+            return queryset_list
 
 
-    #################Paginator#################
+class ItemListView(ProductListView):
+    context_object_name = 'products'
 
-    paginator = Paginator(queryset_list, 5) #Show 5 contacts per page
-    page_request_var='page' #url name 'page'=1,2,3,4...
-    page = request.GET.get(page_request_var)
+    def get_queryset(self):
+        """ Нужно сделать создав метод для Queryser """
+        queryset_list = Product.objects.items()
+        return queryset_list
 
-    try:
-        queryset = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        queryset = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        queryset = paginator.page(paginator.num_pages)
-
-    context = {
-        'products': queryset,#object_list v html
-        'page_request_var': page_request_var, #v url num page
-        'category_slug':category_slug,
-        'another_categories':another_categories,
-        'user': user,
-    }
-
-    return render(request, "shop/product_list.html", context)
+    def get_context_data(self, **kwargs):
+        context = super(ItemListView, self).get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()[:10]
+        return context
 
 
-def product_detail(request, product_slug):
-    item = get_object_or_404(Product, slug=product_slug)
+class ServiceListView(ProductListView):
+    template_name = "shop/service_list.html"
+    context_object_name = 'services'
 
-    related_items = Product.objects.filter(relation=item).distinct()
-
-    context = {
-        'item': item,
-        'related_items':related_items,
-    }
-
-    return render(request, "shop/product_detail.html", context=context)
+    def get_queryset(self):
+        """ Нужно сделать создав метод для Queryser """
+        queryset_list = Product.objects.services()
+        return queryset_list
 
 
-def service_list(request):
-    queryset_list = Service.objects.filter(available=True)
+class CategoryShopListView(CategoryListView):
+    template_name = "shop/category_list.html"
 
 
-    ##################Search###################
+class ItemCategoriedListView(ItemListView):
+    def get_queryset(self):
+        queryset_list = super(ItemCategoriedListView, self).get_queryset()
+        return queryset_list.filter(category__slug=self.kwargs['category_slug'])
 
-    query = request.GET.get("q")
-    if query:
-        queryset_list = queryset_list.filter(Q(name__icontains=query)).distinct()
-
-
-    #################Paginator#################
-
-    paginator = Paginator(queryset_list, 5) #Show 5 contacts per page
-    page_request_var='page' #url name 'page'=1,2,3,4...
-    page = request.GET.get(page_request_var)
-    try:
-        queryset = paginator.page(page)
-
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        queryset = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        queryset = paginator.page(paginator.num_pages)
-
-    context = {
-        'services': queryset,
-        'page_request_var': page_request_var,
-    }
-
-    return render(request, "shop/service_list.html", context=context)
+    def get_context_data(self, **kwargs):
+        context = super(ItemCategoriedListView, self).get_context_data(**kwargs)
+        context['another_categories'] = Category.objects.all()[:10]
+        context['category_slug'] = self.kwargs['category_slug']
+        return context
 
 
-def category_list(request):
-    queryset_list = Category.objects.all()
+class ProductDetalilView(DetailView):
+    model = Product
+    context_object_name = 'item'
 
-    ##################Search###################
-
-    query = request.GET.get("q")
-    if query:
-        queryset_list = queryset_list.filter(Q(name__icontains=query)).distinct()
-
-
-    #################Paginator#################
-
-    paginator = Paginator(queryset_list, 5) #Show 5 contacts per page
-    page_request_var='page' #url name 'page'=1,2,3,4...
-    page = request.GET.get(page_request_var)
-    try:
-        queryset = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        queryset = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        queryset = paginator.page(paginator.num_pages)
+    def get_context_data(self, **kwargs):
+        context = super(ProductDetalilView, self).get_context_data(**kwargs)
+        item = context['item']
+        related_items = Product.objects.items().filter(relation=item).distinct()
+        related_services = Product.objects.services().filter(relation=item).distinct()
+        context['related_items'] = related_items
+        context['related_services'] = related_services
+        return context
 
 
-    context = {
-        'categories': queryset,
-        'page_request_var': page_request_var,
-    }
+class ItemDetailView(ProductDetalilView):
+    template_name = "shop/product_detail.html"
 
-    return render(request, "shop/category_list.html", context=context)
 
- 
-
-def service_detail(request, service_slug):
-    item = get_object_or_404(Service, slug=service_slug)
-
-    related_services = Service.objects.filter(relation=item).distinct()
-
-    related_productes = Product.objects.filter(relation=item).distinct()
-
-    context = {
-        'item': item,
-        'related_services':related_services,
-        'related_productes':related_productes,
-    }
-
-    return render(request, "shop/service_detail.html", context=context)
- 
+class ServiceDetailView(ProductDetalilView):
+    template_name = "shop/service_detail.html"

@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^article/', include('blog.urls')),
     url(r'^market/', include('shop.urls')),
+    url(r'^orders/', include('orders.urls')),
 ]
 
 if settings.DEBUG:
