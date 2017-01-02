@@ -10,9 +10,6 @@ from .models import Category, Product, Service
 @csrf_protect
 def product_list(request):
     queryset_list = Product.objects.all()
-    
-
-    user = request.user
     categories = Category.objects.all()[:10]
 
     ##################Search###################
@@ -21,7 +18,6 @@ def product_list(request):
     if query:
         queryset_list = queryset_list.filter(
                 Q(name__icontains=query)).distinct()
-
 
     #################Paginator#################
 
@@ -41,8 +37,7 @@ def product_list(request):
     context = {
         'products': queryset,#object_list v html
         'page_request_var': page_request_var, #v url num page
-        'categories':categories,
-        'user': user,
+        'categories': categories,
     }
 
     return render(request, "shop/product_list.html", context)

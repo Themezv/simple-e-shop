@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_protect
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 from .models import Tiles
 from django.contrib.flatpages.models import FlatPage
 from .forms import AboutForm, ContactForm, TilesForm
 from shop.models import Service
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.serializers import json
 
 
 @csrf_protect
@@ -70,3 +71,12 @@ def contacts_edit(request):
         'form': form,
     }
     return render(request, "homepage/FlatPagesForm.html", context)
+
+
+@csrf_protect
+def test_ajax(request):
+    context = {}
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        return JsonResponse({'name': name})
+    return render(request, "homepage/index2.html", context)
