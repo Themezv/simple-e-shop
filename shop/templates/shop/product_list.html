@@ -3,9 +3,22 @@
 
 
 {% block content %}
+<div class="row finder">
+
+
+	<div class="col-xs-12">
+
+					<form method="GET" action="">
+						<div class="input-group">	
+							<input class="form-control" type="text" placeholder="Введите запрос" name="q" value="{{ request.GET.q }}">
+							<span class="input-group-btn"><input class="btn btn-default" type="submit" value="Search"></span>
+						</div>
+					</form>
+    </div>
+</div>
 <div class="row">
 
-	<div class="col-xs-3">
+        <div class="col-xs-3 categories">
 					<br>
 					{% if categories %}
 						<a href="{% url 'category_list' %}"><h3>Категории</h3></a>
@@ -13,20 +26,12 @@
 						<a href="{{ catgr.get_absolute_url }}" class="list-group-item">{{ catgr.title }}</a>
 						{% endfor %}
 					{% endif %}
-	</div>
+    	</div>
 
 
-	<div class="col-xs-6">
-					<br>
-					<form method="GET" action="" class="">
-						<div class="input-group">	
-							<input class="form-control" type="text" placeholder="Введите запрос" name="q" value="{{ request.GET.q }}">
-							<span class="input-group-btn"><input class="btn btn-default" type="submit" value="Search"></span>
-						</div>
-					</form>
-
-
+<div class="col-xs-9 row">
 					{% for product in products %}
+
 					<h3><a href="{{ product.get_absolute_url }}"> {{ product.title }} </a></h3>	
 
 					{% if product.avatar %}
@@ -35,11 +40,15 @@
 					
 					<p>Цена:{{ product.price }}</p>
 					<hr/>
-					
+
 					{% endfor %}
 
 
-					<div class="pagination">
+
+	</div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="pagination">
 						<span class="step-links">
 						{% if products.has_previous %}
 							<a href="?{{page_request_var}}={{ products.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>
@@ -54,13 +63,12 @@
 							{% endif %}
 						</span>
 					</div>
-	</div>
-
-
-	<div class="col-xs-3">
-					<br>
-	</div>
-
+            </div>
+        </div>
 </div>
+
+
+
+
 
 {% endblock content %}

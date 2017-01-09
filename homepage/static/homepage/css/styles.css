@@ -106,3 +106,39 @@ h3.card-title{
     top: 10px; /* Положение от нижнего края */
     right: 10px;
 }
+
+/*
+*
+*		Product list
+*
+*/
+
+div.finder
+{
+	display: flex;
+	height: 60px;
+	align-content: space-around;
+}
+.form-control {
+	width: 500px;
+}
+.categories {
+	 margin: 0;
+	padding: 0;
+}
+.product {
+	height: 400px;
+	border: 1px solid black;
+	margin: 0;
+	padding: 0;
+}
+.product-item-top, .product-item-bottom {
+	text-align: center;
+	padding: 0 10px;
+}
+.a-product:hover {
+	text-decoration: none;
+}
+.product-img {
+	width: 100%;
+}

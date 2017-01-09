@@ -9,7 +9,7 @@ from transliterate import translit
 class ProductManager(models.Manager):
     def items(self, *args, **kwargs):
         return super(ProductManager, self).filter(product_type__title="Item")
-    
+
     def services(self, *args, **kwargs):    
         return super(ProductManager, self).filter(product_type__title="Service")
 
@@ -61,6 +61,6 @@ class Product(models.Model):
 
     def get_category_slug(self):
         return self.category.first().slug
-    
+
     def __str__(self):
         return self.title

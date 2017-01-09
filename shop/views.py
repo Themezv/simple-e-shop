@@ -1,16 +1,10 @@
 from django.db.models import Q
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, RedirectView, DeleteView, TemplateView
 from django.views.decorators.csrf import csrf_protect
-
-
-
 from blog.views import CategoryListView
-
-
 from .models import Category, Product, ProductType
 
 
-# Create your views here.
 class ProductListView(ListView):
     template_name = "shop/product_list.html"
     model = Product
