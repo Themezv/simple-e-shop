@@ -33,19 +33,6 @@ class NewTileView(CreateView):
         return HttpResponse("Плитка со ссылкой на эту услугу уже создана <a href=\"/\">Вернуться на главую </a>")
 
 
-
-# def new_tile(request):
-#     if request.method == 'POST':
-#         form = TilesForm(request.POST)
-#         if form.is_valid():
-#             form.save(commit=True)
-#             return redirect('/')
-#         else:
-#             return HttpResponse("Плитка со ссылкой на эту услугу уже создана <a href=\"/\">Вернуться на главую </a>")
-#     else:
-#         return Http404
-
-
 @method_decorator(login_required(), name="dispatch")
 class DeleteTileView(DeleteView):
     model = Tiles
@@ -56,16 +43,6 @@ class DeleteTileView(DeleteView):
         id_tile_to_delete = int(self.request.POST.get('id-to-delete'))
         tile = Tiles.objects.get(pk=id_tile_to_delete)
         return tile
-
-
-# def delete_tile(request):
-#     if request.method == 'POST':
-#         id_tile_to_delete = int(request.POST['id-to-delete'])
-#         tile = Tiles.objects.get(pk=id_tile_to_delete)
-#         tile.delete()
-#         return redirect('/')
-#     else:
-#         return Http404
 
 
 def about_edit(request):

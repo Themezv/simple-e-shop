@@ -19,6 +19,7 @@ class Order(models.Model):
     email = models.EmailField()
     phone_number = models.CharField(max_length=15)
     items = models.ManyToManyField(OrderedItem)
+    timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
 
     def get_absolute_url(self):
         return reverse("order_detail", args=[str(self.id)])

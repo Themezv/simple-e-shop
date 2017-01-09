@@ -19,6 +19,7 @@ class OrderListView(ListView):
     template_name = "orders/order_list.html"
     model = Order
     context_object_name = 'obj_list'
+    ordering = '-timestamp'
 
     paginate_by = 10
 
