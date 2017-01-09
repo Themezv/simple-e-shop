@@ -99,11 +99,3 @@ def contacts_edit(request):
     }
     return render(request, "homepage/FlatPagesForm.html", context)
 
-
-@csrf_protect
-def test_ajax(request):
-    context = {}
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        return JsonResponse({'name': name})
-    return render(request, "homepage/index2.html", context)

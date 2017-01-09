@@ -9,9 +9,9 @@
       <br>
       {% for obj in obj_list %}
               <a href="{{ obj.get_absolute_url }}"><h3>{{ obj.FIO }}</h3></a>
-              <p>Телефон:{{ obj.phone_number }}</p>
-              <p>Email:{{ obj.email }}</p>
-              <p>Адресс{{ obj.adress }}</p>
+              <p>Телефон: {{ obj.phone_number }}</p>
+              <p>Email: {{ obj.email }}</p>
+              <p>Адрес: {{ obj.adress }}</p>
               <hr>
       {% endfor %}
 

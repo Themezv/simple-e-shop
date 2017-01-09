@@ -9,6 +9,7 @@ from transliterate import translit
 class ProductManager(models.Manager):
     def items(self, *args, **kwargs):
         return super(ProductManager, self).filter(product_type__title="Item")
+
     def services(self, *args, **kwargs):    
         return super(ProductManager, self).filter(product_type__title="Service")
 
@@ -48,10 +49,8 @@ class Product(models.Model):
     #ForeignKey
     product_type = models.ForeignKey(ProductType)
 
-
     #Manager
     objects = ProductManager()
-
 
     def get_absolute_url(self):
         if self.product_type.title == 'Item':
@@ -60,10 +59,8 @@ class Product(models.Model):
         if self.product_type.title == 'Service':
             return reverse("service_detail", args=[str(self.id)])
 
-
     def get_category_slug(self):
         return self.category.first().slug
 
-    
     def __str__(self):
         return self.title

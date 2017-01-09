@@ -5,14 +5,10 @@ from django.http import Http404, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, RedirectView, DeleteView, TemplateView
 from django.utils.decorators import method_decorator
-
-
-
-
 from orders.forms import OrderForm
 from shop.models import Product
 from orders.models import Order, OrderedItem
-# Create your views here.
+
 
 @method_decorator(login_required(), name="dispatch")
 class OrderListView(ListView):
@@ -46,9 +42,10 @@ class OrderDetailView(DetailView):
         context['ordered_products'] = instance.items.all()
         return context
 
-#Не сделанно
+
+#  Не сделанно
 @method_decorator(login_required(), name="dispatch")
-class OrdereDeleteView(DeleteView):
+class OrderDeleteView(DeleteView):
     template_name = "orders/order_create.html"
     model = Order
     form_class = OrderForm
