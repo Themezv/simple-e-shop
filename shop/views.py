@@ -88,3 +88,4 @@ class ProductCreateView(CreateView):
     model = Product
     form_class = ProductForm
     context_object_name = 'product'
+
