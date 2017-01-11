@@ -1,18 +1,18 @@
 {% load staticfiles %}
-<div class="container-fluid">
-  <div class="row header flex-items-xs-middle">
-          <div class="col-xs-3">
+<div class="container-fluid ">
+  <div class="row header flex-items-md-middle">
+          <div class="col-md-3">
             <a href="/"><img src="/media/{{ firm_settings.logo }}" id="logo"></a>
           </div>
-          <div class="col-xs-3 myalign">
+          <div class="col-md-3 hidden-sm-down">
             <div class="header-img"><img src="{% static 'homepage/img/home.png' %}"></div>
             <div class="header-img">Адрес: <br> {{ firm_settings.address | safe}} </div>
           </div>
-          <div class="col-xs-3 myalign">
+          <div class="col-md-3 hidden-sm-down">
             <div class="header-img"><img src="{% static 'homepage/img/time.png' %}"></div>
             <div class="header-img">Время работы: <br> {{ firm_settings.work_time }} </div>
           </div>
-          <div class="col-xs-3 myalign">
+          <div class="col-md-3 hidden-sm-down">
             <div class="header-img"><img src="{% static 'homepage/img/cont.png' %}"></div>
             <div class="header-img">тел.: <br> {{ firm_settings.phone1 }}  <br> {{ firm_settings.phone2 }} </div>
           </div>

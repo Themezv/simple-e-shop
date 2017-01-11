@@ -90,4 +90,9 @@ class ProductCreateView(CreateView):
     context_object_name = 'product'
 
     def form_valid(self, form):
+        print(form)
         return super(ProductCreateView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        print(form)
+        return super(ProductCreateView, self).form_invalid(form)

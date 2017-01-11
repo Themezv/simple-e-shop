@@ -1,6 +1,6 @@
 {% load page_extras %}
-<div class="row menu-row">
-<nav class="main-menu">
+<div class="row menu-row hidden-sm-down">
+<nav class="main-menu ">
 <ul class="nav nav-justified main-menu-ul">
 {% if path == '/' %}
     <li class="active main-menu-li"><a class="main-menu-li-a" href="/">Главная</a></li>
@@ -8,38 +8,38 @@
     <li class="main-menu-li"><a class="main-menu-li-a" href="/">Главная</a></li>
 {% endif %}
 
-{% if '/market/shop/' in path %}
+{% if path == '/market/shop/' %}
     <li class="active main-menu-li"><a class="main-menu-li-a" href="/market/shop/">Магазин</a></li>
 {% else %}
     <li class="main-menu-li"><a class="main-menu-li-a" href="/market/shop/">Магазин</a></li>
 {% endif %}
 
-{% if '/market/service/' in path %}
+{% if path == '/market/service/' %}
     <li class="active main-menu-li"><a class="main-menu-li-a" href="/market/service/">Услуги</a></li>
 {% else %}
     <li class="main-menu-li"><a class="main-menu-li-a" href="/market/service/">Услуги</a></li>
 {% endif %}
 
-{% if '/article/' in path %}
+{% if path == '/article/' %}
     <li class="active main-menu-li"><a class="main-menu-li-a" href="/article/">Статьи</a></li>
 {% else %}
     <li class="main-menu-li"><a class="main-menu-li-a" href="/article/">Статьи</a></li>
 {% endif %}
 
-{% if '/about/' in path %}
+{% if path == '/about/' %}
     <li  class="active main-menu-li"><a class="main-menu-li-a" href="/about/">О нас</a></li>
 {% else %}
     <li class="main-menu-li"><a class="main-menu-li-a" href="/about/">О нас</a></li>
 {% endif %}
 
-{% if '/contacts/' in path %}
+{% if path == '/contacts/' %}
     <li class="active main-menu-li"><a class="main-menu-li-a" href="/contacts/">Контакты</a></li>
 {% else %}
     <li class="main-menu-li"><a class="main-menu-li-a" href="/contacts/">Контакты</a></li>
 {% endif %}
 
 {% if user.is_superuser or user.is_staff %}
-    {% if '/orders/' in path %}
+    {% if path == '/orders/' %}
         <li class="active main-menu-li"><a class="main-menu-li-a" href="/orders/">Заказы</a></li>
     {% else %}
         <li class="main-menu-li"><a class="main-menu-li-a" href="/orders/">Заказы</a></li>
@@ -59,3 +59,20 @@
 </ul>
 </nav>
 </div>
+
+<div class="dropdown">
+    <button class="btn btn-primary btn-block dropdown-toggle hidden-md-up" type="button" data-toggle="dropdown">Меню
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li><a href="/">Главная</a></li>
+      <li><a href="/market/shop/">Магазин</a></li>
+      <li><a href="/market/service/">Услуги</a></li>
+      <li><a href="/article/">Статьи</a></li>
+      <li><a href="/about/">Статьи</a></li>
+      <li><a href="/contacts/">Контакты</a></li>
+      {% if user.is_superuser or user.is_staff %}
+        <li><a href="/orders/">Заказы</a></li>
+      {% endif %}
+    </ul>
+</div>
+<!-- <a id="touch-menu" class="mobile-menu hidden-md-up " href="#"><i class="icon-reorder"></i>Menu</a> -->
