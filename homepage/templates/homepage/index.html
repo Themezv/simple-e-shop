@@ -9,7 +9,8 @@
   {{ block.super }}
       
 
-  <div class="row">
+  <div class="row wrap-tile">
+      <div class="for-back-img"></div>
       <div class="row">
       {% for tile in tiles %}
           <div class="col-lg-4 col-md-6 col-sm-12">
@@ -28,6 +29,7 @@
           </div>
       {% endfor %}
       </div> 
+      <hr>
 
       {% if user.is_staff or user.is_superuser %}
           <div class="col-xs-3 tile" id="div-new-tile">
