@@ -6,8 +6,8 @@
 <div class="row finder">
 
 
-	<div class="col-xs-12">
-
+	<div class="col-md-6 offset-md-3">
+	<br>	
 					<form method="GET" action="">
 						<div class="input-group">	
 							<input class="form-control" type="text" placeholder="Введите запрос" name="q" value="{{ request.GET.q }}">
@@ -18,7 +18,7 @@
 </div>
 <div class="row">
 
-        <div class="col-xs-3 categories">
+        <div class="col-md-3 categories">
 					<br>
 					{% if categories %}
 						<a href="{% url 'category_list' %}"><h3>Категории</h3></a>
@@ -29,7 +29,7 @@
     	</div>
 
 
-<div class="col-xs-9 row">
+<div class="col-md-9">
 					{% for product in products %}
 
 					<h3><a href="{{ product.get_absolute_url }}"> {{ product.title }} </a></h3>	
@@ -47,7 +47,7 @@
 
 	</div>
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-md-12">
                 <div class="pagination">
 						<span class="step-links">
 						{% if products.has_previous %}
