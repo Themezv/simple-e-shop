@@ -88,6 +88,3 @@ class ProductCreateView(CreateView):
     model = Product
     form_class = ProductForm
     context_object_name = 'product'
-
-    def form_valid(self, form):
-        return super(ProductCreateView, self).form_valid(form)
