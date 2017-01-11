@@ -8,7 +8,7 @@ class OrderForm(forms.ModelForm):
         model = Order
         fields = [
             'FIO',
-            'adress',
+            'address',
             'phone_number',
             'email',
             # 'items',

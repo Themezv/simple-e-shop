@@ -3,6 +3,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, R
 from django.views.decorators.csrf import csrf_protect
 from blog.views import CategoryListView
 from .models import Category, Product, ProductType
+from .forms import ProductForm
 
 
 class ProductListView(ListView):
@@ -80,3 +81,13 @@ class ItemDetailView(ProductDetalilView):
 
 class ServiceDetailView(ProductDetalilView):
     template_name = "shop/service_detail.html"
+
+
+class ProductCreateView(CreateView):
+    template_name = "shop/product_create.html"
+    model = Product
+    form_class = ProductForm
+    context_object_name = 'product'
+
+    def form_valid(self, form):
+        return super(ProductCreateView, self).form_valid(form)

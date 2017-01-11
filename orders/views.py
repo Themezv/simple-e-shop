@@ -25,7 +25,7 @@ class OrderListView(ListView):
         if query:
             return queryset_list.filter(
                             Q(FIO__icontains=query) |
-                            Q(adress__icontains=query) |
+                            Q(address__icontains=query) |
                             Q(email__icontains=query)).distinct()
         else:
             return queryset_list

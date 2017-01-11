@@ -1,0 +1,17 @@
+{% extends "homepage/base.html" %}
+
+{% block head_extra %}
+{% endblock head_extra %}
+
+{% block content %}
+<div class="row">
+  <div class="col-xs-6 offset-xs-3">
+    <br>
+    <h1>Создать новый товар</h1>
+    <form action="" method="POST" class="article-form">  {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="save btn btn-default">Сохранить</button>
+    </form>
+  </div>
+</div>
+{% endblock content %}
