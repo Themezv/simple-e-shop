@@ -1,74 +1,49 @@
-{% extends "homepage/base.html" %}
-
-
-
-{% block content %}
-<div class="row finder">
-
-
-	<div class="col-md-6 offset-md-3">
-	<br>	
-					<form method="GET" action="">
-						<div class="input-group">	
-							<input class="form-control" type="text" placeholder="Введите запрос" name="q" value="{{ request.GET.q }}">
-							<span class="input-group-btn"><input class="btn btn-default" type="submit" value="Search"></span>
-						</div>
-					</form>
+{% extends "homepage/base.html" %} {% block content %}
+<div class="row product-list">
+    <div class="col-md-6 push-md-3 content-box">
+        <form method="GET" class="search-box" action="">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Введите запрос" name="q" value="{{ request.GET.q }}">
+                <span class="input-group-btn"><input class="btn btn-primary btn-default" type="submit" value="Search"></span>
+            </div>
+        </form>
+        {% for product in products %}
+        <div class="card full-size" style="width: 20rem;">
+            <img class="card-img-top img-fluid" src="/media/{{ product.avatar }}" alt="Card image cap">
+            <div class="card-block">
+                <h4 class="card-title"><a href="{{ product.get_absolute_url }}"> {{ product.title }}</a></h4>
+                <p class="card-text">Цена:{{ product.price }}</p>
+                <a href="{{ product.get_absolute_url }}" class="btn btn-primary">Подробнее</a>
+                <a href="#" class="btn btn-primary">Заказать</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="col-md-3 pull-md-6 left-box">
+        {% if categories %}
+        <div class="card card-primary category-card">
+            <div class="card-header"><a href="{% url 'category_list' %}"><h3>Категории</h3></a></div>
+            {% for catgr in categories %}
+            <div class="card-block"><a href="{{ catgr.get_absolute_url }}" class="">{{ catgr.title }}</a></div>
+            {% endfor %}
+        </div>
+        {% endif %}
     </div>
 </div>
 <div class="row">
-
-        <div class="col-md-3 categories">
-					<br>
-					{% if categories %}
-						<a href="{% url 'category_list' %}"><h3>Категории</h3></a>
-						{% for catgr in categories %}
-						<a href="{{ catgr.get_absolute_url }}" class="list-group-item">{{ catgr.title }}</a>
-						{% endfor %}
+    <div class="col-md-12">
+        <div class="pagination">
+            <span class="step-links">
+				{% if products.has_previous %}
+					<a href="?{{page_request_var}}={{ products.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>
 					{% endif %}
-    	</div>
 
-
-<div class="col-md-9">
-					{% for product in products %}
-
-					<h3><a href="{{ product.get_absolute_url }}"> {{ product.title }} </a></h3>	
-
-					{% if product.avatar %}
-					<img src="/media/{{ product.avatar }}" alt="" class="img-fluid" />
-					{% endif %}
-					
-					<p>Цена:{{ product.price }}</p>
-					<hr/>
-
-					{% endfor %}
-
-
-
-	</div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="pagination">
-						<span class="step-links">
-						{% if products.has_previous %}
-							<a href="?{{page_request_var}}={{ products.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>
-							{% endif %}
-
-							<span class="current">
-							{{ products.number }} из {{ products.paginator.num_pages }}.
-							</span>
-
-							{% if products.has_next %}
-							<a href="?{{page_request_var}}={{ products.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a>
-							{% endif %}
-						</span>
-					</div>
-            </div>
+					<span class="current">
+					{{ products.number }} из {{ products.paginator.num_pages }}.
+					</span> {% if products.has_next %}
+            <a href="?{{page_request_var}}={{ products.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a> {% endif %}
+            </span>
         </div>
+    </div>
 </div>
-
-
-
-
-
 {% endblock content %}
