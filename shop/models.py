@@ -45,6 +45,8 @@ class Product(models.Model):
     category = models.ManyToManyField(Category)
     relation = models.ManyToManyField('self', blank=True)
     avatar = models.ImageField(upload_to='items_avatars')
+    text_preview = models.TextField(max_length=5000, null=True, blank=True)
+
 
     #ForeignKey
     product_type = models.ForeignKey(ProductType)
