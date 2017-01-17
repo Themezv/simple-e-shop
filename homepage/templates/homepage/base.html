@@ -57,10 +57,21 @@
     </script>
     
     <script type="text/javascript">
-            $("#new-tile").click(function () {
+        $("#new-tile").click(function () {
                     $("#div-new-tile").html("<form method=\"POST\" action=\" /new_tile/ \" > {% csrf_token %} {{ form.as_p | escapejs}} <button id=\"add-tile\" class=\"save btn btn-default\">Добавить</button></form>");
               });
+            $(document).ready(function() {
+                $("#div-new-tile").fadeTo('fast', 0.5)
+                                    .mouseenter(function() {
+                    $(this).fadeTo('fast', 1);
+                })
+                .mouseleave(function() {
+                    $(this).fadeTo('fast', 0.5);
+                });
+            });
+            $(document).ready(function () {
+                $(".for-back-img").height($(".wrap-tile").height());
+            })
     </script>
-
   </body>
 </html>

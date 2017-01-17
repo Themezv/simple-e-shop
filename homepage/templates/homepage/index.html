@@ -11,50 +11,30 @@
 
   <div class="row wrap-tile">
       <div class="for-back-img"></div>
-      <div class="row">
       {% for tile in tiles %}
           <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="card card-block tile">
-                  <a href="{{ tile.pages.get_absolute_url }}" class="card-link">
-                      <h3 class="card-title">{{ tile.pages.title }}</h3>
-                      {% if  user.is_staff or user.is_superuser %}
-                            <form method="post" action="/tile-delete/"> {% csrf_token %}
-                            <input type="number" class="number-tile-delete" value="{{ tile.pk }}" name="id-to-delete">
-                            <button class="btn btn-danger btn-tile-delete">x</button>
-                            </form>
-                      {% endif %}
-                      <img src="media/{{ tile.pages.avatar }}" class="tile-img img-fluid">
-                  </a>
-                </div>
+                <div class="tile">
+                      <a href="{{ tile.pages.get_absolute_url }}" class="card-link">
+                          <h3 class="card-title">{{ tile.pages.title }}</h3>
+                          {% if  user.is_staff or user.is_superuser %}
+                                <form method="post" action="/tile-delete/"> {% csrf_token %}
+                                <input type="number" class="number-tile-delete" value="{{ tile.pk }}" name="id-to-delete">
+                                <button class="btn btn-danger btn-tile-delete">x</button>
+                                </form>
+                          {% endif %}
+                          <img src="media/{{ tile.pages.avatar }}" class="tile-img img-fluid">
+                      </a>
+                    </div>
           </div>
       {% endfor %}
-      </div> 
-      <hr>
+
 
       {% if user.is_staff or user.is_superuser %}
           <div class="col-xs-3 tile" id="div-new-tile">
             <h1 id="new-tile">+</h1>
-            <script type="text/javascript">
-            $("#new-tile").click(function () {
-                    $("#div-new-tile").html("<form method=\"POST\" action=\" /new_tile/ \" > {% csrf_token %} {{ form.as_p | escapejs}} <button id=\"add-tile\" class=\"save btn btn-default\">Добавить</button></form>");
-              });
-            $(document).ready(function() {
-                $("#div-new-tile").fadeTo('fast', 0.5);
-    $("#div-new-tile").mouseenter(function() {
-        $("#div-new-tile").fadeTo('fast', 1);
-    });
-    $("#div-new-tile").mouseleave(function() {
-        $("#div-new-tile").fadeTo('fast', 0.5);
-    });
-});
-            </script>
           </div>
       {% endif %}
-
-
-
   </div>
-
 
 
 
