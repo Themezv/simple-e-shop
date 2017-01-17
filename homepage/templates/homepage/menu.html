@@ -2,11 +2,12 @@
 <div class="row menu-row hidden-sm-down">
 <nav class="main-menu ">
 <ul class="nav nav-justified main-menu-ul">
-{% if path == '/' %}
+{% if '/' == path %}
     <li class="active main-menu-li"><a class="main-menu-li-a" href="/">Главная</a></li>
 {% else %}
     <li class="main-menu-li"><a class="main-menu-li-a" href="/">Главная</a></li>
 {% endif %}
+
 
 {% if '/market/shop/' in path %}
     <li class="active main-menu-li"><a class="main-menu-li-a" href="/market/shop/">Магазин</a></li>
@@ -14,11 +15,13 @@
     <li class="main-menu-li"><a class="main-menu-li-a" href="/market/shop/">Магазин</a></li>
 {% endif %}
 
+
 {% if '/market/service/' in path %}
     <li class="active main-menu-li"><a class="main-menu-li-a" href="/market/service/">Услуги</a></li>
 {% else %}
     <li class="main-menu-li"><a class="main-menu-li-a" href="/market/service/">Услуги</a></li>
 {% endif %}
+
 
 {% if '/article/' in path %}
     <li class="active main-menu-li"><a class="main-menu-li-a" href="/article/">Статьи</a></li>
@@ -26,11 +29,13 @@
     <li class="main-menu-li"><a class="main-menu-li-a" href="/article/">Статьи</a></li>
 {% endif %}
 
+
 {% if '/about/' in path %}
     <li  class="active main-menu-li"><a class="main-menu-li-a" href="/about/">О нас</a></li>
 {% else %}
     <li class="main-menu-li"><a class="main-menu-li-a" href="/about/">О нас</a></li>
 {% endif %}
+
 
 {% if '/contacts/' in path %}
     <li class="active main-menu-li"><a class="main-menu-li-a" href="/contacts/">Контакты</a></li>
@@ -61,7 +66,7 @@
 </div>
 
 <div class="dropdown">
-    <button class="btn btn-block dropdown-toggle hidden-md-up" type="button" data-toggle="dropdown">Меню
+    <button class="btn btn-block btn-primary dropdown-toggle hidden-md-up" type="button" data-toggle="dropdown">Меню
     <span class="caret"></span></button>
     <ul class="dropdown-menu">
       <li><a href="/">Главная</a></li>
