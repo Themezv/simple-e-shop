@@ -2,37 +2,42 @@
 <div class="row menu-row hidden-sm-down">
 <nav class="main-menu ">
 <ul class="nav nav-justified main-menu-ul">
-{% if '/' == path%}
+{% if '/' == path %}
     <li class="active main-menu-li"><a class="main-menu-li-a" href="/">Главная</a></li>
 {% else %}
     <li class="main-menu-li"><a class="main-menu-li-a" href="/">Главная</a></li>
 {% endif %}
 
-{% if '/market/shop/' in path%}
+
+{% if '/market/shop/' in path %}
     <li class="active main-menu-li"><a class="main-menu-li-a" href="/market/shop/">Магазин</a></li>
 {% else %}
     <li class="main-menu-li"><a class="main-menu-li-a" href="/market/shop/">Магазин</a></li>
 {% endif %}
 
-{% if '/market/service/' in path%}
+
+{% if '/market/service/' in path %}
     <li class="active main-menu-li"><a class="main-menu-li-a" href="/market/service/">Услуги</a></li>
 {% else %}
     <li class="main-menu-li"><a class="main-menu-li-a" href="/market/service/">Услуги</a></li>
 {% endif %}
 
-{% if '/article/' in path%}
+
+{% if '/article/' in path %}
     <li class="active main-menu-li"><a class="main-menu-li-a" href="/article/">Статьи</a></li>
 {% else %}
     <li class="main-menu-li"><a class="main-menu-li-a" href="/article/">Статьи</a></li>
 {% endif %}
 
-{% if '/about/' in path%}
+
+{% if '/about/' in path %}
     <li  class="active main-menu-li"><a class="main-menu-li-a" href="/about/">О нас</a></li>
 {% else %}
     <li class="main-menu-li"><a class="main-menu-li-a" href="/about/">О нас</a></li>
 {% endif %}
 
-{% if '/contacts/' in path%}
+
+{% if '/contacts/' in path %}
     <li class="active main-menu-li"><a class="main-menu-li-a" href="/contacts/">Контакты</a></li>
 {% else %}
     <li class="main-menu-li"><a class="main-menu-li-a" href="/contacts/">Контакты</a></li>

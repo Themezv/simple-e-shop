@@ -8,7 +8,7 @@
   <div class="col-xs-6 offset-xs-3">
     <br>
     <h1>Создать новый товар</h1>
-    <form action="" method="POST" enctype="multipart/form-data" class="product-form">  {% csrf_token %}
+    <form action="" enctype="multipart/form-data" method="POST" class="article-form">  {% csrf_token %}
       {{ form.as_p }}
       <button type="submit" class="save btn btn-default">Сохранить</button>
     </form>
