@@ -68,10 +68,10 @@ class ProductDetalilView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ProductDetalilView, self).get_context_data(**kwargs)
         item = context['object']
-        related_items = Product.objects.items().filter(relation=item).distinct()
-        related_services = Product.objects.services().filter(relation=item).distinct()
-        context['related_items'] = related_items
-        context['related_services'] = related_services
+        related_items = Product.objects.items().filter(relation=item).distinct().exclude(id=item.id)
+        related_services = Product.objects.services().filter(relation=item).distinct().exclude(id=item.id)
+        context['related_items'] = related_items[:4]
+        context['related_services'] = related_services[:4]
         print(context)
         return context
 
