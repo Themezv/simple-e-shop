@@ -217,9 +217,12 @@
 	    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
 	}
 	
-	.search-box {
+	.content-box {
 	    margin-top: 20px;
-	    margin-bottom: 10px;
+	}
+
+	.search-box {
+		margin-bottom: 10px;
 	}
 	
 	.full-size {
@@ -227,12 +230,18 @@
 	}
 	
 	.left-box {
+		margin-top: 20px;
+	    padding-left: 30px;
+	    padding-right: 30px;
+	}
+
+	.right-box {
+		margin-top: 20px;
 	    padding-left: 30px;
 	    padding-right: 30px;
 	}
 	
 	.category-card {
-	    margin-top: 20px;
 	    width: 100%;
 	    text-align: center;
 	}
@@ -347,11 +356,11 @@
 	    vertical-align: middle;
 	}
 
-	.article-list a {
+	.article-list a, .recent-article-list a{
 		color: black;
 	}
 	
-	.article-list a:hover {
+	.article-list a:hover, .recent-article-list a:hover {
 		text-decoration: none;
 	}
 
@@ -383,4 +392,10 @@
 	.article-dscrpt h4 {
 		margin-top: 10px;
 		color: rgba(66,65,60,0.74); 
+	}
+
+
+	.recent-article-list .card-text {
+		font-size: 14px;
+		color: rgba(66,65,60,0.95);
 	}
