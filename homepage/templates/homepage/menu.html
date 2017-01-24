@@ -1,57 +1,57 @@
 {% load page_extras %}
 <div class="row menu-row hidden-sm-down">
-<nav class="main-menu ">
-<ul class="nav nav-justified main-menu-ul">
-{% if '/' == path %}
-    <li class="active main-menu-li"><a class="main-menu-li-a" href="/">Главная</a></li>
-{% else %}
-    <li class="main-menu-li"><a class="main-menu-li-a" href="/">Главная</a></li>
-{% endif %}
+    <nav class="main-menu ">
+        <ul class="nav nav-justified main-menu-ul">
+            {% if '/' == path %}
+                <li class="active main-menu-li"><a class="main-menu-li-a" href="/">Главная</a></li>
+            {% else %}
+                <li class="main-menu-li"><a class="main-menu-li-a" href="/">Главная</a></li>
+            {% endif %}
 
 
-{% if '/market/shop/' in path %}
-    <li class="active main-menu-li"><a class="main-menu-li-a" href="/market/shop/">Магазин</a></li>
-{% else %}
-    <li class="main-menu-li"><a class="main-menu-li-a" href="/market/shop/">Магазин</a></li>
-{% endif %}
+            {% if '/market/shop/' in path %}
+                <li class="active main-menu-li"><a class="main-menu-li-a" href="/market/shop/">Магазин</a></li>
+            {% else %}
+                <li class="main-menu-li"><a class="main-menu-li-a" href="/market/shop/">Магазин</a></li>
+            {% endif %}
 
 
-{% if '/market/service/' in path %}
-    <li class="active main-menu-li"><a class="main-menu-li-a" href="/market/service/">Услуги</a></li>
-{% else %}
-    <li class="main-menu-li"><a class="main-menu-li-a" href="/market/service/">Услуги</a></li>
-{% endif %}
+            {% if '/market/service/' in path %}
+                <li class="active main-menu-li"><a class="main-menu-li-a" href="/market/service/">Услуги</a></li>
+            {% else %}
+                <li class="main-menu-li"><a class="main-menu-li-a" href="/market/service/">Услуги</a></li>
+            {% endif %}
 
 
-{% if '/article/' in path %}
-    <li class="active main-menu-li"><a class="main-menu-li-a" href="/article/">Статьи</a></li>
-{% else %}
-    <li class="main-menu-li"><a class="main-menu-li-a" href="/article/">Статьи</a></li>
-{% endif %}
+            {% if '/article/' in path %}
+                <li class="active main-menu-li"><a class="main-menu-li-a" href="/article/">Статьи</a></li>
+            {% else %}
+                <li class="main-menu-li"><a class="main-menu-li-a" href="/article/">Статьи</a></li>
+            {% endif %}
 
 
-{% if '/about/' in path %}
-    <li  class="active main-menu-li"><a class="main-menu-li-a" href="/about/">О нас</a></li>
-{% else %}
-    <li class="main-menu-li"><a class="main-menu-li-a" href="/about/">О нас</a></li>
-{% endif %}
+            {% if '/about/' in path %}
+                <li class="active main-menu-li"><a class="main-menu-li-a" href="/about/">О нас</a></li>
+            {% else %}
+                <li class="main-menu-li"><a class="main-menu-li-a" href="/about/">О нас</a></li>
+            {% endif %}
 
 
-{% if '/contacts/' in path %}
-    <li class="active main-menu-li"><a class="main-menu-li-a" href="/contacts/">Контакты</a></li>
-{% else %}
-    <li class="main-menu-li"><a class="main-menu-li-a" href="/contacts/">Контакты</a></li>
-{% endif %}
+            {% if '/contacts/' in path %}
+                <li class="active main-menu-li"><a class="main-menu-li-a" href="/contacts/">Контакты</a></li>
+            {% else %}
+                <li class="main-menu-li"><a class="main-menu-li-a" href="/contacts/">Контакты</a></li>
+            {% endif %}
 
-{% if user.is_superuser or user.is_staff %}
-    {% if path == '/orders/' %}
-        <li class="active main-menu-li"><a class="main-menu-li-a" href="/orders/">Заказы</a></li>
-    {% else %}
-        <li class="main-menu-li"><a class="main-menu-li-a" href="/orders/">Заказы</a></li>
-    {% endif %}
-{% endif %}
+            {% if user.is_superuser or user.is_staff %}
+                {% if path == '/orders/' %}
+                    <li class="active main-menu-li"><a class="main-menu-li-a" href="/orders/">Заказы</a></li>
+                {% else %}
+                    <li class="main-menu-li"><a class="main-menu-li-a" href="/orders/">Заказы</a></li>
+                {% endif %}
+            {% endif %}
 
-<!-- {% for page in menu_pages %}
+            <!-- {% for page in menu_pages %}
     {% if page.get_absolute_url == path  %}
         <li class="active"><a href="{{ page.get_absolute_url }}">{{ page.title }}</a></li>
     {% else %}
@@ -61,23 +61,29 @@
     <li> Нет страниц в меню</li>
 {% endfor %} -->
 
-</ul>
-</nav>
+        </ul>
+    </nav>
 </div>
 
 <div class="dropdown">
     <button class="btn btn-block btn-primary dropdown-toggle hidden-md-up" type="button" data-toggle="dropdown">Меню
-    <span class="caret"></span></button>
+        <span class="caret"></span></button>
     <ul class="dropdown-menu">
-      <li><a href="/">Главная</a></li>
-      <li><a href="/market/shop/">Магазин</a></li>
-      <li><a href="/market/service/">Услуги</a></li>
-      <li><a href="/article/">Статьи</a></li>
-      <li><a href="/about/">Статьи</a></li>
-      <li><a href="/contacts/">Контакты</a></li>
-      {% if user.is_superuser or user.is_staff %}
-        <li><a href="/orders/">Заказы</a></li>
-      {% endif %}
+        <li><a class="dropdown-item" href="/">Главная</a></li>
+        <div class="dropdown-divider"></div>
+        <li><a class="dropdown-item" href="/market/shop/">Магазин</a></li>
+        <div class="dropdown-divider"></div>
+        <li><a class="dropdown-item" href="/market/service/">Услуги</a></li>
+        <div class="dropdown-divider"></div>
+        <li><a class="dropdown-item" href="/article/">Статьи</a></li>
+        <div class="dropdown-divider"></div>
+        <li><a class="dropdown-item" href="/about/">Статьи</a></li>
+        <div class="dropdown-divider"></div>
+        <li><a class="dropdown-item" href="/contacts/">Контакты</a></li>
+        {% if user.is_superuser or user.is_staff %}
+            <div class="dropdown-divider"></div>
+            <li><a class="dropdown-item" href="/orders/">Заказы</a></li>
+        {% endif %}
     </ul>
 </div>
 <!-- <a id="touch-menu" class="mobile-menu hidden-md-up " href="#"><i class="icon-reorder"></i>Menu</a> -->

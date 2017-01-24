@@ -6,7 +6,19 @@
 	    max-width: 100%;
 	    max-height: 110px;
 	}
-	
+	.dropdown-item{
+		width: 400px;
+		height: 50px;
+		line-height: 45px;
+		text-align: center;
+	}
+
+	@media (max-width: 375px) {
+  		.dropdown-item{
+		width: 288px;
+		}
+	}
+
 	.myalign {
 	    display: flex;
 	    flex-direction: row;
@@ -110,11 +122,7 @@
 			height: 311px;
 		}
 	}
-	@media (min-width: 1200px) {
-  		.tile{
-			height: 1140px;
-		}
-	}
+
 	@media (min-width: 1366px) {
   		.tile{
 			height: 425px;

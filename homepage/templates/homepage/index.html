@@ -6,40 +6,41 @@
 
 {% block content %}
 
-  {{ block.super }}
-      
+    {{ block.super }}
 
-  <div class="row wrap-tile">
-      <div class="for-back-img"></div>
-      {% for tile in tiles %}
-          <div class="col-lg-4 col-md-6 col-sm-12">
+
+    <div class="row wrap-tile">
+        <div class="for-back-img"></div>
+        {% for tile in tiles %}
+            <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="tile">
-                      <a href="{{ tile.pages.get_absolute_url }}" class="card-link">
-                          <h3 class="card-title">{{ tile.pages.title }}</h3>
-                          {% if  user.is_staff or user.is_superuser %}
-                                <form method="post" action="/tile-delete/"> {% csrf_token %}
-                                <input type="number" class="number-tile-delete" value="{{ tile.pk }}" name="id-to-delete">
+                    <a href="{{ tile.pages.get_absolute_url }}" class="card-link">
+                        <h3 class="card-title">{{ tile.pages.title }}</h3>
+                        {% if  user.is_staff or user.is_superuser %}
+                            <form method="post" action="/tile-delete/"> {% csrf_token %}
+                                <input type="number" class="number-tile-delete" value="{{ tile.pk }}"
+                                       name="id-to-delete">
                                 <button class="btn btn-danger btn-tile-delete">x</button>
-                                </form>
-                          {% endif %}
-                          <img src="media/{{ tile.pages.avatar }}" class="tile-img img-fluid">
-                      </a>
-                    </div>
-          </div>
-      {% endfor %}
+                            </form>
+                        {% endif %}
+                        <img src="media/{{ tile.pages.avatar }}" class="tile-img img-fluid">
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
 
 
-      {% if user.is_staff or user.is_superuser %}
-          <div class="col-xs-3 tile" id="div-new-tile">
-            <h1 id="new-tile">+</h1>
-          </div>
-      {% endif %}
-  </div>
+        {% if user.is_staff or user.is_superuser %}
+            <div class="col-xs-3 tile" id="div-new-tile">
+                <h1 id="new-tile">+</h1>
+            </div>
+        {% endif %}
+    </div>
 
 
 
 
 
-  
+
 
 {% endblock content %} 
