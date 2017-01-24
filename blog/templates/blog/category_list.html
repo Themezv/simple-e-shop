@@ -1,31 +1,38 @@
 {% extends "homepage/base.html" %} {% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-xs-6 offset-xs-3">
-            <br>
-            <form method="GET" action="" class="row">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Введите запрос" name="q" value="{{ request.GET.q }}">
-                    <span class="input-group-btn"><input class="btn btn-default" type="submit" value="Искать"></span>
-                </div>
-            </form>
-            <h1>Категории</h1> {% for obj in categories %}
-            <h3><a href="{{ obj.get_absolute_url_for_blog }}"> {{ obj.title }} </a></h3> {% if obj.image %}
-            <img src="/media/{{ obj.image }}" alt="" class="img-fluid" /> {% endif %}
-            <hr/> {% endfor %}
-            <div class="pagination">
-                <span class="step-links">
-						{% if categories.has_previous %}
-				    	<a href="?{{page_request_var}}={{ categories.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>
-						{% endif %}
-
-						<span class="current">
-						{{ categories.number }} из {{ categories.paginator.num_pages }}.
-						</span> {% if categories.has_next %}
-                <a href="?{{page_request_var}}={{ categories.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a> {% endif %}
-                </span>
-            </div>
+<div class="row">
+    <div class="container">
+        <div class="category-list-title">
+            <h1>Категории</h1>
         </div>
+        <div class="row">
+            {% for obj in categories %}
+                <div class="col-md-4">
+                    <a href="{{ obj.get_absolute_url_for_blog }}">
+                        <div class="card card-inverse category-list-card">
+                            <img class="card-img img-fluid" src="/media/{{ obj.image }}" alt="Card image">
+                            <div class="card-img-overlay">
+                                <h4 class="card-title category-title">{{ obj.title }}</h4>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if is_paginated %}
+        <div class="pagination">
+            <span class="step-links">
+                            {% if categories.has_previous %}
+                            <a href="?{{page_request_var}}={{ categories.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>
+                            {% endif %}
+
+                            <span class="current">
+                            {{ categories.number }} из {{ categories.paginator.num_pages }}.
+                            </span> {% if categories.has_next %}
+            <a href="?{{page_request_var}}={{ categories.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a> {% endif %}
+            </span>
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock content %}

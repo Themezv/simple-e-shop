@@ -1,6 +1,8 @@
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, RedirectView, DeleteView, TemplateView
 from django.views.decorators.csrf import csrf_protect
+from django.utils.decorators import method_decorator
 from blog.views import CategoryListView
 from .models import Category, Product, ProductType
 from .forms import ProductForm
@@ -68,10 +70,10 @@ class ProductDetalilView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ProductDetalilView, self).get_context_data(**kwargs)
         item = context['object']
-        related_items = Product.objects.items().filter(relation=item).distinct()
-        related_services = Product.objects.services().filter(relation=item).distinct()
-        context['related_items'] = related_items
-        context['related_services'] = related_services
+        related_items = Product.objects.items().filter(relation=item).distinct().exclude(id=item.id)
+        related_services = Product.objects.services().filter(relation=item).distinct().exclude(id=item.id)
+        context['related_items'] = related_items[:4]
+        context['related_services'] = related_services[:4]
         print(context)
         return context
 
@@ -84,6 +86,7 @@ class ServiceDetailView(ProductDetalilView):
     template_name = "shop/service_detail.html"
 
 
+@method_decorator(login_required(), name="dispatch")
 class ProductCreateView(CreateView):
     template_name = "shop/product_create.html"
     model = Product
