@@ -1,4 +1,4 @@
-{% extends "homepage/base.html" %} 
+{% extends extended_template %}
 {% block content %}
 <div class="row">
 
@@ -9,10 +9,10 @@
                 <span class="input-group-btn"><input class="btn btn-primary btn-default" type="submit" value="Найти"></span>
             </div>
         </form>
-        
+
         <div class="article-list">
             {% if user.is_staff or user.is_superuser %}
-            <a href="{% url 'article_create' category_slug=category_url %}">
+            <a href="{% url 'article_create' category_slug=category_url %}" onclick="ajaxLinkMain('{% url 'article_create' category_slug=category_url %}')">
                 <div class="card create-article-card">
                     <div class="row">
                         <h4>Создать новую статью</h4>
@@ -22,13 +22,13 @@
             {% endif %}
             {% for obj in object_list %}
             <div class="card">
-                <a href="{{ obj.get_absolute_url }}">
+                <a href="{{ obj.get_absolute_url }}" onclick="ajaxLinkMain('{{ obj.get_absolute_url }}')">
                     <div class="row">
                             <div class="col-md-4 article-image">
                                 {% if obj.image %}
                                 <img src="/media/{{ obj.image }}" alt="" class="img-fluid" />
-                                {% endif %}    
-                            </div>                        
+                                {% endif %}
+                            </div>
                             <div class="col-md-8 article-dscrpt">
                                 {% if obj.draft %}
                                 <p style="color:#f00" class="draft-warning">В разработке</p>
@@ -38,8 +38,8 @@
                                 <div class="content-markdown">
                                     <p>{{ obj.get_markdown|truncatechars_html:50|safe }} </p>
                                 </div>
-                                
-                                    
+
+
                             </div>
                     </div>
                 </a>
@@ -52,13 +52,13 @@
     <div class="col-md-3 pull-md-8 left-box">
     {% if another_categories %}
         <div class="card card-primary category-card">
-            <a href="{% url 'article_category_list' %}">
+            <a href="{% url 'article_category_list' %}" onclick="ajaxLinkMain('{% url 'article_category_list' %}')">
                 <div class="card-header">
                     <h4>Категории</h4>
                 </div>
             </a>
             {% for catgr in another_categories %}
-            <a href="{{ catgr.get_absolute_url_for_blog }}" class="card-block-a"><div class="card-block">{{ catgr.title }}</div></a>
+            <a href="{{ catgr.get_absolute_url_for_blog }}" onclick="ajaxLinkMain('{{ catgr.get_absolute_url_for_blog }}')" class="card-block-a"><div class="card-block">{{ catgr.title }}</div></a>
             {% endfor %}
         </div>
     {% endif %}
