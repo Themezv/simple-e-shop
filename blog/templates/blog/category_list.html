@@ -1,4 +1,4 @@
-{% extends "homepage/base.html" %} {% block content %}
+{% extends extended_template %} {% block content %}
 <div class="row">
     <div class="container">
         <div class="category-list-title">
@@ -6,8 +6,8 @@
         </div>
         <div class="row">
             {% for obj in categories %}
-                <div class="col-md-4">
-                    <a href="{{ obj.get_absolute_url_for_blog }}">
+                <div class="col-lg-4 col-md-12">
+                    <a onclick="ajaxLinkMain('{{ obj.get_absolute_url_for_blog }}')" href="{{ obj.get_absolute_url_for_blog }}">
                         <div class="card card-inverse category-list-card">
                             <img class="card-img img-fluid" src="/media/{{ obj.image }}" alt="Card image">
                             <div class="card-img-overlay">

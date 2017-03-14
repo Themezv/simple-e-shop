@@ -4,13 +4,13 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.text import slugify
 from transliterate import translit
-    
+
 
 class ProductManager(models.Manager):
     def items(self, *args, **kwargs):
         return super(ProductManager, self).filter(product_type__title="Item")
 
-    def services(self, *args, **kwargs):    
+    def services(self, *args, **kwargs):
         return super(ProductManager, self).filter(product_type__title="Service")
 
 
@@ -43,15 +43,14 @@ class Product(models.Model):
     description = models.TextField(max_length=100)
     available = models.BooleanField(default=True)
     category = models.ManyToManyField(Category)
-    relation = models.ManyToManyField('self', blank=True)
+    relation = models.ManyToManyField('self', blank=True, symmetrical=True)
     avatar = models.ImageField(upload_to='items_avatars')
-    text_preview = models.TextField(max_length=5000, null=True, blank=True)
+    text_preview = models.TextField(max_length=500, null=True, blank=True)
 
-
-    #ForeignKey
+    # ForeignKey
     product_type = models.ForeignKey(ProductType)
 
-    #Manager
+    # Manager
     objects = ProductManager()
 
     def get_absolute_url(self):

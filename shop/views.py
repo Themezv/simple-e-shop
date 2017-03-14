@@ -28,7 +28,8 @@ class ItemListView(ProductListView):
 
     def get_queryset(self):
         """ Нужно сделать создав метод для Queryser """
-        queryset_list = Product.objects.items()
+        queryset_list = super(ItemListView, self).get_queryset()
+        queryset_list = queryset_list.filter(product_type__title="Item")
         return queryset_list
 
     def get_context_data(self, **kwargs):
@@ -43,12 +44,17 @@ class ServiceListView(ProductListView):
 
     def get_queryset(self):
         """ Нужно сделать создав метод для Queryser """
-        queryset_list = Product.objects.services()
+        queryset_list = super(ServiceListView, self).get_queryset()
+        queryset_list = Product.objects.filter(product_type__title="Service")
         return queryset_list
 
 
 class CategoryShopListView(CategoryListView):
     template_name = "shop/category_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(CategoryShopListView, self).get_context_data(**kwargs)
+        return context
 
 
 class ItemCategoriedListView(ItemListView):
@@ -62,6 +68,10 @@ class ItemCategoriedListView(ItemListView):
         context['category_slug'] = self.kwargs['category_slug']
         return context
 
+    def get(self, request, *args, **kwargs):
+        # context = super(ItemCategoriedListView, self).get_context_data(**kwargs)
+        return super(ItemCategoriedListView, self).get(self.request, *args, **kwargs)
+
 
 class ProductDetalilView(DetailView):
     model = Product
@@ -74,7 +84,6 @@ class ProductDetalilView(DetailView):
         related_services = Product.objects.services().filter(relation=item).distinct().exclude(id=item.id)
         context['related_items'] = related_items[:4]
         context['related_services'] = related_services[:4]
-        print(context)
         return context
 
 

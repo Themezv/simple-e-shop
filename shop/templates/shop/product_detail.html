@@ -1,4 +1,6 @@
-{% extends "homepage/base.html" %} {% load staticfiles %} {% block head_title %}Товар: {{ item.title }} {% endblock head_title %} {% block content %}
+{% extends extended_template %} {% load staticfiles %}
+{% block head_title %}Товар: {{ item.title }} {% endblock head_title %}
+{% block content %}
 <div class="row main-box product-item-detail container">
     <div class="row">
         <div class="col-md-6 item-image">
@@ -28,9 +30,9 @@
                 <div class="card-deck">
                     {% for item in related_items %}
                     <div class="card related-item-card">
-                        <a href="{{ item.get_absolute_url }}"><img class="card-img-top img-fluid" src="/media/{{ item.avatar }}" alt="Card image cap"></a>
+                        <a href="{{ item.get_absolute_url }}" onclick="ajaxLinkMain('{{ item.get_absolute_url }}')"><img class="card-img-top img-fluid" src="/media/{{ item.avatar }}" alt="Card image cap"></a>
                         <div class="card-block">
-                            <a href="{{ item.get_absolute_url }}"><h4 class="card-title">{{ item.title }}</h4></a>
+                            <a href="#" onclick="ajaxLinkMain('{{ item.get_absolute_url }}')" ><h4 class="card-title">{{ item.title }}</h4></a>
                             {% if item.text_preview %}
                             <p class="card-text">{{ item.text_preview|truncatechars:30}}</p>
                             {% endif %}
@@ -43,4 +45,5 @@
     </div>
    {% endif %}
 </div>
+
 {% endblock content %}
