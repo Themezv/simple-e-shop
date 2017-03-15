@@ -25,13 +25,17 @@
 	    justify-content: center;
 	}
 	
-	div.header-img {
-	    height: 100%;
+	.div-header-img {
+		display: flex;
 	    margin-left: 20px;
 	    text-align: left;
 	    font-family: 'Roboto Condensed', sans-serif;
 	}
-	
+
+	.header-img {
+		display: flex;
+	    margin-left: 20px;
+	}
 	.main-menu {
 	    display: flex;
 	    justify-content: space-around;

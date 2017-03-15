@@ -4,7 +4,7 @@
 {% block content %}
 <div class="row main-box">
 
-    <div class="col-md-6 push-md-3 content-box">
+    <div class="col-md-9 push-md-3 content-box">
         <form method="GET" class="search-box" action="">
             <div class="input-group">
                 <input class="form-control" type="text" placeholder="Введите запрос" name="q" value="{{ request.GET.q }}">
@@ -28,7 +28,7 @@
         </div>
         {% endfor %}
     </div>
-    <div class="col-md-3 pull-md-6 left-box">
+    <div class="col-md-3 pull-md-9 left-box">
         {% if categories %}
         <div class="card card-primary category-card">
             <a href="{% url 'category_list' %}" onclick="ajaxLinkMain('{% url 'category_list' %}')"><div class="card-header"><h3 class="nav-link">Категории</h3></div></a>
