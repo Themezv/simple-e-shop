@@ -4,7 +4,7 @@
 {% block content %}
 <div class="row main-box">
 
-    <div class="col-md-9 push-md-3 content-box">
+    <div class="col-md-8 push-md-3 content-box">
         <form method="GET" class="search-box" action="">
             <div class="input-group">
                 <input class="form-control" type="text" placeholder="Введите запрос" name="q" value="{{ request.GET.q }}">
@@ -13,22 +13,60 @@
                 </span>
             </div>
         </form>
+
         {% for product in products %}
-        <div class="card full-size product-card">
-            <a href="" onclick="ajaxLinkMain('{{ product.get_absolute_url }}')">
-                <img class="card-img-top img-fluid" src="/media/{{ product.avatar }}" alt="Card image cap">
-            </a>
-            <div class="card-block">
-                <h4 class="card-title"><a href="{{ product.get_absolute_url }}"> {{ product.title }}</a></h4>
-                <p><small>{{ product.text_preview|truncatechars:120 }}</small></p>
-                <p class="card-text">Цена:{{ product.price }}</p>
-                <a href="" onclick="ajaxLinkMain('{{ product.get_absolute_url }}')" class="btn btn-primary">Подробнее</a>
-                <a href="" class="btn btn-primary">Заказать</a>
+            <div class="card">
+                <a href="{{ product.get_absolute_url }}" onclick="ajaxLinkMain('{{ product.get_absolute_url }}')" style="color: #2b2d2f">
+                    <div class="row">
+                            <div class="col-md-4 product-image">
+                                {% if product.avatar %}
+                                <img src="/media/{{ product.avatar }}" alt="" class="img-fluid" />
+                                {% endif %}
+                            </div>
+                            <div class="col-md-8 product-dscrpt">
+                                {% if product.draft %}
+                                <p style="color:#f00" class="draft-warning">В разработке</p>
+                                {% endif %}
+                                <h4>{{ product.title }}<span class="product-price"> {{ product.get_price_ruble }} Р / {{ product.get_price_usd }} $</span></h4></h4>
+                                <hr>
+                                <div class="content-markdown" style="padding: 5px">
+                                    <p>{{ product.text_preview|truncatechars:100 }} </p>
+                                </div>
+                            </div>
+                    </div>
+                </a>
             </div>
-        </div>
+
+{#        <div class="card full-size product-card">#}
+{#            <a href="" onclick="ajaxLinkMain('{{ product.get_absolute_url }}')">#}
+{#                <img class="card-img-top img-fluid" src="/media/{{ product.avatar }}" alt="Card image cap">#}
+{#            </a>#}
+{#            <div class="card-block">#}
+{#                <h4 class="card-title"><a href="{{ product.get_absolute_url }}"> {{ product.title }}</a></h4>#}
+{#                <p><small>{{ product.text_preview|truncatechars:120 }}</small></p>#}
+{#                <p class="card-text">Цена:{{ product.price }}</p>#}
+{#                <a href="" onclick="ajaxLinkMain('{{ product.get_absolute_url }}')" class="btn btn-primary">Подробнее</a>#}
+{#                <a href="" class="btn btn-primary">Заказать</a>#}
+{#            </div>#}
+{#        </div>#}
         {% endfor %}
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if products.has_previous %}
+                    <a href="?{{page_request_var}}={{ products.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>
+                    {% endif %}
+
+                    <span class="current">
+                    {{ products.number }} из {{ products.paginator.num_pages }}.
+                    </span> {% if products.has_next %}
+            <a href="?{{page_request_var}}={{ products.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a> {% endif %}
+            </span>
+        </div>
+
     </div>
-    <div class="col-md-3 pull-md-9 left-box">
+
+    <div class="col-md-3 pull-md-8 left-box">
         {% if categories %}
         <div class="card card-primary category-card">
             <a href="{% url 'category_list' %}" onclick="ajaxLinkMain('{% url 'category_list' %}')"><div class="card-header"><h3 class="nav-link">Категории</h3></div></a>
@@ -40,20 +78,5 @@
     </div>
 
 </div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="pagination">
-            <span class="step-links">
-				{% if products.has_previous %}
-					<a href="?{{page_request_var}}={{ products.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>
-					{% endif %}
 
-					<span class="current">
-					{{ products.number }} из {{ products.paginator.num_pages }}.
-					</span> {% if products.has_next %}
-            <a href="?{{page_request_var}}={{ products.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a> {% endif %}
-            </span>
-        </div>
-    </div>
-</div>
 {% endblock content %}

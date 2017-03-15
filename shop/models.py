@@ -1,9 +1,7 @@
 from django.db import models
-from django.db.models.signals import pre_save
-from django.conf import settings
+from forex_python.converter import CurrencyRates
 from django.core.urlresolvers import reverse
-from django.utils.text import slugify
-from transliterate import translit
+
 
 
 class ProductManager(models.Manager):
@@ -16,6 +14,13 @@ class ProductManager(models.Manager):
 
 class ProductType(models.Model):
     title = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.title
+
+
+class Currency(models.Model):
+    title = models.CharField(max_length=100)
 
     def __str__(self):
         return self.title
@@ -39,15 +44,17 @@ class Category(models.Model):
 
 class Product(models.Model):
     title = models.CharField(max_length=20)
-    price = models.PositiveSmallIntegerField(blank=True, null=True)
-    description = models.TextField(max_length=100)
-    available = models.BooleanField(default=True)
-    category = models.ManyToManyField(Category)
-    relation = models.ManyToManyField('self', blank=True, symmetrical=True)
     avatar = models.ImageField(upload_to='items_avatars')
     text_preview = models.TextField(max_length=500, null=True, blank=True)
 
-    # ForeignKey
+    price = models.PositiveSmallIntegerField(blank=True, null=True)
+    currency = models.ForeignKey(Currency)
+
+    description = models.TextField(max_length=100)
+    available = models.BooleanField(default=True)
+
+    category = models.ManyToManyField(Category)
+    relation = models.ManyToManyField('self', blank=True, symmetrical=True)
     product_type = models.ForeignKey(ProductType)
 
     # Manager
@@ -62,6 +69,26 @@ class Product(models.Model):
 
     def get_category_slug(self):
         return self.category.first().slug
+
+    def get_price_ruble(self):
+        if self.currency.title == "RUB":
+            return self.price
+        elif self.currency.title == "USD":
+            c = CurrencyRates()
+            rate = c.get_rate('USD', 'RUB')
+            return "%.2f" %(self.price * rate)
+        else:
+            pass
+
+    def get_price_usd(self):
+        if self.currency.title == "USD":
+            return self.price
+        elif self.currency.title == "RUB":
+            c = CurrencyRates()
+            rate = c.get_rate('RUB', 'USD')
+            return "%.2f" %(self.price * rate)
+        else:
+            pass
 
     def __str__(self):
         return self.title
