@@ -39,12 +39,12 @@ class Category(models.Model):
 
 class Product(models.Model):
     title = models.CharField(max_length=20)
-    price = models.PositiveSmallIntegerField(blank=True, null=True)
-    description = models.TextField(max_length=100)
+    price = models.PositiveSmallIntegerField('Цена', blank=True, null=True)
+    description = models.TextField('Описание', max_length=100)
     available = models.BooleanField(default=True)
     category = models.ManyToManyField(Category)
     relation = models.ManyToManyField('self', blank=True, symmetrical=True)
-    avatar = models.ImageField(upload_to='items_avatars')
+    avatar = models.ImageField('Изображение', upload_to='items_avatars')
     text_preview = models.TextField(max_length=500, null=True, blank=True)
 
     # ForeignKey

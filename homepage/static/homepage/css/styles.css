@@ -81,8 +81,6 @@
 	
 	.wrap-tile {
 	    background-color: #033559;
-	    height: 100%;
-	    overflow: hidden;
 	    background-image: -moz-radial-gradient( 50% 50%, circle closest-side, rgba(255, 255, 255, 0.13) 0%, rgba(0, 0, 0, 0.13) 100%);
 	    background-image: -ms-radial-gradient( 50% 50%, circle closest-side, rgba(255, 255, 255, 0.13) 0%, rgba(0, 0, 0, 0.13) 100%);
 	    background-image: -webkit-radial-gradient( 50% 50%, circle closest-side, rgba(255, 255, 255, 0.13) 0%, rgba(0, 0, 0, 0.13) 100%);

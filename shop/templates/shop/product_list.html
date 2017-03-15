@@ -17,14 +17,13 @@
         <div class="card full-size product-card">
             <a href="" onclick="ajaxLinkMain('{{ product.get_absolute_url }}')">
                 <img class="card-img-top img-fluid" src="/media/{{ product.avatar }}" alt="Card image cap">
-            </a>
             <div class="card-block">
                 <h4 class="card-title"><a href="{{ product.get_absolute_url }}"> {{ product.title }}</a></h4>
                 <p><small>{{ product.text_preview|truncatechars:120 }}</small></p>
                 <p class="card-text">Цена:{{ product.price }}</p>
                 <a href="" onclick="ajaxLinkMain('{{ product.get_absolute_url }}')" class="btn btn-primary">Подробнее</a>
                 <a href="" class="btn btn-primary">Заказать</a>
-            </div>
+            </div></a>
         </div>
         {% endfor %}
     </div>
