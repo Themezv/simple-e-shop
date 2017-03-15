@@ -11,7 +11,7 @@
             <h1>{{ item.title }}</h1>
             <hr>
             <div class="buy-form">
-                <h4> Цена: {{ item.price }} р</h4>
+                <h4> Цена: {{ item.get_price_ruble }} р / {{ item.get_price_usd }} $</h4>
                 <form action="/orders/order-create/" method="POST"> {% csrf_token %}
                     <input type="number" name="count" class="count" value="1" required>
                     <input type="hidden" name="id_product" value="{{ item.id }}">
