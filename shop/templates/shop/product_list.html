@@ -27,7 +27,7 @@
                                 {% if product.draft %}
                                 <p style="color:#f00" class="draft-warning">В разработке</p>
                                 {% endif %}
-                                <h4>{{ product.title }}<span class="product-price"> {{ product.get_price_ruble }} Р / {{ product.get_price_usd }} $</span></h4></h4>
+                                <h4>{{ product.title }}<span class="product-price"> {{ product.get_price_ruble }}Р ({{ product.get_price_usd }}$)</span></h4></h4>
                                 <hr>
                                 <div class="content-markdown" style="padding: 5px">
                                     <p>{{ product.text_preview|truncatechars:100 }} </p>

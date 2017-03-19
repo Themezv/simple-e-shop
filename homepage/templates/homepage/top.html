@@ -4,17 +4,17 @@
           <div class="col-md-3 myalign">
             <a href="/"><img src="/media/{{ firm_settings.logo }}" id="logo"></a>
           </div>
-          <div class="col-md-3 myalign hidden-sm-down">
-            <div class="div-header-img"><img src="{% static 'homepage/img/home.png' %}" class="header-img"></div>
-            <div class="div-header-img">Адрес: <br> {{ firm_settings.address | safe}} </div>
+          <div class="col-md-3 myalign hidden-sm-down center-block">
+            <img src="{% static 'homepage/img/home.png' %}" class="center-block header-img">
+            <div class="div-header-img">{{ firm_settings.address | safe}} </div>
           </div>
-          <div class="col-md-3 myalign hidden-sm-down">
-            <div class="div-header-img"><img src="{% static 'homepage/img/time.png' %}" class="header-img"></div>
-            <div class="div-header-img">Время работы: <br> {{ firm_settings.work_time }} </div>
+          <div class="col-md-3 myalign hidden-sm-down center-block">
+            <img src="{% static 'homepage/img/time.png' %}" class="header-img center-block">
+            <div class="div-header-img">{{ firm_settings.work_time }}</div>
           </div>
-          <div class="col-md-3 myalign hidden-sm-down">
-            <img src="{% static 'homepage/img/cont.png' %}" class="header-img">
-            <div class="div-header-img">тел.: <br> {{ firm_settings.phone1 }}  <br> {{ firm_settings.phone2 }} </div>
+          <div class="col-md-3 myalign hidden-sm-down center-block">
+            <img src="{% static 'homepage/img/cont.png' %}" class="header-img center-block">
+            <div class="div-header-img">{{ firm_settings.phone1 }}  <br> {{ firm_settings.phone2 }} </div>
           </div>
   </div>
 </div>
