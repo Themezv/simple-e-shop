@@ -1,20 +1,20 @@
 {% load staticfiles %}
 <div class="container-fluid ">
   <div class="row header flex-items-md-middle">
-          <div class="col-md-3 myalign">
+          <div class="col-md-3 vertical-align-in-top">
             <a href="/"><img src="/media/{{ firm_settings.logo }}" id="logo"></a>
           </div>
-          <div class="col-md-3 myalign hidden-sm-down center-block">
-            <img src="{% static 'homepage/img/home.png' %}" class="center-block header-img">
-            <div class="div-header-img">{{ firm_settings.address | safe}} </div>
+          <div class="col-md-3 hidden-sm-down center-block flex-wrapper">
+            <div class="my-center-block"><img src="{% static 'homepage/img/home.png' %}" class="top-images" height="48px"></div>
+            <div class="div-for-text-in-top">{{ firm_settings.address | safe}} </div>
           </div>
-          <div class="col-md-3 myalign hidden-sm-down center-block">
-            <img src="{% static 'homepage/img/time.png' %}" class="header-img center-block">
-            <div class="div-header-img">{{ firm_settings.work_time }}</div>
+          <div class="col-md-3 hidden-sm-down center-block flex-wrapper">
+            <div class="my-center-block"><img src="{% static 'homepage/img/time.png' %}" class="top-images" height="48px"></div>
+            <div class="div-for-text-in-top">{{ firm_settings.work_time }}</div>
           </div>
-          <div class="col-md-3 myalign hidden-sm-down center-block">
-            <img src="{% static 'homepage/img/cont.png' %}" class="header-img center-block">
-            <div class="div-header-img">{{ firm_settings.phone1 }}  <br> {{ firm_settings.phone2 }} </div>
+          <div class="col-md-3 hidden-sm-down center-block flex-wrapper">
+            <div class="my-center-block"><img src="{% static 'homepage/img/cont.png' %}" class="top-images" height="48px"></div>
+            <div class="div-for-text-in-top">{{ firm_settings.phone1 }}  <br> {{ firm_settings.phone2 }} </div>
           </div>
   </div>
 </div>

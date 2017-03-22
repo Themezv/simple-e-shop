@@ -1,5 +1,6 @@
 	div.header {
 	    height: 120px;
+		overflow: hidden;
 	}
 	
 	#logo {
@@ -18,29 +19,25 @@
 		width: 288px;
 		}
 	}
-
-	.myalign {
-	    display: flex;
-	    flex-direction: row;
-	    justify-content: center;
-	}
-	
-	.div-header-img {
+	.flex-wrapper {
 		display: flex;
-	    margin-left: 20px;
-	    text-align: left;
-	    font-family: 'Roboto Condensed', sans-serif;
+		justify-content: center;
+		overflow: hidden;
 	}
-
-	.header-img {
-		display: flex;
-	    margin-left: 20px;
+	.div-for-text-in-top {
+		margin-left: 20px;
+		overflow: hidden;
 	}
 	.main-menu {
 	    display: flex;
 	    justify-content: space-around;
 	    width: 100%;
 	    height: 30px;
+	}
+	.my-center-block {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 	}
 	
 	.main-menu-ul {

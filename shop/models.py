@@ -44,9 +44,9 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    title = models.CharField(max_length=20)
-    avatar = models.ImageField(upload_to='items_avatars')
-    text_preview = models.TextField(max_length=500, null=True, blank=True)
+    title = models.CharField('Название', max_length=20)
+    avatar = models.ImageField('Изображение', upload_to='items_avatars')
+    text_preview = models.TextField('Краткое описание', max_length=500, null=True, blank=True)
 
     price = models.FloatField(blank=True, null=True)
     currency = models.ForeignKey(Currency)
