@@ -10,11 +10,11 @@
           </div>
           <div class="col-md-3 hidden-sm-down center-block flex-wrapper">
             <div class="my-center-block"><img src="{% static 'homepage/img/time.png' %}" class="top-images" height="48px"></div>
-            <div class="div-for-text-in-top">{{ firm_settings.work_time }}</div>
+            <div class="div-for-text-in-top">{{ firm_settings.work_time | safe}}</div>
           </div>
           <div class="col-md-3 hidden-sm-down center-block flex-wrapper">
             <div class="my-center-block"><img src="{% static 'homepage/img/cont.png' %}" class="top-images" height="48px"></div>
-            <div class="div-for-text-in-top">{{ firm_settings.phone1 }}  <br> {{ firm_settings.phone2 }} </div>
+            <div class="div-for-text-in-top">{{ firm_settings.phone1 | safe}}  <br> {{ firm_settings.phone2 | safe }} </div>
           </div>
   </div>
 </div>

@@ -8,17 +8,17 @@ from shop.models import Product
 
 class OrderedItem(models.Model):
     product = models.ForeignKey(Product, blank=True, null=True)
-    count = models.PositiveSmallIntegerField(default=1) 
+    count = models.PositiveSmallIntegerField('Количество', default=1)
 
     def __str__(self):
         return "%s:Название-%s, количество-%s" % (self.product.product_type.title, self.product.title, self.count)
 
 
 class Order(models.Model):
-    FIO = models.CharField(max_length=200)
-    address = models.CharField(max_length=300)
-    email = models.EmailField()
-    phone_number = models.CharField(max_length=15)
+    FIO = models.CharField('Фамилия Имя Отчество',max_length=200)
+    address = models.CharField('Адрес', max_length=300)
+    email = models.EmailField('E-mail')
+    phone_number = models.CharField('Номер телефона', max_length=15)
     items = models.ManyToManyField(OrderedItem)
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
 

@@ -1,5 +1,6 @@
 from django import forms
 from shop.models import Product
+from ckeditor.widgets import CKEditorWidget
 
 
 class ProductForm(forms.ModelForm):

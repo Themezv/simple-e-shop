@@ -1,7 +1,7 @@
 from django.db import models
 from forex_python.converter import CurrencyRates
 from django.core.urlresolvers import reverse
-
+from ckeditor.fields import RichTextField
 
 
 class ProductManager(models.Manager):
@@ -13,14 +13,14 @@ class ProductManager(models.Manager):
 
 
 class ProductType(models.Model):
-    title = models.CharField(max_length=50)
+    title = models.CharField('Название типа продукта', max_length=50)
 
     def __str__(self):
         return self.title
 
 
 class Currency(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField('Валюта', max_length=100)
     rate = models.FloatField()
 
     def __str__(self):
@@ -28,8 +28,8 @@ class Currency(models.Model):
 
 
 class Category(models.Model):
-    title = models.CharField(max_length=16, unique=True)
-    description = models.TextField(max_length=100)
+    title = models.CharField('Название категории', max_length=16, unique=True)
+    description = models.TextField('Описание', max_length=100)
     slug = models.SlugField(unique=True, null=True, blank=True)
     image = models.ImageField(upload_to='category_image', null=True, blank=True)
 
@@ -51,7 +51,7 @@ class Product(models.Model):
     price = models.FloatField(blank=True, null=True)
     currency = models.ForeignKey(Currency)
 
-    description = models.TextField(max_length=100)
+    description = RichTextField(max_length=150)
     available = models.BooleanField(default=True)
 
     category = models.ManyToManyField(Category)

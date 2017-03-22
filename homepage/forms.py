@@ -11,7 +11,9 @@ class AboutForm(forms.ModelForm):
         model = FlatPage
         fields = [
             'title',
+            'content'
         ]
+
 
 
 class ContactForm(forms.ModelForm):
@@ -21,6 +23,10 @@ class ContactForm(forms.ModelForm):
             'title',
             'content',
         ]
+        widgets = {
+            'title': CKEditorWidget(),
+            'content': CKEditorWidget(),
+        }
 
 
 class TilesForm(forms.ModelForm):
