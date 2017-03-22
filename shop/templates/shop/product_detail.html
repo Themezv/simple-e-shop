@@ -1,5 +1,10 @@
-{% extends extended_template %} {% load staticfiles %}
-{% block head_title %}Товар: {{ item.title }} {% endblock head_title %}
+{% extends extended_template %}
+{% load staticfiles %}
+
+{% block head_title %}
+    Товар: {{ item.title }}
+{% endblock head_title %}
+
 {% block content %}
 <div class="row main-box product-item-detail container">
     <div class="row">
@@ -11,14 +16,15 @@
             <h1>{{ item.title }}</h1>
             <hr>
             <div class="buy-form">
-                <h4> Цена: {{ item.get_price_ruble }} р / {{ item.get_price_usd }} $</h4>
+                <h4> Цена: {{ item.get_price_ruble }} р / {{ item.get_price_usd }} $ / {{ item.get_price_eur }}&#8364;</h4>
                 <form action="/orders/order-create/" method="POST"> {% csrf_token %}
                     <input type="number" name="count" class="count" value="1" required>
                     <input type="hidden" name="id_product" value="{{ item.id }}">
                     <button type="submit" class="save btn btn-primary btn-default">Заказать</button>
                 </form>
             </div>
-            <p>{{ item.text_preview }}</p>
+            <p>Описание товара: <br>
+                {{ item.text_preview }}</p>
         </div>
     </div>
     {% if related_items %}
@@ -30,9 +36,9 @@
                 <div class="card-deck">
                     {% for item in related_items %}
                     <div class="card related-item-card">
-                        <a href="{{ item.get_absolute_url }}" onclick="ajaxLinkMain('{{ item.get_absolute_url }}')"><img class="card-img-top img-fluid" src="/media/{{ item.avatar }}" alt="Card image cap"></a>
+                        <a href="{{ item.get_absolute_url }}"><img class="card-img-top img-fluid" src="/media/{{ item.avatar }}" alt="Card image cap"></a>
                         <div class="card-block">
-                            <a href="#" onclick="ajaxLinkMain('{{ item.get_absolute_url }}')" ><h4 class="card-title">{{ item.title }}</h4></a>
+                            <a href="#"><h4 class="card-title">{{ item.title }}</h4></a>
                             {% if item.text_preview %}
                             <p class="card-text">{{ item.text_preview|truncatechars:30}}</p>
                             {% endif %}

@@ -12,7 +12,7 @@
 
         <div class="article-list">
             {% if user.is_staff or user.is_superuser %}
-            <a href="{% url 'article_create' category_slug=category_url %}" onclick="ajaxLinkMain('{% url 'article_create' category_slug=category_url %}')">
+            <a href="{% url 'article_create' category_slug=category_url %}">
                 <div class="card create-article-card">
                     <div class="row">
                         <h4>Создать новую статью</h4>
@@ -22,7 +22,7 @@
             {% endif %}
             {% for obj in object_list %}
             <div class="card">
-                <a href="{{ obj.get_absolute_url }}" onclick="ajaxLinkMain('{{ obj.get_absolute_url }}')">
+                <a href="{{ obj.get_absolute_url }}">
                     <div class="row">
                             <div class="col-md-4 article-image">
                                 {% if obj.image %}
@@ -52,30 +52,30 @@
     <div class="col-md-3 pull-md-8 left-box">
     {% if another_categories %}
         <div class="card card-primary category-card">
-            <a href="{% url 'article_category_list' %}" onclick="ajaxLinkMain('{% url 'article_category_list' %}')">
+            <a href="{% url 'article_category_list' %}">
                 <div class="card-header">
                     <h4>Категории</h4>
                 </div>
             </a>
             {% for catgr in another_categories %}
-            <a href="{{ catgr.get_absolute_url_for_blog }}" onclick="ajaxLinkMain('{{ catgr.get_absolute_url_for_blog }}')" class="card-block-a"><div class="card-block">{{ catgr.title }}</div></a>
+            <a href="{{ catgr.get_absolute_url_for_blog }}" class="card-block-a"><div class="card-block">{{ catgr.title }}</div></a>
             {% endfor %}
         </div>
     {% endif %}
     </div>
 
-<!--     <div class="pagination">
-        <span class="step-links">
-						{% if object_list.has_previous %}
-				    	<a href="?{{page_request_var}}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>
-						{% endif %}
-
-						<span class="current">
-						{{ object_list.number }} из {{ object_list.paginator.num_pages }}.
-						</span> {% if object_list.has_next %}
-        <a href="?{{page_request_var}}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a> {% endif %}
-        </span>
-    </div> -->
+{#<!--     <div class="pagination">#}
+{#        <span class="step-links">#}
+{#						{% if object_list.has_previous %}#}
+{#				    	<a href="?{{page_request_var}}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>#}
+{#						{% endif %}#}
+{##}
+{#						<span class="current">#}
+{#						{{ object_list.number }} из {{ object_list.paginator.num_pages }}.#}
+{#						</span> {% if object_list.has_next %}#}
+{#        <a href="?{{page_request_var}}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a> {% endif %}#}
+{#        </span>#}
+{#    </div> -->#}
 
 </div>
 {% endblock content %}

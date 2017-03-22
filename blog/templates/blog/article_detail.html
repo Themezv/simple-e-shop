@@ -8,8 +8,8 @@
         {% endif %}
         <h3 class="article-dscrpt">{{ instance.title }} <span class="updated-time">{{ instance.published|timesince }} назад</span></h3>
         {% if user.is_staff or user.is_superuser %}
-            <a class="btn btn-primary" onclick="ajaxLinkMain('{% url 'article_edit' category_slug=instance.category.slug slug=instance.slug %}')" href="{% url 'article_edit' category_slug=instance.category.slug slug=instance.slug %}">Редактировать</a>
-            <a class="btn btn-primary" onclick="ajaxLinkMain('{% url 'article_delete' category_slug=instance.category.slug slug=instance.slug %}')" href="{% url 'article_delete' category_slug=instance.category.slug slug=instance.slug %}">Удалить</a>
+            <a class="btn btn-primary" href="{% url 'article_edit' category_slug=instance.category.slug slug=instance.slug %}">Редактировать</a>
+            <a class="btn btn-primary" href="{% url 'article_delete' category_slug=instance.category.slug slug=instance.slug %}">Удалить</a>
         {% endif %}
         <hr>
         {% if instance.image %}
@@ -26,7 +26,7 @@
             <div class="row">
                 <div class="container recent-article-list">
                 {% for recent_article in recent_articles %}
-                <a onclick="ajaxLinkMain('{{ recent_article.get_absolute_url }}')" href="{{ recent_article.get_absolute_url }}">
+                <a href="{{ recent_article.get_absolute_url }}">
                     <div class="card">
                         <img class="card-img-top img-fluid" src="/media/{{ recent_article.image }}" alt="Card image cap">
                         <div class="card-block">

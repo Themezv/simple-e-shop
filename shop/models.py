@@ -21,6 +21,7 @@ class ProductType(models.Model):
 
 class Currency(models.Model):
     title = models.CharField(max_length=100)
+    rate = models.FloatField()
 
     def __str__(self):
         return self.title
@@ -47,7 +48,7 @@ class Product(models.Model):
     avatar = models.ImageField(upload_to='items_avatars')
     text_preview = models.TextField(max_length=500, null=True, blank=True)
 
-    price = models.PositiveSmallIntegerField(blank=True, null=True)
+    price = models.FloatField(blank=True, null=True)
     currency = models.ForeignKey(Currency)
 
     description = models.TextField(max_length=100)
@@ -74,9 +75,11 @@ class Product(models.Model):
         if self.currency.title == "RUB":
             return self.price
         elif self.currency.title == "USD":
-            c = CurrencyRates()
-            rate = c.get_rate('USD', 'RUB')
-            return "%.2f" %(self.price * rate)
+            price = self.price * self.currency.rate
+            return "%.2f" %(price)
+        elif self.currency.title == "EUR":
+            price = self.price * self.currency.rate
+            return "%.2f" % (price)
         else:
             pass
 
@@ -84,9 +87,31 @@ class Product(models.Model):
         if self.currency.title == "USD":
             return self.price
         elif self.currency.title == "RUB":
-            c = CurrencyRates()
-            rate = c.get_rate('RUB', 'USD')
-            return "%.2f" %(self.price * rate)
+            rate = Currency.objects.get(title="USD").rate
+            price = self.price / rate
+            return "%.2f" %(price)
+        elif self.currency.title == "EUR":
+            rate_ruble = self.currency.rate
+            ruble_price = self.price * rate_ruble
+            rate = Currency.objects.get(title="USD").rate
+            price = ruble_price / rate
+            return "%.2f" %(price)
+        else:
+            pass
+
+    def get_price_eur(self):
+        if self.currency.title == "EUR":
+            return self.price
+        elif self.currency.title == "RUB":
+            rate = Currency.objects.get(title="EUR").rate
+            price = self.price / rate
+            return "%.2f" %(price)
+        elif self.currency.title == "USD":
+            rate_ruble = self.currency.rate
+            ruble_price = self.price * rate_ruble
+            rate = Currency.objects.get(title="EUR").rate
+            price = ruble_price / rate
+            return "%.2f" %(price)
         else:
             pass
 

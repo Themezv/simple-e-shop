@@ -61,27 +61,27 @@
 
 </script>
 
-<script type="text/javascript">
-    // AJAX script by Stepan
-
-    // onclick
-    function ajaxLinkMain(str_url, data) {
-        event.preventDefault();
-        window.history.pushState("string","Title", str_url); //Меняет адресс без перезагрузки, HTML5
-        $(document).ready(function() {
-            $.ajax({
-                url: str_url,
-                type: "GET",
-                data: data,
-                success: function(result) {
-                    $("main").html(result);
-                }
-            });
-        });
-    };
-
-
-</script>
+{#<script type="text/javascript">#}
+{#    // AJAX script by Stepan#}
+{##}
+{#    // onclick#}
+{#    function ajaxLinkMain(str_url, data) {#}
+{#        event.preventDefault();#}
+{#        window.history.pushState("string","Title", str_url); //Меняет адресс без перезагрузки, HTML5#}
+{#        $(document).ready(function() {#}
+{#            $.ajax({#}
+{#                url: str_url,#}
+{#                type: "GET",#}
+{#                data: data,#}
+{#                success: function(result) {#}
+{#                    $("main").html(result);#}
+{#                }#}
+{#            });#}
+{#        });#}
+{#    };#}
+{##}
+{##}
+{#</script>#}
 
 {% block extra_script %}
 {% endblock extra_script %}

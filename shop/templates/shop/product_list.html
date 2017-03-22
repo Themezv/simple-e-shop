@@ -16,7 +16,7 @@
 
         {% for product in products %}
             <div class="card">
-                <a href="{{ product.get_absolute_url }}" onclick="ajaxLinkMain('{{ product.get_absolute_url }}')" style="color: #2b2d2f">
+                <a href="{{ product.get_absolute_url }}" style="color: #2b2d2f">
                     <div class="row">
                             <div class="col-md-4 product-image">
                                 {% if product.avatar %}
@@ -27,7 +27,7 @@
                                 {% if product.draft %}
                                 <p style="color:#f00" class="draft-warning">В разработке</p>
                                 {% endif %}
-                                <h4>{{ product.title }}<span class="product-price"> {{ product.get_price_ruble }}Р ({{ product.get_price_usd }}$)</span></h4></h4>
+                                <h4>{{ product.title }}<span class="product-price">{{ product.get_price_eur }}&#8364; {{ product.get_price_ruble }}Р ({{ product.get_price_usd }}$)</span></h4></h4>
                                 <hr>
                                 <div class="content-markdown" style="padding: 5px">
                                     <p>{{ product.text_preview|truncatechars:100 }} </p>
@@ -69,9 +69,9 @@
     <div class="col-md-3 pull-md-8 left-box">
         {% if categories %}
         <div class="card card-primary category-card">
-            <a href="{% url 'category_list' %}" onclick="ajaxLinkMain('{% url 'category_list' %}')"><div class="card-header"><h3 class="nav-link">Категории</h3></div></a>
+            <a href="{% url 'category_list' %}"><div class="card-header"><h3 class="nav-link">Категории</h3></div></a>
             {% for catgr in categories %}
-            <a href="{{ catgr.get_absolute_url }}" onclick="ajaxLinkMain('{{ catgr.get_absolute_url }}')" class="card-block-a"><div class="card-block category-title">{{ catgr.title }}</div></a>
+            <a href="{{ catgr.get_absolute_url }}" class="card-block-a"><div class="card-block category-title">{{ catgr.title }}</div></a>
             {% endfor %}
         </div>
         {% endif %}
