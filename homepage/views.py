@@ -1,12 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.flatpages.models import FlatPage
-from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_protect
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, RedirectView, DeleteView, TemplateView
+from django.views.generic import CreateView, DeleteView
 from django.utils.decorators import method_decorator
+
 from .models import Tiles
+from blog.models import Article
 from .forms import AboutForm, ContactForm, TilesForm
 ##############
 
@@ -18,9 +19,10 @@ from .forms import AboutForm, ContactForm, TilesForm
 @csrf_protect
 def index(request):
     tiles = Tiles.objects.all()
+    articles = Article.objects.all().order_by('-published')[:3]
     form = TilesForm
 
-    return render(request, 'homepage/index.html', {'tiles': tiles, 'form': form, })
+    return render(request, 'homepage/index.html', {'tiles': tiles, 'form': form, "articles":articles})
 
 
 @method_decorator(login_required(), name="dispatch")

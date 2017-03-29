@@ -5,37 +5,52 @@
 
 
 {% block content %}
-
-    {{ block.super }}
-
-
     <div class="row wrap-tile">
-        <div class="for-back-img"></div>
-        {% for tile in tiles %}
-            <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="tile">
-                    <a href="{{ tile.pages.get_absolute_url }}" class="card-link">
-                        <h3 class="card-title">{{ tile.pages.title }}</h3>
-                        {% if  user.is_staff or user.is_superuser %}
-                            <form method="post" action="/tile-delete/"> {% csrf_token %}
-                                <input type="number" class="number-tile-delete" value="{{ tile.pk }}"
-                                       name="id-to-delete">
-                                <button class="btn btn-danger btn-tile-delete">x</button>
-                            </form>
-                        {% endif %}
-                        <img src="media/{{ tile.pages.avatar }}" class="tile-img img-fluid">
-                    </a>
+        <div class="container-fluid">
+            <div class="row">
+                {% for tile in tiles %}
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="tile">
+                            <a href="{{ tile.pages.get_absolute_url }}" class="card-link">
+                                <h3 class="card-title" style="text-shadow: 0 0 20px black;">{{ tile.pages.title }}</h3>
+                                {% if  user.is_staff or user.is_superuser %}
+                                    <form method="post" action="/tile-delete/"> {% csrf_token %}
+                                        <input type="number" class="number-tile-delete" value="{{ tile.pk }}"
+                                               name="id-to-delete">
+                                        <button class="btn btn-danger btn-tile-delete">x</button>
+                                    </form>
+                                {% endif %}
+                                <img src="media/{{ tile.pages.avatar }}" class="tile-img img-fluid">
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+                {% if user.is_staff or user.is_superuser %}
+                    <div class="col-lg-4 col-md-6 col-sm-12 tile" id="div-new-tile">
+                        <h1 id="new-tile">+</h1>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="container text-white" style="margin-top: 25px; margin-bottom: 25px">
+            <h2>Последние статьи</h2>
+            <div class="row">
+                {% for article in articles %}
+                <div class="col-xs-12">
+                    <div class="article-main" style="padding: 10px; margin-top: 15px; box-shadow: 0 0 4px 0px black; background-color: #08314e;">
+                        <a href="{{ article.get_absolute_url }}" class="text-white">
+                            <h3>{{ article.title }}</h3>
+                        </a>
+                        <p>{{ article.content|truncatechars_html:250 }}</p>
+                    </div>
                 </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-
-
-        {% if user.is_staff or user.is_superuser %}
-            <div class="col-xs-3 tile" id="div-new-tile">
-                <h1 id="new-tile">+</h1>
-            </div>
-        {% endif %}
+        </div>
     </div>
+
 {% endblock content %}
 
 {% block extra_script %}
