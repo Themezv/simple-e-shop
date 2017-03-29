@@ -1,7 +1,8 @@
 {% extends extended_template %}
-{% load static %}
-
+{% load staticfiles %}
 {% block content %}
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
 <div class="row">
   <div class="col-sm-6 col-sm-offset-3">
     <h1>Форма для заполнения</h1>

@@ -1,11 +1,10 @@
 from django import forms
 from django.contrib.flatpages.models import FlatPage
 from .models import Tiles
-from ckeditor.widgets import CKEditorWidget
-
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 class AboutForm(forms.ModelForm):
-    content = forms.CharField(widget=CKEditorWidget())
+    content = forms.CharField(widget=CKEditorUploadingWidget(config_name='awesome_ckeditor'))
 
     class Meta:
         model = FlatPage
@@ -24,8 +23,8 @@ class ContactForm(forms.ModelForm):
             'content',
         ]
         widgets = {
-            'title': CKEditorWidget(),
-            'content': CKEditorWidget(),
+            'title': CKEditorUploadingWidget(config_name='awesome_ckeditor'),
+            'content': CKEditorUploadingWidget(config_name='awesome_ckeditor'),
         }
 
 
