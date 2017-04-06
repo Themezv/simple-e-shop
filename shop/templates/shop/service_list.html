@@ -40,7 +40,7 @@
                                 </span></h4></h4>
                                 <hr>
                                 <div class="content-markdown" style="padding: 5px">
-                                    <p>{{ service.text_preview|truncatechars:100 }} </p>
+                                    <p>{{ service.text_preview|truncatechars:100 | safe }} </p>
                                 </div>
                             </div>
                     </div>
@@ -72,6 +72,21 @@
                     </span> {% if products.has_next %}
             <a href="?{{page_request_var}}={{ services.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a> {% endif %}
             </span>
+        </div>
+
+        <div class="col-md-3 pull-md-8 left-box">
+            {% if categories %}
+                <div class="card card-primary category-card">
+                    <a href="{% url 'category_list' %}">
+                        <div class="card-header"><h3 class="nav-link">Категории</h3></div>
+                    </a>
+                    {% for catgr in categories %}
+                        <a href="{{ catgr.get_absolute_url }}" class="card-block-a">
+                            <div class="card-block category-title">{{ catgr.title | safe }}</div>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
 
     </div>

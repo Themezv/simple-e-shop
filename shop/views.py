@@ -48,6 +48,11 @@ class ServiceListView(ProductListView):
         queryset_list = Product.objects.filter(product_type__title="Service")
         return queryset_list
 
+    def get_context_data(self, **kwargs):
+        context = super(ServiceListView, self).get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()[:10]
+        return context
+
 
 class CategoryShopListView(CategoryListView):
     template_name = "shop/category_list.html"
