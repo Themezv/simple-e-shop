@@ -14,7 +14,7 @@ class ProductManager(models.Manager):
 
 
 class ProductType(models.Model):
-    title = models.CharField('Название типа продукта', max_length=50)
+    title = models.CharField('Название типа продукта', max_length=500)
 
     def __str__(self):
         return self.title
@@ -37,8 +37,8 @@ class Currency(models.Model):
 
 
 class Category(models.Model):
-    title = models.CharField('Название категории', max_length=16, unique=True)
-    description = RichTextUploadingField('Описание', max_length=100)
+    title = models.CharField('Название категории', max_length=100, unique=True)
+    description = RichTextUploadingField('Описание', max_length=2000)
     slug = models.SlugField('Генерируется автоматически', unique=True, null=True, blank=True)
     image = models.ImageField(upload_to='category_image', null=True, blank=True)
 
@@ -64,7 +64,7 @@ class Product(models.Model):
     price = models.FloatField('Цена', blank=True, null=True)
     currency = models.ForeignKey(Currency, verbose_name='Валюта')
 
-    description = RichTextUploadingField('Описание', max_length=150)
+    description = RichTextUploadingField('Описание', max_length=2000)
     available = models.BooleanField(default=True)
 
     category = models.ManyToManyField(Category)
