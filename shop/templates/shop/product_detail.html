@@ -6,50 +6,64 @@
 {% endblock head_title %}
 
 {% block content %}
-<div class="row main-box product-item-detail container">
-    <div class="row">
-        <div class="col-md-6 item-image">
-            {% if item.avatar %}
-            <img src="/media/{{ item.avatar }}" class="img-fluid"> {% endif %}
-        </div>
-        <div class="col-md-6 item-description">
-            <h1>{{ item.title }}</h1>
-            <hr>
-            <div class="buy-form">
-                <h4> Цена: {{ item.get_price_ruble }} р / {{ item.get_price_usd }} $ / {{ item.get_price_eur }}&#8364;</h4>
-                <form action="/orders/order-create/" method="POST"> {% csrf_token %}
-                    <input type="number" name="count" class="count" value="1" required>
-                    <input type="hidden" name="id_product" value="{{ item.id }}">
-                    <button type="submit" class="save btn btn-primary btn-default">Заказать</button>
-                </form>
+    <div class="row main-box product-item-detail container">
+        <div class="row">
+            <div class="col-md-6 item-image">
+                {% if item.avatar %}
+                    <img src="/media/{{ item.avatar }}" class="img-fluid"> {% endif %}
             </div>
-            <p>Описание товара: <br>
-                {{ item.text_preview }}</p>
+            <div class="col-md-6 item-description">
+                <h1>{{ item.title }}</h1>
+                <hr>
+                <div class="buy-form">
+                    <h4> Цена:
+                        {% if item.currency.title == 'RUB' %}
+                            {{ item.get_price_ruble }}&#8381;
+
+
+                        {% elif item.currency.title == 'USD' %}
+                            {{ item.get_price_ruble }}&#8381;
+                            ({{ item.get_price_usd }}$)
+                        {% elif item.currency.title == 'EUR' %}
+                            {{ item.get_price_ruble }}&#8381;
+                            {{ item.get_price_eur }}&#8364;
+                        {% endif %}
+                    </h4>
+                    <form action="/orders/order-create/" method="POST"> {% csrf_token %}
+                        <input type="number" name="count" class="count" value="1" required>
+                        <input type="hidden" name="id_product" value="{{ item.id }}">
+                        <button type="submit" class="save btn btn-primary btn-default">Заказать</button>
+                    </form>
+                </div>
+                <p>Описание товара: <br>
+                    {{ item.text_preview | safe }}</p>
+            </div>
         </div>
-    </div>
-    {% if related_items %}
-    <div class="row">
-        <div class="col-md-12">
-            <hr>
-            <div class="related-list">
-                <h2>Также рекомендуем</h2>
-                <div class="card-deck">
-                    {% for item in related_items %}
-                    <div class="card related-item-card">
-                        <a href="{{ item.get_absolute_url }}"><img class="card-img-top img-fluid" src="/media/{{ item.avatar }}" alt="Card image cap"></a>
-                        <div class="card-block">
-                            <a href="#"><h4 class="card-title">{{ item.title }}</h4></a>
-                            {% if item.text_preview %}
-                            <p class="card-text">{{ item.text_preview|truncatechars:30}}</p>
-                            {% endif %}
+        {% if related_items %}
+            <div class="row">
+                <div class="col-md-12">
+                    <hr>
+                    <div class="related-list">
+                        <h2>Также рекомендуем</h2>
+                        <div class="card-deck">
+                            {% for item in related_items %}
+                                <div class="card related-item-card">
+                                    <a href="{{ item.get_absolute_url }}"><img class="card-img-top img-fluid"
+                                                                               src="/media/{{ item.avatar }}"
+                                                                               alt="Card image cap"></a>
+                                    <div class="card-block">
+                                        <a href="#"><h4 class="card-title">{{ item.title | safe }}</h4></a>
+                                        {% if item.text_preview %}
+                                            <p class="card-text">{{ item.text_preview|truncatechars:30 | safe }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
-                    {% endfor %}
                 </div>
             </div>
-        </div>
+        {% endif %}
     </div>
-   {% endif %}
-</div>
 
 {% endblock content %}

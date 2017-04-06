@@ -27,7 +27,17 @@
                                 {% if service.draft %}
                                 <p style="color:#f00" class="draft-warning">В разработке</p>
                                 {% endif %}
-                                <h4>{{ service.title }}<span class="product-price"> {{ service.get_price_eur }}&#8364; {{ service.get_price_ruble }}Р ({{ service.get_price_usd }}$)</span></h4></h4>
+                                <h4>{{ service.title }}<span class="product-price">
+                                    {% if service.currency.title == 'RUB' %}
+                                            {{ service.get_price_ruble }}&#8381;
+                                        {% elif service.currency.title == 'USD' %}
+                                            {{ service.get_price_ruble }}&#8381;
+                                            ({{ service.get_price_usd }}$)
+                                        {% elif service.currency.title == 'EUR' %}
+                                            {{ service.get_price_ruble }}&#8381;
+                                            {{ service.get_price_eur }}&#8364;
+                                        {% endif %}
+                                </span></h4></h4>
                                 <hr>
                                 <div class="content-markdown" style="padding: 5px">
                                     <p>{{ service.text_preview|truncatechars:100 }} </p>

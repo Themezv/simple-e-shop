@@ -4,12 +4,12 @@ register = template.Library()
 
 
 @register.inclusion_tag('homepage/menu.html', takes_context=True)
-def show_menu(context,path):
+def show_menu(context, path):
     request = context['request']
     user = request.user
     context = {
         'path': path,
-        'user':user,
+        'user': user,
     }
     return context
 

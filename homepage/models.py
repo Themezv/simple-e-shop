@@ -9,6 +9,11 @@ class Tiles(models.Model):
     def __str__(self):
         return "Страницы для отображения на главной (плитки)"
 
+    class Meta:
+        verbose_name = "Плитка на главной странице"
+        verbose_name_plural = "Плитки на главной странице"
+
+
 
 class MainSetting(models.Model):
     firm_name = models.CharField('Название компании', max_length=70)
@@ -18,10 +23,12 @@ class MainSetting(models.Model):
     work_time = models.TextField('Время работы', max_length=100)
     logo = models.ImageField('Логотип', upload_to='homepage')
     favicon = models.ImageField('Маленькая иконка сайта во вкладке', upload_to='homepage', blank=True)
-    active = models.BooleanField(default=False, help_text='Только одна запись должна быть активна')
+    active = models.BooleanField('Настройки активны', default=False, help_text='Только одна запись должна быть активна')
 
-    class META:
+    class Meta:
         unique_together = ("active",)
+        verbose_name = "Главные настройки"
+        verbose_name_plural = "Главные настройки"
 
     def __str__(self):
         return "Главные настройки сайта. Информация в верхней части"

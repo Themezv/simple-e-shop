@@ -2,6 +2,7 @@ from django.db import models
 from forex_python.converter import CurrencyRates
 from django.core.urlresolvers import reverse
 from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class ProductManager(models.Manager):
@@ -18,6 +19,10 @@ class ProductType(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = "Тип продукта"
+        verbose_name_plural = "Типы продуктов"
+
 
 class Currency(models.Model):
     title = models.CharField('Валюта', max_length=100)
@@ -26,11 +31,15 @@ class Currency(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = "Курс валюты"
+        verbose_name_plural = "Курсы валют"
+
 
 class Category(models.Model):
     title = models.CharField('Название категории', max_length=16, unique=True)
-    description = models.TextField('Описание', max_length=100)
-    slug = models.SlugField(unique=True, null=True, blank=True)
+    description = RichTextUploadingField('Описание', max_length=100)
+    slug = models.SlugField('Генерируется автоматически', unique=True, null=True, blank=True)
     image = models.ImageField(upload_to='category_image', null=True, blank=True)
 
     def get_absolute_url(self):
@@ -42,16 +51,20 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = "Категория"
+        verbose_name_plural = "Категории"
+
 
 class Product(models.Model):
     title = models.CharField('Название', max_length=20)
     avatar = models.ImageField('Изображение', upload_to='items_avatars')
-    text_preview = models.TextField('Краткое описание', max_length=500, null=True, blank=True)
+    text_preview = RichTextUploadingField('Краткое описание', max_length=500, null=True, blank=True)
 
-    price = models.FloatField(blank=True, null=True)
-    currency = models.ForeignKey(Currency)
+    price = models.FloatField('Цена', blank=True, null=True)
+    currency = models.ForeignKey(Currency, verbose_name='Валюта')
 
-    description = RichTextField(max_length=150)
+    description = RichTextUploadingField('Описание', max_length=150)
     available = models.BooleanField(default=True)
 
     category = models.ManyToManyField(Category)
@@ -117,3 +130,7 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name = "Товар"
+        verbose_name_plural = "Товары"
