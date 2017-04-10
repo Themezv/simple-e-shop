@@ -17,10 +17,10 @@ class Tiles(models.Model):
 
 class MainSetting(models.Model):
     firm_name = models.CharField('Название компании', max_length=70)
-    phone1 = models.CharField('Номер телефона', max_length=16)
-    phone2 = models.CharField('Номер телефона', max_length=16, blank=True)
-    address = models.TextField('Адрес', max_length=100,)
-    work_time = models.TextField('Время работы', max_length=100)
+    phone1 = models.CharField('Номер телефона', max_length=20)
+    phone2 = models.CharField('Номер телефона', max_length=20, blank=True)
+    address = models.TextField('Адрес', max_length=500,)
+    work_time = models.TextField('Время работы', max_length=500)
     logo = models.ImageField('Логотип', upload_to='homepage')
     favicon = models.ImageField('Маленькая иконка сайта во вкладке', upload_to='homepage', blank=True)
     active = models.BooleanField('Настройки активны', default=False, help_text='Только одна запись должна быть активна')

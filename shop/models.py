@@ -37,8 +37,8 @@ class Currency(models.Model):
 
 
 class Category(models.Model):
-    title = models.CharField('Название категории', max_length=100, unique=True)
-    meta_description = models.CharField('Описание', max_length=2000)
+    title = models.CharField('Название категории', max_length=500, unique=True)
+    meta_description = RichTextUploadingField('Описание', max_length=2000)
     slug = models.SlugField('Генерируется автоматически', unique=True, null=True, blank=True)
     image = models.ImageField(upload_to='category_image', null=True, blank=True)
 
@@ -72,14 +72,14 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    title = models.CharField('Название', max_length=20)
+    title = models.CharField('Название', max_length=200)
     avatar = models.ImageField('Изображение', upload_to='items_avatars')
-    text_preview = RichTextUploadingField('Краткое описание', max_length=500, null=True, blank=True)
+    text_preview = RichTextUploadingField('Краткое описание', max_length=5000, null=True, blank=True)
 
     price = models.FloatField('Цена', blank=True, null=True)
     currency = models.ForeignKey(Currency, verbose_name='Валюта')
 
-    description = RichTextUploadingField('Описание', max_length=2000)
+    description = RichTextUploadingField('Описание', max_length=10000)
     available = models.BooleanField(default=True)
 
     category = models.ManyToManyField(Category)

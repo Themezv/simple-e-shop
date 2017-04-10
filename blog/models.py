@@ -13,7 +13,7 @@ class ArticleManager(models.Manager):
 
 
 class Article(models.Model):
-    title = models.CharField(max_length=55)
+    title = models.CharField(max_length=550)
     content = models.TextField(max_length=50000)
     published = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)

@@ -19,10 +19,10 @@ class OrderedItem(models.Model):
 
 
 class Order(models.Model):
-    FIO = models.CharField('Фамилия Имя Отчество',max_length=200)
-    address = models.CharField('Адрес', max_length=300)
+    FIO = models.CharField('Фамилия Имя Отчество',max_length=500)
+    address = models.CharField('Адрес', max_length=500)
     email = models.EmailField('E-mail')
-    phone_number = models.CharField('Номер телефона', max_length=15)
+    phone_number = models.CharField('Номер телефона', max_length=20)
     items = models.ManyToManyField(OrderedItem)
     timestamp = models.DateTimeField('Время заказа', auto_now=False, auto_now_add=True)
 
