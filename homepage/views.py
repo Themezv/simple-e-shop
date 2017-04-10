@@ -41,7 +41,7 @@ class DeleteTileView(DeleteView):
     form_class = TilesForm
     success_url = '/'
 
-    def get_object(self):
+    def get_object(self, queryset=None):
         id_tile_to_delete = int(self.request.POST.get('id-to-delete'))
         tile = Tiles.objects.get(pk=id_tile_to_delete)
         return tile

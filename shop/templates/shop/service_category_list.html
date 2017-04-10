@@ -6,9 +6,9 @@
         </div>
         <div class="row">
             {% for obj in categories %}
-                {% if obj.has_articles %}
+                {% if obj.has_services %}
                 <div class="col-lg-4 col-md-12">
-                    <a href="{{ obj.get_absolute_url_for_blog }}">
+                    <a href="{{ obj.get_absolute_url_for_service }}">
                         <div class="card card-inverse category-list-card">
                             <img class="card-img img-fluid" src="/media/{{ obj.image }}" alt="Card image">
                             <div class="card-img-overlay">

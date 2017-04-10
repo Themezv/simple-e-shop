@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from .models import Article
 from shop.models import Category
-from .forms import ArticleForm
+from .forms import ArticleForm, CategoryForm
 
 
 class CategoryListView(ListView):
@@ -28,6 +28,16 @@ class CategoryListView(ListView):
             return queryset_list.filter(Q(title__icontains=query)).distinct()
         else:
             return queryset_list
+
+
+@method_decorator(login_required(), name="dispatch")
+class CreateCategoryView(CreateView):
+    template_name = "blog/article_form.html"
+    model = Category
+    form_class = CategoryForm
+
+    def get_success_url(self):
+        return '/'
 
 
 class ArticleListView(ListView):

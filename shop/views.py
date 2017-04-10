@@ -38,14 +38,21 @@ class ItemListView(ProductListView):
         return context
 
 
+class CategoryServiceListView(CategoryListView):
+    template_name = "shop/service_category_list.html"
+    # model = ServiceCategory
+    # context_object_name = "categories"
+
+
 class ServiceListView(ProductListView):
     template_name = "shop/service_list.html"
     context_object_name = 'services'
 
     def get_queryset(self):
         """ Нужно сделать создав метод для Queryser """
+        category_slug = self.kwargs.get("category_slug")
         queryset_list = super(ServiceListView, self).get_queryset()
-        queryset_list = Product.objects.filter(product_type__title="Service")
+        queryset_list = queryset_list.filter(product_type__title="Service").filter(category__slug=category_slug)
         return queryset_list
 
     def get_context_data(self, **kwargs):
@@ -72,10 +79,6 @@ class ItemCategoriedListView(ItemListView):
         context['another_categories'] = Category.objects.all()[:10]
         context['category_slug'] = self.kwargs['category_slug']
         return context
-
-    def get(self, request, *args, **kwargs):
-        # context = super(ItemCategoriedListView, self).get_context_data(**kwargs)
-        return super(ItemCategoriedListView, self).get(self.request, *args, **kwargs)
 
 
 class ProductDetalilView(DetailView):

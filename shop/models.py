@@ -1,8 +1,8 @@
 from django.db import models
-from forex_python.converter import CurrencyRates
 from django.core.urlresolvers import reverse
-from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
+
+from blog.models import Article
 
 
 class ProductManager(models.Manager):
@@ -38,15 +38,30 @@ class Currency(models.Model):
 
 class Category(models.Model):
     title = models.CharField('Название категории', max_length=100, unique=True)
-    description = RichTextUploadingField('Описание', max_length=2000)
+    meta_description = models.CharField('Описание', max_length=2000)
     slug = models.SlugField('Генерируется автоматически', unique=True, null=True, blank=True)
     image = models.ImageField(upload_to='category_image', null=True, blank=True)
+
+    def has_articles(self):
+        qs = Article.objects.all().filter(category=self)
+        return qs.exists()
+
+    def has_items(self):
+        qs = Product.objects.items().filter(category=self)
+        return qs.exists()
+
+    def has_services(self):
+        qs = Product.objects.services().filter(category=self)
+        return qs.exists()
 
     def get_absolute_url(self):
         return reverse("product_categoried_list", args=[str(self.slug)])
 
     def get_absolute_url_for_blog(self):
         return reverse("article_list", args=[str(self.slug)])
+
+    def get_absolute_url_for_service(self):
+        return reverse("service_list", args=[str(self.slug)])
 
     def __str__(self):
         return self.title

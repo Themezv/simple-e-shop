@@ -4,7 +4,7 @@ from PIL import Image
 
 from markdown_deux import markdown
 
-from shop.models import Category
+# from shop.models import Category
 
 
 class ArticleManager(models.Manager):
@@ -23,8 +23,7 @@ class Article(models.Model):
 
 
     ##########FOREIGNFIELDS###########
-    category = models.ForeignKey(Category)   
-
+    category = models.ForeignKey("shop.Category")
 
     objects = ArticleManager()
 
