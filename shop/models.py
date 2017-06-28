@@ -1,8 +1,18 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
-
 from blog.models import Article
+
+
+class Manufacturer(models.Model):
+    title = models.CharField('Название', max_length=100)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Производитель'
+        verbose_name_plural = 'Производители'
 
 
 class ProductManager(models.Manager):
@@ -13,15 +23,36 @@ class ProductManager(models.Manager):
         return super(ProductManager, self).filter(product_type__title="Service")
 
 
-class ProductType(models.Model):
-    title = models.CharField('Название типа продукта', max_length=500)
+class ProductGroup(models.Model):
+    title = models.CharField('Название группы продукта', max_length=500)
 
     def __str__(self):
         return self.title
 
     class Meta:
-        verbose_name = "Тип продукта"
-        verbose_name_plural = "Типы продуктов"
+        verbose_name = "Группа продукта"
+        verbose_name_plural = "Группы продуктов"
+
+
+class ProductSubGroup(models.Model):
+    group = models.ForeignKey(ProductGroup, verbose_name='Группа')
+    title = models.CharField('Название подгруппы продукта', max_length=500)
+    description = RichTextUploadingField('Описание подгруппы')
+
+    def get_manufacturers(self):
+        products = self.product_set.all()
+        manufacturers = []
+        for product in products:
+            if product.manufacturer not in manufacturers:
+                manufacturers.append(product.manufacturer)
+        return manufacturers
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Подгруппа продукта"
+        verbose_name_plural = "Подгруппы продуктов"
 
 
 class Currency(models.Model):
@@ -84,17 +115,14 @@ class Product(models.Model):
 
     category = models.ManyToManyField(Category)
     relation = models.ManyToManyField('self', blank=True, symmetrical=True)
-    product_type = models.ForeignKey(ProductType)
+    subgroup = models.ForeignKey(ProductSubGroup, verbose_name='Подгруппа')
+    manufacturer = models.ForeignKey(Manufacturer, verbose_name='Производитель')
 
     # Manager
     objects = ProductManager()
 
     def get_absolute_url(self):
-        if self.product_type.title == 'Item':
-            return reverse("product_detail", args=[str(self.id)])
-
-        if self.product_type.title == 'Service':
-            return reverse("service_detail", args=[str(self.id)])
+        return reverse("product_detail", args=[str(self.id)])
 
     def get_category_slug(self):
         return self.category.first().slug
@@ -104,10 +132,10 @@ class Product(models.Model):
             return self.price
         elif self.currency.title == "USD":
             price = self.price * self.currency.rate
-            return "%.2f" %(price)
+            return "%.2f" % price
         elif self.currency.title == "EUR":
             price = self.price * self.currency.rate
-            return "%.2f" % (price)
+            return "%.2f" % price
         else:
             pass
 
@@ -117,13 +145,13 @@ class Product(models.Model):
         elif self.currency.title == "RUB":
             rate = Currency.objects.get(title="USD").rate
             price = self.price / rate
-            return "%.2f" %(price)
+            return "%.2f" % price
         elif self.currency.title == "EUR":
             rate_ruble = self.currency.rate
             ruble_price = self.price * rate_ruble
             rate = Currency.objects.get(title="USD").rate
             price = ruble_price / rate
-            return "%.2f" %(price)
+            return "%.2f" % price
         else:
             pass
 
@@ -133,13 +161,13 @@ class Product(models.Model):
         elif self.currency.title == "RUB":
             rate = Currency.objects.get(title="EUR").rate
             price = self.price / rate
-            return "%.2f" %(price)
+            return "%.2f" % price
         elif self.currency.title == "USD":
             rate_ruble = self.currency.rate
             ruble_price = self.price * rate_ruble
             rate = Currency.objects.get(title="EUR").rate
             price = ruble_price / rate
-            return "%.2f" %(price)
+            return "%.2f" % price
         else:
             pass
 

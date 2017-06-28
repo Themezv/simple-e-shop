@@ -16,5 +16,5 @@ class ProductForm(forms.ModelForm):
             'category',
             'relation',
             'avatar',
-            'product_type',
+            'subgroup',
         ]

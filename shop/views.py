@@ -4,7 +4,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, R
 from django.views.decorators.csrf import csrf_protect
 from django.utils.decorators import method_decorator
 from blog.views import CategoryListView
-from .models import Category, Product, ProductType
+from .models import Category, Product, ProductSubGroup, ProductGroup, Manufacturer
 from .forms import ProductForm
 
 
@@ -14,28 +14,18 @@ class ProductListView(ListView):
 
     paginate_by = 10
 
-    def get_queryset(self):
-        queryset_list = super(ProductListView, self).get_queryset()
-        query = self.request.GET.get('q')
-        if query:
-            return queryset_list.filter(Q(title__icontains=query)).distinct()
-        else:
-            return queryset_list
-
-
-class ItemListView(ProductListView):
-    context_object_name = 'products'
-
-    def get_queryset(self):
-        """ Нужно сделать создав метод для Queryser """
-        queryset_list = super(ItemListView, self).get_queryset()
-        queryset_list = queryset_list.filter(product_type__title="Item")
-        return queryset_list
-
     def get_context_data(self, **kwargs):
-        context = super(ItemListView, self).get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()[:10]
+        context = super(ProductListView, self).get_context_data(**kwargs)
+        context['product_groups'] = ProductGroup.objects.all()
         return context
+
+    # def get_queryset(self):
+    #     queryset_list = super(ProductListView, self).get_queryset()
+    #     query = self.request.GET.get('q')
+    #     if query:
+    #         return queryset_list.filter(Q(title__icontains=query)).distinct()
+    #     else:
+    #         return queryset_list
 
 
 class CategoryServiceListView(CategoryListView):
@@ -44,21 +34,21 @@ class CategoryServiceListView(CategoryListView):
     # context_object_name = "categories"
 
 
-class ServiceListView(ProductListView):
-    template_name = "shop/service_list.html"
-    context_object_name = 'services'
-
-    def get_queryset(self):
-        """ Нужно сделать создав метод для Queryser """
-        category_slug = self.kwargs.get("category_slug")
-        queryset_list = super(ServiceListView, self).get_queryset()
-        queryset_list = queryset_list.filter(product_type__title="Service").filter(category__slug=category_slug)
-        return queryset_list
-
-    def get_context_data(self, **kwargs):
-        context = super(ServiceListView, self).get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()[:10]
-        return context
+# class ServiceListView(ProductListView):
+#     template_name = "shop/service_list.html"
+#     context_object_name = 'services'
+#
+#     def get_queryset(self):
+#         """ Нужно сделать создав метод для Queryser """
+#         category_slug = self.kwargs.get("category_slug")
+#         queryset_list = super(ServiceListView, self).get_queryset()
+#         queryset_list = queryset_list.filter(product_type__title="Service").filter(category__slug=category_slug)
+#         return queryset_list
+#
+#     def get_context_data(self, **kwargs):
+#         context = super(ServiceListView, self).get_context_data(**kwargs)
+#         context['categories'] = Category.objects.all()[:10]
+#         return context
 
 
 class CategoryShopListView(CategoryListView):
@@ -69,30 +59,30 @@ class CategoryShopListView(CategoryListView):
         return context
 
 
-class ItemCategoriedListView(ItemListView):
-    def get_queryset(self):
-        queryset_list = super(ItemCategoriedListView, self).get_queryset()
-        return queryset_list.filter(category__slug=self.kwargs['category_slug'])
-
-    def get_context_data(self, **kwargs):
-        context = super(ItemCategoriedListView, self).get_context_data(**kwargs)
-        context['another_categories'] = Category.objects.all()[:10]
-        context['category_slug'] = self.kwargs['category_slug']
-        return context
+# class ItemCategoriedListView(ItemListView):
+#     def get_queryset(self):
+#         queryset_list = super(ItemCategoriedListView, self).get_queryset()
+#         return queryset_list.filter(category__slug=self.kwargs['category_slug'])
+#
+#     def get_context_data(self, **kwargs):
+#         context = super(ItemCategoriedListView, self).get_context_data(**kwargs)
+#         context['another_categories'] = Category.objects.all()[:10]
+#         context['category_slug'] = self.kwargs['category_slug']
+#         return context
 
 
 class ProductDetalilView(DetailView):
     model = Product
     context_object_name = 'item'
 
-    def get_context_data(self, **kwargs):
-        context = super(ProductDetalilView, self).get_context_data(**kwargs)
-        item = context['object']
-        related_items = Product.objects.items().filter(relation=item).distinct().exclude(id=item.id)
-        related_services = Product.objects.services().filter(relation=item).distinct().exclude(id=item.id)
-        context['related_items'] = related_items[:4]
-        context['related_services'] = related_services[:4]
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super(ProductDetalilView, self).get_context_data(**kwargs)
+    #     item = context['object']
+    #     related_items = Product.objects.items().filter(relation=item).distinct().exclude(id=item.id)
+    #     related_services = Product.objects.services().filter(relation=item).distinct().exclude(id=item.id)
+    #     context['related_items'] = related_items[:4]
+    #     context['related_services'] = related_services[:4]
+    #     return context
 
 
 class ItemDetailView(ProductDetalilView):
@@ -110,3 +100,7 @@ class ProductCreateView(CreateView):
     form_class = ProductForm
     context_object_name = 'product'
 
+
+class ManufacturerDetailView(DetailView):
+    model = Manufacturer
+    template_name = 'shop/manufacturer_detail.html'

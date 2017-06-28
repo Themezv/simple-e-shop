@@ -9,11 +9,6 @@ from django.utils.decorators import method_decorator
 from .models import Tiles
 from blog.models import Article
 from .forms import AboutForm, ContactForm, TilesForm
-##############
-
-# class 
-
-##############
 
 
 @csrf_protect
