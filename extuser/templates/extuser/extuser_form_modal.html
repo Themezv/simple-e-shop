@@ -1,0 +1,41 @@
+<div class="modal fade" id="order-modal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="loginmodal-container">
+            <h1>Заполните форму</h1><br>
+            <form action="{% url "order:order_create" %}" class="form-group"
+                      id="user-data-form" method="post">{% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group">
+                        <p class="text-danger">{{ field.errors }}</p>
+                        {{ field.label }} {{ field }}
+                        {% if field.help_text %}
+                            <p class="help">{{ field.help_text|safe }}</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            <label class="custom-control custom-checkbox">
+                    <input id="agree_rights" name="agree_rights" type="checkbox" class="custom-control-input" required checked>
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Согласен на обработку персональных данны</span>
+                </label>
+                <input type="hidden" class="hiddenRecaptcha required" required name="hiddenRecaptcha" id="hiddenRecaptcha">
+                <div class="pb-2 g-recaptcha float-md-right"
+                     data-sitekey="6LduhSQUAAAAAKIzN_cLgciyfRk9fU0gwkNZPmbZ"></div>
+
+                <button id="buy-ticket" class="login font-weight-bold h3 loginmodal-submit g-recaptcha">Подтвердить</button>
+            </form>
+
+            <div class="login-help">
+                <span>Выбранные Вами билеты блокируются на 20 минут. В случае, если за это время Вы не завершите оплату, билеты будут разблокированы.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+{#<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"#}
+{#     style="display: none;">#}
+{#    <div class="modal-dialog">#}
+{##}
+{#    </div>#}
+{#</div>#}
