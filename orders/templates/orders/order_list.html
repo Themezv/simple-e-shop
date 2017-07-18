@@ -8,11 +8,15 @@
       <h1>Заказы</h1>
       <br>
       {% for obj in obj_list %}
-              <a href="{{ obj.get_absolute_url }}"><h3>{{ obj.FIO }}</h3></a>
-              <p>Телефон: {{ obj.phone_number }}</p>
-              <p>Email: {{ obj.email }}</p>
-              <p>Адрес: {{ obj.address }}</p>
-              <p>Время: {{ obj.timestamp }}</p>
+              <a href="{{ obj.get_absolute_url }}">
+                  <p>Имя: {{ obj.user.last_name }}</p>
+                  <p>Фамилия: {{ obj.user.first_name }}</p>
+              </a>
+              <p>Телефон: {{ obj.user.phone }}</p>
+              <p>Email: {{ obj.user.email }}</p>
+              <p>Адрес: {{ obj.user.address }}</p>
+              <p>Время: {{ obj.date }}</p>
+
               <hr>
       {% endfor %}
 

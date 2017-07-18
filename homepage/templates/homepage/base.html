@@ -29,7 +29,6 @@
 <body>
 <script src="{% static 'homepage/js/jquery-3.1.1.min.js' %}"></script>
 
-<div class="container-fluid">
 <header>
     <!-- Header start -->
     {% show_top %}
@@ -38,7 +37,7 @@
     {% show_menu request.path %}
 </header>
 
-<main class="row">
+<main style="min-height: 100vh">
     {% block content %}
     {% endblock content %}
 </main>
@@ -46,7 +45,6 @@
 <footer>
 {% include "homepage/footer.html" %}
 </footer>
-</div>
 
 <!-- jQuery first, then Tether, then Bootstrap JS. -->
 

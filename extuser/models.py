@@ -11,6 +11,7 @@ class ExtUser(models.Model):
     last_name = models.CharField('Фамилия', max_length=30, blank=True)
     email = models.EmailField('email')
     phone = models.CharField('Номер телефона', max_length=20)
+    address = models.CharField(verbose_name="Адрес", max_length=200)
 
     def __str__(self):
         return str(self.email)

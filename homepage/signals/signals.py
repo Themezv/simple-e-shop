@@ -4,7 +4,8 @@ from django.utils.text import slugify
 from transliterate import translit
 
 from blog.models import Article
-from shop.models import Category
+from shop.models import Category, ProductGroup, Manufacturer
+
 
 def create_slug(instance, new_slug=None):
     try:
@@ -25,6 +26,8 @@ def create_slug(instance, new_slug=None):
 
 @receiver(pre_save, sender=Article)
 @receiver(pre_save, sender=Category)
+@receiver(pre_save, sender=ProductGroup)
+@receiver(pre_save, sender=Manufacturer)
 def pre_save(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = create_slug(instance)

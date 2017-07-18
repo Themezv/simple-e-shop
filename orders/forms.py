@@ -1,15 +1,10 @@
 from django import forms
-from shop.models import Product
-from orders.models import OrderedItem, Order
 
-
-class OrderForm(forms.ModelForm):
-    class Meta:
-        model = Order
-        fields = [
-            'FIO',
-            'address',
-            'phone_number',
-            'email',
-            # 'items',
-        ]
+# from orders.models import OrderProduct
+#
+#
+# class OrderForm(forms.Form):
+#     count = forms.FloatField(max_value=5000)
+#     count.label = "Количество"
+#
+#

@@ -1,97 +1,35 @@
 {% extends "homepage/base.html" %}
 
-
 {% block content %}
-<div class="row main-box">
+    <div class="container-fluid">
+        <div class="row pt-2">
 
-    <div class="col-md-8 offset-md-3 content-box">
-        <form method="GET" class="search-box" action="">
-            <div class="input-group">
-                <input class="form-control" type="text" placeholder="Введите запрос" name="q" value="{{ request.GET.q }}">
-                <span class="input-group-btn">
-                    <input class="btn btn-primary btn-default" type="submit" value="Найти">
-                </span>
-            </div>
-        </form>
-
-        {% for service in services %}
-            <div class="card">
-                <a href="{{ service.get_absolute_url }}" style="color: #2b2d2f">
-                    <div class="row">
-                            <div class="col-md-4 product-image">
-                                {% if service.avatar %}
-                                <img src="/media/{{ service.avatar }}" alt="" class="img-fluid" />
-                                {% endif %}
-                            </div>
-                            <div class="col-md-8 product-dscrpt">
-                                {% if service.draft %}
-                                <p style="color:#f00" class="draft-warning">В разработке</p>
-                                {% endif %}
-                                <h4>{{ service.title }}<span class="product-price">
-                                    {% if service.currency.title == 'RUB' %}
-                                            {{ service.get_price_ruble }}&#8381;
-                                        {% elif service.currency.title == 'USD' %}
-                                            {{ service.get_price_ruble }}&#8381;
-                                            ({{ service.get_price_usd }}$)
-                                        {% elif service.currency.title == 'EUR' %}
-                                            {{ service.get_price_ruble }}&#8381;
-                                            {{ service.get_price_eur }}&#8364;
-                                        {% endif %}
-                                </span></h4>
-                                <hr>
-                                <div class="content-markdown" style="padding: 5px">
-                                    <p>{{ service.text_preview|truncatechars:100 | safe }} </p>
+            {% for service in services %}
+                <div class="col-md-6">
+                    <div class="card">
+                        <a href="{{ service.get_absolute_url }}" style="color: #2b2d2f">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    {% if service.image %}
+                                        <img src="/media/{{ service.image }}" alt="" class="img-fluid"/>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-8">
+                                    {% if service.draft %}
+                                        <p style="color:#f00" class="draft-warning">В разработке</p>
+                                    {% endif %}
+                                    <h4>{{ service.title }}</h4>
+                                    <hr>
+                                    <div class="content-markdown" style="padding: 5px">
+                                        <p>{{ service.text_preview|truncatechars:100 | safe }} </p>
+                                    </div>
                                 </div>
                             </div>
-                    </div>
-                </a>
-            </div>
-
-{#        <div class="card full-size product-card">#}
-{#            <a href="" onclick="ajaxLinkMain('{{ product.get_absolute_url }}')">#}
-{#                <img class="card-img-top img-fluid" src="/media/{{ product.avatar }}" alt="Card image cap">#}
-{#            </a>#}
-{#            <div class="card-block">#}
-{#                <h4 class="card-title"><a href="{{ product.get_absolute_url }}"> {{ product.title }}</a></h4>#}
-{#                <p><small>{{ product.text_preview|truncatechars:120 }}</small></p>#}
-{#                <p class="card-text">Цена:{{ product.price }}</p>#}
-{#                <a href="" onclick="ajaxLinkMain('{{ product.get_absolute_url }}')" class="btn btn-primary">Подробнее</a>#}
-{#                <a href="" class="btn btn-primary">Заказать</a>#}
-{#            </div>#}
-{#        </div>#}
-        {% endfor %}
-
-        <div class="pagination">
-            <span class="step-links">
-                {% if services.has_previous %}
-                    <a href="?{{page_request_var}}={{ services.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>
-                    {% endif %}
-
-                    <span class="current">
-                    {{ services.number }} из {{ services.paginator.num_pages }}.
-                    </span> {% if products.has_next %}
-            <a href="?{{page_request_var}}={{ services.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a> {% endif %}
-            </span>
-        </div>
-
-        <div class="col-md-3 pull-md-8 left-box">
-            {% if categories %}
-                <div class="card card-primary category-card">
-                    <a href="{% url 'category_list' %}">
-                        <div class="card-header"><h3 class="nav-link">Категории</h3></div>
-                    </a>
-                    {% for catgr in categories %}
-                        <a href="{{ catgr.get_absolute_url }}" class="card-block-a">
-                            <div class="card-block category-title">{{ catgr.title | safe }}</div>
                         </a>
-                    {% endfor %}
+                    </div>
                 </div>
-            {% endif %}
+            {% endfor %}
+
         </div>
-
     </div>
-
-
-</div>
-
 {% endblock content %}

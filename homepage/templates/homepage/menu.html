@@ -1,68 +1,70 @@
 {% load page_extras %}
-<div class="row menu-row hidden-sm-down">
-    <nav class="main-menu ">
-        <ul class="nav nav-justified main-menu-ul">
-            {% if '/' == path %}
-                <li class="active main-menu-li"><a class="main-menu-li-a" href="/">Главная</a></li>
-            {% else %}
-                <li class="main-menu-li"><a class="main-menu-li-a" href="/">Главная</a></li>
-            {% endif %}
-
-
-            {% if '/market/shop/' in path %}
-                <li class="active main-menu-li"><a class="main-menu-li-a" href="/market/shop/">Товары</a></li>
-            {% else %}
-                <li class="main-menu-li"><a class="main-menu-li-a" href="/market/shop/">Товары</a></li>
-            {% endif %}
-
-
-            {% if '/market/service/' in path %}
-                <li class="active main-menu-li"><a class="main-menu-li-a" href="/market/service/">Услуги</a></li>
-            {% else %}
-                <li class="main-menu-li"><a class="main-menu-li-a" href="/market/service/">Услуги</a></li>
-            {% endif %}
-
-
-            {% if '/article/' in path %}
-                <li class="active main-menu-li"><a class="main-menu-li-a" href="/article/">Статьи</a></li>
-            {% else %}
-                <li class="main-menu-li"><a class="main-menu-li-a" href="/article/">Статьи</a></li>
-            {% endif %}
-
-
-            {% if '/about/' in path %}
-                <li class="active main-menu-li"><a class="main-menu-li-a" href="/about/">О нас</a></li>
-            {% else %}
-                <li class="main-menu-li"><a class="main-menu-li-a" href="/about/">О нас</a></li>
-            {% endif %}
-
-
-            {% if '/contacts/' in path %}
-                <li class="active main-menu-li"><a class="main-menu-li-a" href="/contacts/">Контакты</a></li>
-            {% else %}
-                <li class="main-menu-li"><a class="main-menu-li-a" href="/contacts/">Контакты</a></li>
-            {% endif %}
-
-            {% if user.is_superuser or user.is_staff %}
-                {% if path == '/orders/' %}
-                    <li class="active main-menu-li"><a class="main-menu-li-a" href="/orders/">Заказы</a></li>
+<div class="container-fluid">
+    <div class="row menu-row hidden-sm-down">
+        <nav class="main-menu ">
+            <ul class="nav nav-justified main-menu-ul">
+                {% if '/' == path %}
+                    <li class="active main-menu-li"><a class="main-menu-li-a" href="/">Главная</a></li>
                 {% else %}
-                    <li class="main-menu-li"><a class="main-menu-li-a" href="/orders/">Заказы</a></li>
+                    <li class="main-menu-li"><a class="main-menu-li-a" href="/">Главная</a></li>
                 {% endif %}
-            {% endif %}
 
-            <!-- {% for page in menu_pages %}
-    {% if page.get_absolute_url == path  %}
-        <li class="active"><a href="{{ page.get_absolute_url }}">{{ page.title }}</a></li>
-    {% else %}
-        <li><a href="{{ page.get_absolute_url }}">{{ page.title }}</a></li>
-    {% endif %}
-{% empty %}
-    <li> Нет страниц в меню</li>
-{% endfor %} -->
 
-        </ul>
-    </nav>
+                {% if '/market/shop/' in path %}
+                    <li class="active main-menu-li"><a class="main-menu-li-a" href="/market/shop/">Товары</a></li>
+                {% else %}
+                    <li class="main-menu-li"><a class="main-menu-li-a" href="/market/shop/">Товары</a></li>
+                {% endif %}
+
+
+                {% if '/market/service/' in path %}
+                    <li class="active main-menu-li"><a class="main-menu-li-a" href="/market/service/">Услуги</a></li>
+                {% else %}
+                    <li class="main-menu-li"><a class="main-menu-li-a" href="/market/service/">Услуги</a></li>
+                {% endif %}
+
+
+                {% if '/article/' in path %}
+                    <li class="active main-menu-li"><a class="main-menu-li-a" href="/article/">Статьи</a></li>
+                {% else %}
+                    <li class="main-menu-li"><a class="main-menu-li-a" href="/article/">Статьи</a></li>
+                {% endif %}
+
+
+                {% if '/about/' in path %}
+                    <li class="active main-menu-li"><a class="main-menu-li-a" href="/about/">О нас</a></li>
+                {% else %}
+                    <li class="main-menu-li"><a class="main-menu-li-a" href="/about/">О нас</a></li>
+                {% endif %}
+
+
+                {% if '/contacts/' in path %}
+                    <li class="active main-menu-li"><a class="main-menu-li-a" href="/contacts/">Контакты</a></li>
+                {% else %}
+                    <li class="main-menu-li"><a class="main-menu-li-a" href="/contacts/">Контакты</a></li>
+                {% endif %}
+
+                {% if user.is_superuser or user.is_staff %}
+                    {% if path == '/orders/' %}
+                        <li class="active main-menu-li"><a class="main-menu-li-a" href="/orders/">Заказы</a></li>
+                    {% else %}
+                        <li class="main-menu-li"><a class="main-menu-li-a" href="/orders/">Заказы</a></li>
+                    {% endif %}
+                {% endif %}
+
+                <!-- {% for page in menu_pages %}
+        {% if page.get_absolute_url == path  %}
+            <li class="active"><a href="{{ page.get_absolute_url }}">{{ page.title }}</a></li>
+        {% else %}
+            <li><a href="{{ page.get_absolute_url }}">{{ page.title }}</a></li>
+        {% endif %}
+    {% empty %}
+        <li> Нет страниц в меню</li>
+    {% endfor %} -->
+
+            </ul>
+        </nav>
+    </div>
 </div>
 
 <div class="dropdown">

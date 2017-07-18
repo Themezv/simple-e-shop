@@ -14,7 +14,6 @@ class Tiles(models.Model):
         verbose_name_plural = "Плитки на главной странице"
 
 
-
 class MainSetting(models.Model):
     firm_name = models.CharField('Название компании', max_length=70)
     phone1 = models.CharField('Номер телефона', max_length=20)

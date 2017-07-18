@@ -1,47 +1,21 @@
 {% extends "homepage/base.html" %}
+{% load inclusion_tags %}
+{% load static %}
 
 {% block content %}
-    <div class="col-md-2">
-
-
-        {% for group in product_groups %}
-            <div>{{ group.title }}</div>
-
-
-        <div id="accordion" role="tablist" aria-multiselectable="true">
-            {% for subgroup in group.productsubgroup_set.all %}
-            <div class="card">
-                <div class="card-header" role="tab" id="heading{{ subgroup.id }}">
-                    <h5 class="mb-0">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ subgroup.id }}" aria-expanded="true"
-                           aria-controls="collapse{{ subgroup.id }}">
-                            {{ subgroup.title }}
-                        </a>
-                    </h5>
-                </div>
-
-                <div id="collapse{{ subgroup.id }}" class="collapse show" role="tabpanel" aria-labelledby="heading{{ subgroup.id }}">
-                    <div class="card-block">
-                        {% for manufacturer in subgroup.get_manufacturers %}
-                            {{ manufacturer }}
-                        {% endfor %}
-                    </div>
-                </div>
+    <div class="container-fluid">
+        <div class="row pt-1">
+            <div class="col-md-3">
+                {% show_filter_panel %}
             </div>
-            {% endfor %}
+
+            <div class="col-md-9" id="product-list">
+                {% include "shop/product_list_ajax.html" %}
+            </div>
         </div>
-        {% endfor %}
-
-    </div>
-
-    <div class="col-md-9">
-        {% for product in product_list %}
-            <div>
-                {{ product.title }}
-            </div>
-            <div>
-                {{ product.get_absolute_url }}
-            </div>
-        {% endfor %}
     </div>
 {% endblock content %}
+
+{% block extra_script %}
+    <script src="{% static 'homepage/js/product_list.js' %}"></script>
+{% endblock %}

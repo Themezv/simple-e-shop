@@ -1,24 +1,13 @@
 from django import template
 
+from shop.models import ProductGroup
+
 register = template.Library()
 
 
-@register.inclusion_tag('homepage/menu.html', takes_context=True)
-def show_menu(context, path):
-    request = context['request']
-    user = request.user
+@register.inclusion_tag('shop/filter_panel.html')
+def show_filter_panel():
     context = {
-        'path': path,
-        'user': user,
-    }
-    return context
-
-
-@register.inclusion_tag('homepage/top.html')
-def show_top():
-    from homepage.models import MainSetting
-    firm_settings = MainSetting.objects.get(active=True)
-    context = {
-        'firm_settings': firm_settings,
+        'product_groups': ProductGroup.objects.all()
     }
     return context
