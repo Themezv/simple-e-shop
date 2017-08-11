@@ -139,7 +139,7 @@ class Service(models.Model):
     title = models.CharField(verbose_name="Название", max_length=500)
     description = RichTextUploadingField('Описание', max_length=10000)
 
-    text_preview = RichTextUploadingField(verbose_name='Краткое описание', max_length=5000, null=True, blank=True)
+    text_preview = models.CharField(verbose_name='Краткое описание', max_length=1000, null=True, blank=True)
 
     meta_title = models.CharField(verbose_name="SEO заголовок", max_length=500)
     meta_description = models.CharField(verbose_name="SEO описание", max_length=5000)
@@ -151,7 +151,7 @@ class Service(models.Model):
 
     available = models.BooleanField(verbose_name="Доступ", default=True)
 
-    currency = models.ForeignKey(Currency)
+    currency = models.ForeignKey(Currency, blank=True, null=True)
 
     group = models.ForeignKey(ProductGroup, blank=True, null=True)
 

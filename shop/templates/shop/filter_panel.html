@@ -1,29 +1,55 @@
 {% load inclusion_tags %}
 
-{% for group in product_groups %}
-    <form action="{% url 'filtered_product_list' %}" method="get" class="get-product-list-form">
-        <h3>{{ group.title }}</h3>
-        <input type="hidden" name="group" value="{{ group.slug }}">
-        {% if group.get_all_categories %}
-            <h4>Категории</h4>
-            {% for category in group.get_all_categories %}
-                <label>
-                    <input type="checkbox" name="category" value="{{ category.slug }}">
-                    {{ category.title }}
-                </label>
-                <br>
+<div class="nav-side-menu">
+    <div class="menu-list">
+        <div id="menu-content" class="menu-content collapse in">
+            {% for group in product_groups %}
+                <form action="{% url 'filtered_product_list' %}"
+                      method="get"
+                      class="get-product-list-form visible-zone mb-0">
+                    <input type="hidden" name="group" value="{{ group.slug }}">
+                    <div data-toggle="collapse" aria-expanded="true" data-target="#{{ group.slug }}" class="visible-product-title active">
+                        <a href="#">
+                            <h4 class="font-weight-bold">{{ group.title }}</h4>
+                        </a>
+                    </div>
+                    <div class="sub-menu collapse in" aria-expanded="true" id="{{ group.slug }}">
+                        {% if group.get_all_categories %}
+                            <div class="category-header">
+                                <h4>Категории</h4>
+                            </div>
+                            {% for category in group.get_all_categories %}
+                                <div class="category-title">
+                                    <a href="#">
+                                        <label>
+                                            <input type="checkbox" name="category" value="{{ category.slug }}">
+                                            {{ category.title }}
+                                        </label>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        {% if group.get_all_manufacturers %}
+                            <div class="manufacturer-header">
+                                <h4>Производитель</h4>
+                            </div>
+                            {% for manufacturer in group.get_all_manufacturers %}
+                                <div class="manufacturer-title">
+                                    <a href="#">
+                                        <label>
+                                            <input type="checkbox" name="manufacturer" value="{{ manufacturer.slug }}">
+                                            {{ manufacturer.title }}
+                                        </label>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <div class="">
+                            <button class="get-product-list-btn">Найти</button>
+                        </div>
+                    </div>
+                </form>
             {% endfor %}
-        {% endif %}
-        {% if group.get_all_manufacturers %}
-            <h4>Производители</h4>
-            {% for manufacturer in group.get_all_manufacturers %}
-                <label>
-                    <input type="checkbox" name="manufacturer" value="{{ manufacturer.slug }}">
-                    {{ manufacturer.title }}
-                </label>
-                <br>
-            {% endfor %}
-        {% endif %}
-    <button class="get-product-list-btn">Найти</button>
-    </form>
-{% endfor %}
+        </div>
+    </div>
+</div>

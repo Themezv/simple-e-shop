@@ -1,81 +1,68 @@
 {% extends "homepage/base.html" %}
 {% block content %}
-<div class="row">
-
-    <div class="col-md-8 push-md-3 content-box">
-        <form method="GET" action="" class="search-box">
-            <div class="input-group">
-                <input class="form-control" type="text" placeholder="Введите запрос" name="q" value="{{ request.GET.q }}">
-                <span class="input-group-btn"><input class="btn btn-primary btn-default" type="submit" value="Найти"></span>
-            </div>
-        </form>
-
-        <div class="article-list">
-            {% if user.is_staff or user.is_superuser %}
-            <a href="{% url 'article_create' category_slug=category_url %}">
-                <div class="card create-article-card">
-                    <div class="row">
-                        <h4>Создать новую статью</h4>
-                    </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 push-md-3 content-box">
+            <form method="GET" action="" class="search-box">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Введите запрос" name="q" value="{{ request.GET.q }}">
+                    <span class="input-group-btn"><input class="btn btn-primary btn-default" type="submit" value="Найти"></span>
                 </div>
-            </a>
-            {% endif %}
-            {% for obj in object_list %}
-            <div class="card">
-                <a href="{{ obj.get_absolute_url }}">
-                    <div class="row">
-                            <div class="col-md-4 article-image">
-                                {% if obj.image %}
-                                <img src="/media/{{ obj.image }}" alt="" class="img-fluid" />
-                                {% endif %}
-                            </div>
-                            <div class="col-md-8 article-dscrpt">
-                                {% if obj.draft %}
-                                <p style="color:#f00" class="draft-warning">В разработке</p>
-                                {% endif %}
-                                <h4>{{ obj.title }}<span class="updated-time"> {{ obj.updated|timesince }} назад</span></h4>
-                                <hr>
-                                <div class="content-markdown">
-                                    <p>{{ obj.get_markdown|truncatechars_html:50|safe }} </p>
-                                </div>
+            </form>
 
-
-                            </div>
+            <div class="article-list">
+                {% if user.is_staff or user.is_superuser %}
+                <a href="{% url 'article_create' category_slug=category_url %}">
+                    <div class="card create-article-card">
+                        <div class="row">
+                            <h4>Создать новую статью</h4>
+                        </div>
                     </div>
                 </a>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
+                {% endif %}
+                {% for obj in object_list %}
+                <div class="card">
+                    <a href="{{ obj.get_absolute_url }}">
+                        <div class="row">
+                                <div class="col-md-4 article-image">
+                                    {% if obj.image %}
+                                    <img src="/media/{{ obj.image }}" alt="" class="img-fluid" />
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-8 article-dscrpt">
+                                    {% if obj.draft %}
+                                    <p style="color:#f00" class="draft-warning">В разработке</p>
+                                    {% endif %}
+                                    <h4>{{ obj.title }}<span class="updated-time"> {{ obj.updated|timesince }} назад</span></h4>
+                                    <hr>
+                                    <div class="content-markdown">
+                                        <p>{{ obj.get_markdown|truncatechars_html:50|safe }} </p>
+                                    </div>
 
 
-    <div class="col-md-3 pull-md-8 left-box">
-    {% if another_categories %}
-        <div class="card card-primary category-card">
-            <a href="{% url 'article_category_list' %}">
-                <div class="card-header">
-                    <h4>Категории</h4>
+                                </div>
+                        </div>
+                    </a>
                 </div>
-            </a>
-            {% for catgr in another_categories %}
-            <a href="{{ catgr.get_absolute_url_for_blog }}" class="card-block-a"><div class="card-block">{{ catgr.title }}</div></a>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
-    {% endif %}
+
+        <div class="col-md-3 pull-md-8 left-box hidden-sm-down">
+        {% if another_categories %}
+            <div class="card card-primary category-card">
+                <a href="{% url 'article_category_list' %}">
+                    <div class="card-header">
+                        <h4 class="font-weight-bold">Категории</h4>
+                    </div>
+                </a>
+                {% for catgr in another_categories %}
+                <a href="{{ catgr.get_absolute_url }}" class="card-block-a"><div class="card-block">{{ catgr.title }}</div></a>
+                {% endfor %}
+            </div>
+        {% endif %}
+        </div>
+
     </div>
-
-{#<!--     <div class="pagination">#}
-{#        <span class="step-links">#}
-{#						{% if object_list.has_previous %}#}
-{#				    	<a href="?{{page_request_var}}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>#}
-{#						{% endif %}#}
-{##}
-{#						<span class="current">#}
-{#						{{ object_list.number }} из {{ object_list.paginator.num_pages }}.#}
-{#						</span> {% if object_list.has_next %}#}
-{#        <a href="?{{page_request_var}}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a> {% endif %}#}
-{#        </span>#}
-{#    </div> -->#}
-
 </div>
 {% endblock content %}

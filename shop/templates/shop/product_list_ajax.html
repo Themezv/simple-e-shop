@@ -1,25 +1,45 @@
 <div class="container-fluid">
     <div class="row">
-    {% for product in product_list %}
-        <div class="col-sm-6 mb-1">
-            <div class="product-list-item p-1" style="background-color:#9f9f9f;">
-                <h4> {{ product.title }} </h4>
-                <div>
-                    <p>{{ product.price }}</p>
-                    <p>Пр. {{ product.manufacturer.title }}</p>
-                    <p>Группа: {{ product.group }}</p>
-                    <ul>
-                        <li><h4>Категории</h4></li>
-                        {% for foo in product.category.all %}
-                            <li>{{ foo.title }}</li>
-                        {% endfor %}
-                    </ul>
-                    <br>
-                    <a href="{{ product.get_absolute_url }}">Перейти</a>
+        {% for product in product_list %}
+            <div class="col-sm-6 mb-1">
+                <div class="image-block">
+                    <div class="image-block__top image-block--grid">
+                        <div class="image-block__top__title pull-left">
+                            <h4 class="image-block__top__title__main">{{ product.title }}</h4>
+                        </div>
+                        <div class="image-block__top__price pull-right">
+{#                            <div class="image-block__top__timestamp__month">Jan</div>#}
+{#                            <div class="image-block__top__timestamp__day">15th</div>#}
+                            {% if product.new_price or product.price %}
+                            <div class="image-block__top__price__ruble">
+                                    {% if product.new_price %}
+                                        <b>{{ product.new_price }} р</b>
+                                        <s>{{ product.price }}</s>
+                                    {% else %}
+                                        <b>{{ product.price }} р</b>
+                                    {% endif %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <img src="/media/{{ product.avatar }}" alt="" class="img-fluid image-block__image">
+                    <div class="image-block__bottom image-block--grid">
+                        <div class="image-block__bottom__left pull-left">
+                            <a href="{{ product.get_absolute_url }}" class="btn btn-info">
+                                Подробнее
+                            </a>
+                        </div>
+                        <div class="image-block__bottom__right pull-right">
+                            <span class="image-block__bottom__right__zoom">
+                                <a href="#" class="btn btn-danger">
+                                    Заказать
+                                </a>
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <hr>
-    {% endfor %}
+            <hr>
+        {% endfor %}
     </div>
 </div>

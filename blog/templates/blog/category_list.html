@@ -1,14 +1,15 @@
-{% extends "homepage/base.html" %} {% block content %}
-<div class="row">
-    <div class="container">
-        <div class="category-list-title">
+{% extends "homepage/base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 category-list-title">
             <h1>Категории</h1>
         </div>
-        <div class="row">
+        <div class="col-sm-12 row">
             {% for obj in categories %}
-                {% if obj.has_articles %}
+{#                {% if obj.has_articles %}#}
                 <div class="col-lg-4 col-md-12">
-                    <a href="{{ obj.get_absolute_url_for_blog }}">
+                    <a href="{{ obj.get_absolute_url }}">
                         <div class="card card-inverse category-list-card">
                             <img class="card-img img-fluid" src="/media/{{ obj.image }}" alt="Card image">
                             <div class="card-img-overlay">
@@ -17,19 +18,19 @@
                         </div>
                     </a>
                 </div>
-                {% endif %}
+{#                {% endif %}#}
             {% endfor %}
             {% if request.user.is_superuser or request.user.is_staff %}
-            <div class="col-lg-4 col-md-12">
-                <a href="{% url "category_create" %}">
-                    <div class="card card-inverse category-list-card">
-{#                        <img class="card-img img-fluid" src="/media/{{ obj.image }}" alt="Card image">#}
-                        <div class="card-img-overlay">
-                            <h4 class="card-title category-title">Добавить</h4>
+                <div class="col-lg-4 col-md-12">
+                    <a href="{% url "category_create" %}">
+                        <div class="card card-inverse category-list-card">
+    {#                        <img class="card-img img-fluid" src="/media/{{ obj.image }}" alt="Card image">#}
+                            <div class="card-img-overlay">
+                                <h4 class="card-title category-title">Добавить</h4>
+                            </div>
                         </div>
-                    </div>
-                </a>
-            </div>
+                    </a>
+                </div>
             {% endif %}
         </div>
 

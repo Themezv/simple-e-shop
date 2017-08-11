@@ -1,11 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, RedirectView, DeleteView, TemplateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from .models import Article
-from shop.models import Category
+from blog.models import Category
 from .forms import ArticleForm, CategoryForm
 
 
@@ -15,19 +14,6 @@ class CategoryListView(ListView):
     slug_field = 'slug'
     slug_url_kwarg = 'category_slug'
     context_object_name = 'categories'
-
-    # Не работает
-    paginate_by = 5
-
-    #############
-
-    def get_queryset(self):
-        query = self.request.GET.get('q')
-        queryset_list = super(CategoryListView, self).get_queryset()
-        if query:
-            return queryset_list.filter(Q(title__icontains=query)).distinct()
-        else:
-            return queryset_list
 
 
 @method_decorator(login_required(), name="dispatch")
@@ -50,11 +36,8 @@ class ArticleListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        query = self.request.GET.get('q')
         queryset_list = super(ArticleListView, self).get_queryset().filter(category__slug=self.kwargs['category_slug'])
-        user = self.request.user
 
-        ##################Search###################
         query = self.request.GET.get("q")
 
         if query:
@@ -88,7 +71,7 @@ class ArticleDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ArticleDetail, self).get_context_data(**kwargs)
         instance = context['object']
-        recent_articles = Article.objects.active().order_by('-published').exclude(slug=instance.slug)[:5]
+        recent_articles = Article.objects.active().order_by('-published').exclude(slug=instance.slug)[:2]
         context['recent_articles'] = recent_articles
         return context
 

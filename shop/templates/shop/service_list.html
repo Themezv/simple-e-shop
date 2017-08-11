@@ -1,29 +1,17 @@
 {% extends "homepage/base.html" %}
 
 {% block content %}
-    <div class="container-fluid">
-        <div class="row pt-2">
-
+    <div class="container">
+        <div class="row pt-2 service-list">
             {% for service in services %}
                 <div class="col-md-6">
-                    <div class="card">
-                        <a href="{{ service.get_absolute_url }}" style="color: #2b2d2f">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    {% if service.image %}
-                                        <img src="/media/{{ service.image }}" alt="" class="img-fluid"/>
-                                    {% endif %}
-                                </div>
-                                <div class="col-md-8">
-                                    {% if service.draft %}
-                                        <p style="color:#f00" class="draft-warning">В разработке</p>
-                                    {% endif %}
-                                    <h4>{{ service.title }}</h4>
-                                    <hr>
-                                    <div class="content-markdown" style="padding: 5px">
-                                        <p>{{ service.text_preview|truncatechars:100 | safe }} </p>
-                                    </div>
-                                </div>
+                    <div class="card service-list-item">
+                        <a href="{{ service.get_absolute_url }}">
+                            <div class="service-list-item-image">
+                                <img class="card-img-top img-fluid" src="/media/{{ service.image }}" alt="Card image cap">
+                            </div>
+                            <div class="card-block">
+                                <p class="card-text">{{ service.text_preview }}</p>
                             </div>
                         </a>
                     </div>

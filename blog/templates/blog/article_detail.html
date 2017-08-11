@@ -1,54 +1,55 @@
 {% extends "homepage/base.html" %}
 {% block content %}
-<div class="row">
+<div class="container-fluid">
+    <div class="row">
 
-    <div class="col-md-6 push-md-3 content-box">
-        {% if instance.draft %}
-        <h4 style="color:red;">В разработке</h4>
-        {% endif %}
-        <h3 class="article-dscrpt">{{ instance.title }} <span class="updated-time">{{ instance.published|timesince }} назад</span></h3>
-        {% if user.is_staff or user.is_superuser %}
-            <a class="btn btn-primary" href="{% url 'article_edit' category_slug=instance.category.slug slug=instance.slug %}">Редактировать</a>
-            <a class="btn btn-primary" href="{% url 'article_delete' category_slug=instance.category.slug slug=instance.slug %}">Удалить</a>
-        {% endif %}
-        <hr>
-        {% if instance.image %}
-        <img src="/media/{{ instance.image }}" alt="" class="img-fluid">
-        {% endif %}
-        <div class="content-markdown">
-            <p>{{ instance.get_markdown|safe }} </p>
-        </div>
-    </div>
-
-    <div class="col-md-3 pull-md-6 left-box">
-            {% if recent_articles %}
-            <h4>Последние Статьи</h4>
+        <div class="col-md-9 push-md-3 content-box">
             <div class="row">
-                <div class="container recent-article-list">
-                {% for recent_article in recent_articles %}
-                <a href="{{ recent_article.get_absolute_url }}">
-                    <div class="card">
-                        <img class="card-img-top img-fluid" src="/media/{{ recent_article.image }}" alt="Card image cap">
-                        <div class="card-block">
-                            <h4 class="card-title">{{ recent_article.title }}</h4>
-                            <hr>
-                            <p class="card-text">{{ recent_article.title|truncatechars_html:50|safe }}</p>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">{{ recent_article.updated|timesince }} назад</small>
-                        </div>
+                <div class="col-md-8">
+                    {% if instance.draft %}
+                    <h4 style="color:red;">В разработке</h4>
+                    {% endif %}
+                    <h3 class="article-dscrpt">{{ instance.title }} <span class="updated-time">{{ instance.published|timesince }} назад</span></h3>
+                    {% if user.is_staff or user.is_superuser %}
+                        <a class="btn btn-primary" href="{% url 'article_edit' category_slug=instance.category.slug slug=instance.slug %}">Редактировать</a>
+                        <a class="btn btn-primary" href="{% url 'article_delete' category_slug=instance.category.slug slug=instance.slug %}">Удалить</a>
+                    {% endif %}
+                    <hr>
+                    {% if instance.image %}
+                    <img src="/media/{{ instance.image }}" alt="" class="img-fluid">
+                    {% endif %}
+                </div>
+                <div class="col-md-12">
+                    <div class="content-markdown">
+                        <p>{{ instance.get_markdown|safe }} </p>
                     </div>
-                </a>
-                {% endfor %}
                 </div>
             </div>
-            {% endif %}
+        </div>
+
+        <div class="col-md-3 pull-md-9 left-box hidden-sm-down">
+                {% if recent_articles %}
+                <h4>Последние Статьи</h4>
+                <div class="row">
+                    <div class="container recent-article-list">
+                    {% for recent_article in recent_articles %}
+                    <a href="{{ recent_article.get_absolute_url }}">
+                        <div class="card">
+                            <img class="card-img-top img-fluid" src="/media/{{ recent_article.image }}" alt="Card image cap">
+                            <div class="card-block">
+                                <p class="card-text">{{ recent_article.title|truncatechars:50|safe }}</p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">{{ recent_article.updated|timesince }} назад</small>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+        </div>
+
     </div>
-
-
-    <div class="col-md-3 right-box">
-        
-    </div>
-
 </div>
 {% endblock content %}
