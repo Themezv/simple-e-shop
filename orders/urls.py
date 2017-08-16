@@ -1,10 +1,11 @@
 from django.conf.urls import url
 
-# from .views import OrderListView, OrderDetailView, OrderCreateView
-#
-#
+from orders.views import ServiceOrderCreate, ProductOrderCreate, OrdersListView
+
 urlpatterns = [
-#     url(r'^$', OrderListView.as_view(), name='order_list'),
+    url(r'^$', OrdersListView.as_view(), name='orders_list'),
 #     url(r'^(?P<pk>[0-9]+)/$', OrderDetailView.as_view(), name='order_detail'),
-#     url(r'^order-create/$', OrderCreateView.as_view(), name='order_create'),
+
+    url(r'^order-create/service$', ServiceOrderCreate.as_view(), name='service_order_create'),
+    url(r'^order-create/product', ProductOrderCreate.as_view(), name='product_order_create'),
 ]

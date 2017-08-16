@@ -1,5 +1,5 @@
-    {% load staticfiles %}
-    {% load page_extras %}
+{% load staticfiles %}
+{% load page_extras %}
 <!--DOCTYPE html-->
 <html lang="en">
 <head>
@@ -37,7 +37,7 @@
     {% show_menu request.path %}
 </header>
 
-<main style="min-height: 100vh">
+<main>
     {% block content %}
     {% endblock content %}
 </main>
@@ -52,6 +52,11 @@
         integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8"
         crossorigin="anonymous"></script>
 <script src="{% static 'homepage/js/bootstrap.min.js' %} "></script>
+
+<script type="text/javascript"
+        src="{% static 'homepage/js/jquery-validation-1.16.0.js/dist/jquery.validate.min.js' %}"></script>
+<script type="text/javascript"
+        src="{% static 'homepage/js/jquery-validation-1.16.0.js/dist/localization/messages_ru.min.js' %}"></script>
 
 
 {% block extra_script %}

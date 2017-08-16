@@ -1,9 +1,20 @@
 from django.db import models
 from PIL import Image
-from shop.models import Product
+from shop.models import Service, Product
 
 
-class Tiles(models.Model):
+class ServiceTile(models.Model):
+    pages = models.OneToOneField(Service, null=True)
+
+    def __str__(self):
+        return "Страницы для отображения на главной (плитки)"
+
+    class Meta:
+        verbose_name = "Плитка на главной странице"
+        verbose_name_plural = "Плитки на главной странице"
+
+
+class ProductTile(models.Model):
     pages = models.OneToOneField(Product, null=True)
 
     def __str__(self):

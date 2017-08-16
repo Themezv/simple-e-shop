@@ -6,13 +6,16 @@
 {% endblock head_title %}
 
 {% block content %}
-    <div class="row main-box product-item-detail container">
-        <div class="row">
-            <div class="col-md-6 item-image">
+    {% include 'extuser/extuser_form_modal.html' %}
+
+    <div class="container-fluid">
+        <div class="row pt-1">
+            <div class="col-md-5 item-image pl-0">
                 {% if item.avatar %}
-                    <img src="/media/{{ item.avatar }}" class="img-fluid"> {% endif %}
+                    <img src="/media/{{ item.avatar }}" class="img-fluid">
+                {% endif %}
             </div>
-            <div class="col-md-6 item-description">
+            <div class="col-md-7 item-actions">
                 <h1>{{ item.title }}</h1>
                 <hr>
                 <div class="buy-form">
@@ -29,41 +32,23 @@
                             {{ item.get_price_eur }}&#8364;
                         {% endif %}
                     </h4>
-                    <form action="/orders/order-create/" method="POST"> {% csrf_token %}
-                        <input type="number" name="count" class="count" value="1" required>
-                        <input type="hidden" name="id_product" value="{{ item.id }}">
-                        <button type="submit" class="save btn btn-primary btn-default">Заказать</button>
+                    <form action="{% url 'product_order_create' %}" id="sub-order-form">
+                        <label for="count">Количество:</label>
+                        <input type="number" id="count" name="count" class="count" value="1" required>
+                        <input type="hidden" id="id_item" name="id_item" value="{{ item.id }}">
+                        <button type="submit" id="show-modal" class="btn btn-primary btn-default">Заказать</button>
                     </form>
                 </div>
-                <p>Описание товара: <br>
-                    {{ item.text_preview | safe }}</p>
             </div>
-        </div>
-        {% if related_items %}
-            <div class="row">
-                <div class="col-md-12">
-                    <hr>
-                    <div class="related-list">
-                        <h2>Также рекомендуем</h2>
-                        <div class="card-deck">
-                            {% for item in related_items %}
-                                <div class="card related-item-card">
-                                    <a href="{{ item.get_absolute_url }}"><img class="card-img-top img-fluid"
-                                                                               src="/media/{{ item.avatar }}"
-                                                                               alt="Card image cap"></a>
-                                    <div class="card-block">
-                                        <a href="#"><h4 class="card-title">{{ item.title | safe }}</h4></a>
-                                        {% if item.text_preview %}
-                                            <p class="card-text">{{ item.text_preview|truncatechars:30 | safe }}</p>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
+            <div class="col-md-12">
+                <div class="item-description">
+                    <p>{{ item.description|safe }}</p>
                 </div>
             </div>
-        {% endif %}
+        </div>
     </div>
-
 {% endblock content %}
+
+{% block extra_script %}
+    <script src={% static 'homepage/js/order_create.js' %}></script>
+{% endblock %}

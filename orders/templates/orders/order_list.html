@@ -2,43 +2,34 @@
 
 
 {% block content %}
-  <div class="row">
+    <div class="container pt-1">
+        <h1>Заказы</h1>
+        <div class="row pt-1">
 
-    <div class="col-xs-6 offset-xs-3">
-      <h1>Заказы</h1>
-      <br>
-      {% for obj in obj_list %}
-              <a href="{{ obj.get_absolute_url }}">
-                  <p>Имя: {{ obj.user.last_name }}</p>
-                  <p>Фамилия: {{ obj.user.first_name }}</p>
-              </a>
-              <p>Телефон: {{ obj.user.phone }}</p>
-              <p>Email: {{ obj.user.email }}</p>
-              <p>Адрес: {{ obj.user.address }}</p>
-              <p>Время: {{ obj.date }}</p>
+            <div class="col-sm-6">
+                <h4>Услуги</h4>
+                <hr>
+                <ul>
+                    {% for order in service_orders %}
+                        <li>{{ order }}</li>
+                    {% empty %}
+                        Заказов нет
+                    {% endfor %}
+                </ul>
+            </div>
 
-              <hr>
-      {% endfor %}
-
-
-      <div class="pagination">
-        <span class="step-links">
-          {% if obj_list.has_previous %}
-            <a href="?{{page_request_var}}={{ obj_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Предыдущая</a>
-          {% endif %}
-
-          <span class="current">
-          {{ obj_list.number }} из {{ obj_list.paginator.num_pages }}.
-          </span>
-
-          {% if obj_list.has_next %}
-            <a href="?{{page_request_var}}={{ obj_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }} {% endif %}">Следующая</a>
-          {% endif %}
-        </span>
-      </div>
+            <div class="col-sm-6">
+                <h4>Товары</h4>
+                <hr>
+                <ul>
+                    {% for order in product_orders %}
+                        <li>{{ order }}</li>
+                    {% empty %}
+                        Заказов нет
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-
 
 {% endblock content %}

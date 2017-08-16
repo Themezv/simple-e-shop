@@ -19,17 +19,3 @@ $(document).on("submit", ".get-product-list-form", function (e) {
         }
     });
 });
-
-// $(document).on("click", ".get-product-list-link", function (e) {
-//     e.preventDefault();
-//     var data = $(this).serialize();
-//
-//     $.ajax({
-//         type: "GET",
-//         url: list_url,
-//         data: data,
-//         success: function (html) {
-//             $("#product-list").html(html)
-//         }
-//     });
-// });

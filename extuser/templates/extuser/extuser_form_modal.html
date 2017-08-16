@@ -3,7 +3,7 @@
     <div class="modal-dialog" role="document">
         <div class="loginmodal-container">
             <h1>Заполните форму</h1><br>
-            <form action="{% url "order:order_create" %}" class="form-group"
+            <form action="" class="form-group"
                       id="user-data-form" method="post">{% csrf_token %}
                 {% for field in form %}
                     <div class="form-group">
@@ -14,20 +14,16 @@
                         {% endif %}
                     </div>
                 {% endfor %}
-            <label class="custom-control custom-checkbox">
-                    <input id="agree_rights" name="agree_rights" type="checkbox" class="custom-control-input" required checked>
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Согласен на обработку персональных данны</span>
-                </label>
-                <input type="hidden" class="hiddenRecaptcha required" required name="hiddenRecaptcha" id="hiddenRecaptcha">
-                <div class="pb-2 g-recaptcha float-md-right"
-                     data-sitekey="6LduhSQUAAAAAKIzN_cLgciyfRk9fU0gwkNZPmbZ"></div>
-
-                <button id="buy-ticket" class="login font-weight-bold h3 loginmodal-submit g-recaptcha">Подтвердить</button>
+{#            <label class="custom-control custom-checkbox">#}
+{#                    <input id="agree_rights" name="agree_rights" type="checkbox" class="custom-control-input" required checked>#}
+{#                    <span class="custom-control-indicator"></span>#}
+{#                    <span class="custom-control-description">Согласен на обработку персональных данны</span>#}
+{#                </label>#}
+                <button id="order-btn" class="login font-weight-bold h3 loginmodal-submit g-recaptcha">Подтвердить</button>
             </form>
 
             <div class="login-help">
-                <span>Выбранные Вами билеты блокируются на 20 минут. В случае, если за это время Вы не завершите оплату, билеты будут разблокированы.</span>
+                <span>Мы свяжемся с вами после рассмотрения заказа</span>
             </div>
         </div>
     </div>

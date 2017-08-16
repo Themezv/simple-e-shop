@@ -6,6 +6,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, R
 from django.views.decorators.csrf import csrf_protect
 from django.utils.decorators import method_decorator
 from blog.views import CategoryListView
+from extuser.forms import ExtUserForm
 from .models import Category, Product, ProductGroup, Manufacturer, Service
 from .forms import ProductForm
 
@@ -44,6 +45,12 @@ class ProductDetailView(DetailView):
     context_object_name = 'item'
     template_name = "shop/product_detail.html"
 
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductDetailView, self).get_context_data(**kwargs)
+        context['form'] = ExtUserForm
+        return context
+
     # def get_context_data(self, **kwargs):
     #     context = super(ProductDetalilView, self).get_context_data(**kwargs)
     #     item = context['object']
@@ -64,6 +71,11 @@ class ServiceDetailView(DetailView):
     template_name = "shop/service_detail.html"
     model = Service
     context_object_name = "item"
+
+    def get_context_data(self, **kwargs):
+        context = super(ServiceDetailView, self).get_context_data(**kwargs)
+        context['form'] = ExtUserForm
+        return context
 
 
 @method_decorator(login_required(), name="dispatch")

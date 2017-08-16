@@ -1,43 +1,54 @@
-{% extends "homepage/base.html" %}
+{% extends 'homepage/base.html' %}
 {% load staticfiles %}
 
-{% block head_title %}Товар: {{ item.title | safe }} {% endblock head_title %}
+{% block head_title %}
+    Товар: {{ item.title }}
+{% endblock head_title %}
 
 {% block content %}
+    {% include 'extuser/extuser_form_modal.html' %}
 
-<div class="row main-box product-item-detail container">
-    <div class="row">
-        <div class="col-md-6 item-image">
-            {% if item.image %}
-            <img src="/media/{{ item.image }}" class="img-fluid"> {% endif %}
-        </div>
-        <div class="col-md-6 item-description">
-            <h1>{{ item.title | safe }}</h1>
-            <hr>
-            <div class="buy-form">
-                <h4> Цена:
-                    {% if item.currency.title == 'RUB' %}
+    <div class="container-fluid">
+        <div class="row pt-1">
+            <div class="col-md-5 item-image pl-0">
+                {% if item.image %}
+                    <img src="/media/{{ item.image }}" class="img-fluid">
+                {% endif %}
+            </div>
+            <div class="col-md-7 item-actions">
+                <h1>{{ item.title }}</h1>
+                <hr>
+                <div class="buy-form">
+                    <h4> Цена:
+                        {% if item.currency.title == 'RUB' %}
                             {{ item.get_price_ruble }}&#8381;
+
+
                         {% elif item.currency.title == 'USD' %}
                             {{ item.get_price_ruble }}&#8381;
                             ({{ item.get_price_usd }}$)
                         {% elif item.currency.title == 'EUR' %}
                             {{ item.get_price_ruble }}&#8381;
                             {{ item.get_price_eur }}&#8364;
-                        {% endif %}</h4>
-                <form action="" method="POST"> {% csrf_token %}
-                    <input type="number" name="count" class="count" value="1" required>
-                    <input type="hidden" name="id_product" value="{{ item.id }}">
-                    <button type="submit" class="save btn btn-primary btn-default">Заказать</button>
-                </form>
+                        {% endif %}
+                    </h4>
+                    <form action="{% url 'service_order_create' %}" id="sub-order-form">
+                        <input type="hidden" id="id_item" name="id_item" value="{{ item.id }}">
+                        <button type="submit" id="show-modal" class="btn btn-primary btn-default">Заказать</button>
+                    </form>
+
+                </div>
             </div>
-            <p>Описание товара: <br>
-                {{ item.text_preview | safe}}</p>
+            <div class="col-md-12">
+                <div class="item-description">
+                    <p>{{ item.description|safe }}</p>
+                </div>
+            </div>
         </div>
     </div>
 
-</div>
-
-
-
 {% endblock content %}
+
+{% block extra_script %}
+    <script src={% static 'homepage/js/order_create.js' %}></script>
+{% endblock %}

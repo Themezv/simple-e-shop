@@ -3,54 +3,58 @@
 
 {% block head_title %}Главная страница{% endblock head_title %}
 
-
 {% block content %}
-    <div class="row wrap-tile">
-        <div class="container-fluid">
+    <div class="homepage-content container-fluid">
+        <div class="row service-list">
+            {% for service in services %}
+                <div class="col-md-4 col-sm-6">
+                    <div class="card service-list-item">
+                        <a href="{{ service.get_absolute_url }}">
+                            <div class="service-list-item-image">
+                                <img class="card-img-top img-fluid" src="/media/{{ service.image }}" alt="Card image cap">
+                            </div>
+                            <div class="card-block">
+                                <h5 class="card-text">{{ service.title|truncatechars:100 }}</h5>
+                            </div>
+                        </a>
+                        {% if user.is_staff or user.is_superuser %}
+                            <form method="post" action="/tile-delete/"> {% csrf_token %}
+                                <input type="hidden" class="number-tile-delete" value="{{ service.pk }}"
+                                       name="id-to-delete">
+                                <button class="btn btn-danger btn-tile-delete">x</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+            {% if canAdd %}
+                <div class="col-md-4 col-sm-12" style="text-align: center">
+                    <span id="new-tile">
+                        +
+                    </span>
+                    <div id="div-new-tile"></div>
+                </div>
+            {% endif %}
+        </div>
+        <hr>
+        <div class="row">
+            <a href='{% url 'product_list' %}' class="btn btn-primary">Перейти в магазин</a>
+        </div>
+
+        {% if articles %}
+            <hr>
             <div class="row">
-                {% for tile in tiles %}
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="tile">
-                            <a href="{{ tile.pages.get_absolute_url }}" class="card-link">
-                                <h3 class="card-title" style="text-shadow: 0 0 20px black;">{{ tile.pages.title }}</h3>
-                                {% if  user.is_staff or user.is_superuser %}
-                                    <form method="post" action="/tile-delete/"> {% csrf_token %}
-                                        <input type="number" class="number-tile-delete" value="{{ tile.pk }}"
-                                               name="id-to-delete">
-                                        <button class="btn btn-danger btn-tile-delete">x</button>
-                                    </form>
-                                {% endif %}
-                                <img src="media/{{ tile.pages.avatar }}" class="tile-img img-fluid">
-                            </a>
+                {% for article in articles %}
+                    <div class="col-sm-6">
+                        <div class="homepage__article">
+                            <h3><a href={{ article.get_absolute_url }}>{{ article.title }}</a></h3>
+                            <p>{{ article.get_markdown|safe|truncatechars_html:500 }}</p>
                         </div>
                     </div>
                 {% endfor %}
-
-
-                {% if user.is_staff or user.is_superuser %}
-                    <div class="col-lg-4 col-md-6 col-sm-12 tile" id="div-new-tile">
-                        <h1 id="new-tile">+</h1>
-                    </div>
-                {% endif %}
             </div>
-        </div>
-        <div class="container text-white" style="margin-top: 25px; margin-bottom: 25px">
-            <h2>Последние статьи</h2>
-            <div class="row">
-                {% for article in articles %}
-                <div class="col-xs-12">
-                    <div class="article-main" style="padding: 10px; margin-top: 15px; box-shadow: 0 0 4px 0px black; background-color: #08314e;">
-                        <a href="{{ article.get_absolute_url }}" class="text-white">
-                            <h3>{{ article.title }}</h3>
-                        </a>
-                        <p>{{ article.content|truncatechars_html:250 }}</p>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
+        {% endif %}
     </div>
-
 {% endblock content %}
 
 {% block extra_script %}
@@ -59,7 +63,7 @@
         $("#div-new-tile").html("<form method=\"POST\" action=\" /new_tile/ \" > {% csrf_token %} {{ form.as_p | escapejs}} <button id=\"add-tile\" class=\"save btn btn-default\">Добавить</button></form>");
     });
     $(document).ready(function () {
-        $("#div-new-tile").fadeTo('fast', 0.5)
+        $("#new-tile").fadeTo('fast', 0.5)
             .mouseenter(function () {
                 $(this).fadeTo('fast', 1);
             })
@@ -67,14 +71,5 @@
                 $(this).fadeTo('fast', 0.5);
             });
     });
-
-    $(document).ready(function () {
-        $(".for-back-img").height($(".wrap-tile").height());
-    });
-
-    $(window).resize(heightOfbackImgOnIndexResize);
-    function heightOfbackImgOnIndexResize() {
-        $(".for-back-img").height($(".wrap-tile").height());
-    }
 </script>
 {% endblock extra_script %}
