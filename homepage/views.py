@@ -15,7 +15,7 @@ def index(request):
     articles = Article.objects.all().order_by('-published')[:3]
     form = ServiceTileForm
     services = [tile.pages for tile in tiles]
-    can_add = len(services) < 6 and (request.user.is_staff or request.is_superuser)
+    can_add = len(services) < 6 and (request.user.is_staff or request.user.is_superuser)
 
     return render(request, 'homepage/index.html', {'services': services, 'form': form, "articles": articles, 'canAdd': can_add})
 
