@@ -61,6 +61,9 @@ class Currency(models.Model):
     def __str__(self):
         return self.title
 
+    def convert_to_curr(self, cur):
+        return self.rate/Currency.objects.get(title=cur).rate
+
     class Meta:
         verbose_name = "Курс валюты"
         verbose_name_plural = "Курсы валют"
@@ -122,6 +125,15 @@ class Product(models.Model):
 
     def get_category_slug(self):
         return self.category.first().slug
+
+    def get_price_ruble(self):
+        return self.price * self.currency.convert_to_curr('RUB')
+
+    def get_price_usd(self):
+        return self.price * self.currency.convert_to_curr('USD')
+
+    def get_price_eur(self):
+        return self.price * self.currency.convert_to_curr('EUR')
 
     def __str__(self):
         return self.title

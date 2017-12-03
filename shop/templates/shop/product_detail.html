@@ -8,8 +8,8 @@
 {% block content %}
     {% include 'extuser/extuser_form_modal.html' %}
 
-    <div class="container-fluid">
-        <div class="row pt-1">
+    <div class="container-fluid position-relative">
+        <div class="row pt-1 product-detail">
             <div class="col-md-5 item-image pl-0">
                 {% if item.avatar %}
                     <img src="/media/{{ item.avatar }}" class="img-fluid">
@@ -21,15 +21,13 @@
                 <div class="buy-form">
                     <h4> Цена:
                         {% if item.currency.title == 'RUB' %}
-                            {{ item.get_price_ruble }}&#8381;
-
-
+                            {{ item.get_price_ruble|floatformat:2}}&#8381;
                         {% elif item.currency.title == 'USD' %}
-                            {{ item.get_price_ruble }}&#8381;
-                            ({{ item.get_price_usd }}$)
+                            {{ item.get_price_ruble |floatformat:2}}&#8381;
+                            ({{ item.get_price_usd|floatformat:2 }}$)
                         {% elif item.currency.title == 'EUR' %}
-                            {{ item.get_price_ruble }}&#8381;
-                            {{ item.get_price_eur }}&#8364;
+                            {{ item.get_price_ruble|floatformat:2 }}&#8381;
+                            {{ item.get_price_eur|floatformat:2 }}&#8364;
                         {% endif %}
                     </h4>
                     <form action="{% url 'product_order_create' %}" id="sub-order-form">

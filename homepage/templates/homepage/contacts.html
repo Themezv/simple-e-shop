@@ -4,13 +4,18 @@
 
 {% block content %}
 
-{% if request.user.is_staff or request.user.is_superuser %}
-  <a href="{% url 'contacts_edit' %}">Редактировать</a>
-  <br>
-{% endif %}
+    <div class="position-relative" style="max-width: 100%; overflow: hidden">
+        <div class="row" >
+            {% if request.user.is_staff or request.user.is_superuser %}
+                <a href="{% url 'contacts_edit' %}" style="position: absolute; color: red;">Редактировать</a>
+            {% endif %}
 
-  <h1>{{ flatpage.title }}</h1>
+            <div class="col-xs-12">
+                <h1>{{ flatpage.title }}</h1>
+                {{ flatpage.content }}
+            </div>
+        </div>
 
-  <p>{{ flatpage.content }}</p>
+    </div>
 
 {% endblock content %}

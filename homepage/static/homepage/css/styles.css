@@ -735,3 +735,11 @@ a:hover {
     font-size: small;
 }
 /*end order modal*/
+
+.product-detail {
+    z-index: 1;
+    background-color: white;
+}
+.position-relative {
+    position: relative;
+}
