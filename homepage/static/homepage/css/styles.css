@@ -420,10 +420,10 @@ a:hover {
     margin-left: 15px;
 }
 
-.category-title a{
+.category-title a label, .manufacturer-title a label{
     color: #535353;
 }
-.category-title:hover a{
+.category-title:hover a label, .manufacturer-title:hover a label {
     color: white;
 }
 
