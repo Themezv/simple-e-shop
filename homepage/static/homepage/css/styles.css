@@ -1,6 +1,7 @@
 div.header {
     height: 120px;
     overflow: hidden;
+    background-color: #f3f3f3;
 }
 .for-back-img {
     width: 100%;
@@ -371,14 +372,14 @@ a:hover {
     /*overflow: auto;*/
     /*font-size: 12px;*/
     /*font-weight: 200;*/
-    background-color: #9f9f9f;
+    background-color: #f3f3f3;
     min-height: 10%;
 
     /*position: fixed;*/
     /*top: 0px;*/
     /*width: 300px;*/
     /*height: 100%;*/
-    color: #e1ffff;
+    /*color: #e1ffff;*/
 }
 
 .nav-side-menu .toggle-btn {
@@ -398,25 +399,53 @@ a:hover {
 
 .nav-side-menu .category-header, .nav-side-menu .manufacturer-header {
     padding: 10px;
-    background-color: #99b0ff;
+    /*background-color: #99b0ff;*/
 }
 
 .nav-side-menu .category-title, .nav-side-menu .manufacturer-title {
-    /*padding: 5px;*/
+    color: #0E2231;
     height: 40px;
 }
 
 .nav-side-menu .category-title:hover, .nav-side-menu .manufacturer-title:hover {
     background-color: #535353;
-    transition: background-color 0.3s;
+    color: white;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.category-title a, .manufacturer-title a {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    margin-left: 15px;
+}
+
+.category-title a{
+    color: #535353;
+}
+.category-title:hover a{
+    color: white;
+}
+
+.category-title a label, .manufacturer-title a label {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    cursor: pointer;
 }
 
 .nav-side-menu .get-product-list-btn {
     border: 0;
-    width: 100%;
     padding: 5px;
     font-size: large;
     background-color: #b8ff9a;
+}
+
+.find-products {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
 }
 
 .nav-side-menu .get-product-list-btn:hover {
@@ -425,7 +454,7 @@ a:hover {
 
 .nav-side-menu a {
     text-decoration: none;
-    color: #e1ffff;
+    color: #fff;
     display: flex;
     align-content: center;
     text-align: center;
@@ -506,8 +535,8 @@ a:hover {
     color: #ffffff;
 }
 .image-block:hover .image-block__bottom {
-    display: inline-block;
-    height: 70px;
+    display: inline-flex;
+    height: 50px;
     box-sizing: border-box;
     line-height: 50px;
     background-color: #fff;
@@ -515,7 +544,9 @@ a:hover {
     bottom:0;
     right:0;
     width: 100%;
-    padding:10px;
+    padding:4px;
+    justify-content: center;
+    align-items: center;
 }
 .image-block--grid {
     letter-spacing: -0.35em;
@@ -554,8 +585,9 @@ a:hover {
 }
 
 .image-block__bottom a {
-    text-decoration: none;
-    padding:5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .image-block__bottom svg {
     height:15px;

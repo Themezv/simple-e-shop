@@ -13,7 +13,7 @@
                             <h4 class="font-weight-bold text-center">{{ group.title }}</h4>
                         </a>
                     </div>
-                    <div class="sub-menu collapse in" aria-expanded="true" id="{{ group.slug }}">
+                    <div class="sub-menu collapse in" aria-expanded="false" id="{{ group.slug }}">
                         {% if group.get_all_categories %}
                             <div class="category-header">
                                 <h4>Категории</h4>
@@ -44,8 +44,8 @@
                                 </div>
                             {% endfor %}
                         {% endif %}
-                        <div class="">
-                            <button class="get-product-list-btn">Найти</button>
+                        <div class="find-products">
+                            <button class="btn btn-success">Найти</button>
                         </div>
                     </div>
                 </form>
