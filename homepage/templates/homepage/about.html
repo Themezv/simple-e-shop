@@ -6,11 +6,10 @@
     <div class="position-relative" style="max-width: 100%; overflow: hidden">
         <div class="row">
             {% if request.user.is_staff or request.user.is_superuser %}
-                <a href="{% url 'about_edit' %}" style="position: absolute; color: red;">Редактировать</a>
+                <a href="{% url 'about_edit' %}" style="position: absolute; color: red; right:40px;">Редактировать</a>
             {% endif %}
 
             <div class="col-xs-12">
-                <h1>{{ flatpage.title }}</h1>
                 {{ flatpage.content }}
             </div>
         </div>
