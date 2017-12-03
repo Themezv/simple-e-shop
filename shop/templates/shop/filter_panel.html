@@ -8,12 +8,12 @@
                       method="get"
                       class="get-product-list-form visible-zone mb-0">
                     <input type="hidden" name="group" value="{{ group.slug }}">
-                    <div data-toggle="collapse" aria-expanded="false" data-target="#{{ group.slug }}" class="text-center visible-product-title active">
+                    <div data-toggle="collapse" role="tab" id="{{ group.slug }}head" aria-expanded="false" data-target="#{{ group.slug }}" class="text-center visible-product-title collapsed">
                         <a href="#" class="text-center">
                             <h4 class="font-weight-bold text-center">{{ group.title }}</h4>
                         </a>
                     </div>
-                    <div class="sub-menu collapse in" aria-expanded="false" id="{{ group.slug }}">
+                    <div class="collapse" id="{{ group.slug }}" aria-labelledby="#{{ group.slug }}head">
                         {% if group.get_all_categories %}
                             <div class="category-header">
                                 <h4>Категории</h4>
