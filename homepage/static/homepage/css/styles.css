@@ -2,7 +2,15 @@ div.header {
     height: 120px;
     overflow: hidden;
 }
-
+.for-back-img {
+    width: 100%;
+    height: 100%;
+    background-image: url("pattern-for-tiles.png");
+    opacity: 0.20;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 #logo {
     max-width: 100%;
     max-height: 110px;
@@ -130,6 +138,7 @@ h3.card-title {
 main {
     background: radial-gradient(#f4f4f4, #187ec2);
     min-height: 100vh;
+    position: relative;
 }
 
 .btn-primary,
@@ -381,6 +390,7 @@ a:hover {
 }
 
 .nav-side-menu .visible-product-title {
+    text-align: center;
     padding:10px;
     font-size: larger;
     background-color: #be5845;
@@ -392,12 +402,13 @@ a:hover {
 }
 
 .nav-side-menu .category-title, .nav-side-menu .manufacturer-title {
-    padding: 5px;
+    /*padding: 5px;*/
+    height: 40px;
 }
 
 .nav-side-menu .category-title:hover, .nav-side-menu .manufacturer-title:hover {
-    padding: 5px;
     background-color: #535353;
+    transition: background-color 0.3s;
 }
 
 .nav-side-menu .get-product-list-btn {
@@ -415,6 +426,13 @@ a:hover {
 .nav-side-menu a {
     text-decoration: none;
     color: #e1ffff;
+    display: flex;
+    align-content: center;
+    text-align: center;
+}
+
+.nav-side-menu a label{
+    margin: 0;
 }
 
 @media (max-width: 767px) {
@@ -456,6 +474,7 @@ a:hover {
 
 /*product-item*/
 .image-block {
+    background-color: white;
     display: inline-block;
     height:30vh;
     width:100%;
@@ -467,7 +486,8 @@ a:hover {
 }
 
 .image-block:hover {
-    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.67);
+    box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.37);
+    transition: box-shadow 0.3s;
 }
 
 .image-block__top, .image-block__bottom {

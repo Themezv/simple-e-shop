@@ -8,9 +8,9 @@
                       method="get"
                       class="get-product-list-form visible-zone mb-0">
                     <input type="hidden" name="group" value="{{ group.slug }}">
-                    <div data-toggle="collapse" aria-expanded="true" data-target="#{{ group.slug }}" class="visible-product-title active">
-                        <a href="#">
-                            <h4 class="font-weight-bold">{{ group.title }}</h4>
+                    <div data-toggle="collapse" aria-expanded="false" data-target="#{{ group.slug }}" class="text-center visible-product-title active">
+                        <a href="#" class="text-center">
+                            <h4 class="font-weight-bold text-center">{{ group.title }}</h4>
                         </a>
                     </div>
                     <div class="sub-menu collapse in" aria-expanded="true" id="{{ group.slug }}">
